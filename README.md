@@ -61,34 +61,31 @@ Cmd+Shift+R) — the browser caches aggressively.
 The contact form posts to Web3Forms via `fetch()`. It never redirects off-site;
 success and error states render inline.
 
+**Status: configured and tested.** The access key is set in `CONFIG.web3formsKey`
+and a live end-to-end submission was confirmed delivering on 12 Aug 2026.
+
 **The destination email address is deliberately not stored in this file.**
 Web3Forms binds it to the access key on their side, which keeps the address out of
 the page source and away from scrapers.
 
-1. Go to https://web3forms.com
-2. Enter the destination email address. They email you an access key (a UUID).
-3. Open `index.html`, find `web3formsKey` near the top of the `CONFIG` object, and
-   replace the placeholder:
+**Plan:** Free / "Personal" tier — 250 submissions per month, unlimited forms and
+domains, no credit card. Verified at web3forms.com/pricing on 12 Aug 2026. Well
+beyond what this site will generate.
 
-   ```js
-   web3formsKey: 'YOUR_WEB3FORMS_ACCESS_KEY_HERE',
-   ```
+### If you ever need to change the key
 
-   with
-
-   ```js
-   web3formsKey: 'paste-your-key-here',
-   ```
-
-4. Commit and push. Submit a test enquiry through the live site and confirm the
-   email arrives.
+1. Go to https://web3forms.com and sign in.
+2. Copy the access key for the form.
+3. In `index.html`, replace the value of `CONFIG.web3formsKey`. The hidden
+   `access_key` input in the CONTACT section carries the same value as a no-JS
+   fallback — update both, or just `CONFIG`, which overwrites the input on load.
 
 Notes:
-- The hidden `access_key` input in the CONTACT section is overwritten from `CONFIG`
-  on page load, so `CONFIG.web3formsKey` is the only value you need to change.
-- A hidden `botcheck` honeypot field is already wired in for spam filtering.
-- The free tier covers 250 submissions/month, which is well beyond what this site
-  will generate.
+- A hidden `botcheck` honeypot is already wired in for spam filtering.
+- The access key is public by design — it sits in the page source. Worst case
+  someone copies it and submits junk to your own form. If that ever happens,
+  hCaptcha is available on the free plan; domain restriction is Pro-only.
+- Free plan keeps submission history for 30 days and allows 1 recipient address.
 
 ---
 
