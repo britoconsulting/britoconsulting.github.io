@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A1020">
+<title>Brito Consulting Services LLC — SAP ILM &amp; Data Archiving Consultant</title>
+<meta name="description" content="Independent SAP Information Lifecycle Management and data archiving consultancy. 20+ years in one discipline: ILM retention management, ADK archiving, Data Volume Management, and system decommissioning across commercial and federal SAP landscapes.">
+<link rel="canonical" href="https://britoconsulting.github.io">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://britoconsulting.github.io">
+<meta property="og:site_name" content="Brito Consulting Services LLC">
+<meta property="og:title" content="Brito Consulting Services LLC — SAP ILM &amp; Data Archiving">
+<meta property="og:description" content="20+ years dedicated exclusively to SAP ILM, data archiving, Data Volume Management, and decommissioning. Nationwide, remote. Commercial and federal.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Brito Consulting Services LLC — SAP ILM &amp; Data Archiving">
+<meta name="twitter:description" content="20+ years dedicated exclusively to SAP ILM, data archiving, Data Volume Management, and decommissioning. Nationwide, remote. Commercial and federal.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'6'%20fill%3D'%230A1020'%2F%3E%3Cg%20fill%3D'%23F8FAFC'%3E%3Crect%20x%3D'4'%20y%3D'5'%20width%3D'4.5'%20height%3D'22'%20rx%3D'1'%2F%3E%3Crect%20x%3D'4'%20y%3D'5'%20width%3D'22'%20height%3D'4.5'%20rx%3D'1'%2F%3E%3Crect%20x%3D'4'%20y%3D'11.5'%20width%3D'18'%20height%3D'4.5'%20rx%3D'1'%2F%3E%3Crect%20x%3D'4'%20y%3D'18'%20width%3D'14'%20height%3D'4.5'%20rx%3D'1'%2F%3E%3C%2Fg%3E%3Crect%20x%3D'4'%20y%3D'24.5'%20width%3D'10'%20height%3D'4.5'%20rx%3D'1'%20fill%3D'%23FBBF24'%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+</head>
+
+<!--
+  ============================================================
+  MAINTENANCE NOTES — read this first
+  ============================================================
+  This site is ONE self-contained file. No build step, no npm,
+  no framework. Edit it, commit it, GitHub Pages serves it.
+
+  1. WHERE CONFIG LIVES
+     Open the single SCRIPT block at the bottom of the page.
+     The very first thing in it is `const CONFIG = { ... }`,
+     wrapped in an "EDIT ZONE — CONFIG" banner comment.
+     Essentially all business content on this page is data in
+     CONFIG and is rendered into the HTML at runtime. You should
+     almost never need to touch the HTML markup itself.
+
+  2. WEB3FORMS ACCESS KEY
+     Two places, both must match:
+       a) CONFIG.web3formsKey
+       b) the hidden input marked with the "WEB3FORMS KEY" comment
+          in the CONTACT section (the script overwrites it from CONFIG
+          on load, so (a) is the authoritative one).
+     Get a free key at web3forms.com; it is bound to the
+     destination email address, which is NOT stored in this file.
+
+  3. HOW TO ADD A CASE RESULT
+     Append an object to CONFIG.caseResults:
+       { industry:'...', situation:'...', metric:'25%',
+         metricLabel:'...', detail:'...' }
+     Never name a client, employer, agency, or program.
+
+  4. HOW TO ADD AN FAQ ITEM
+     Append { q:'...', a:'...' } to CONFIG.faq. The accordion
+     markup, ARIA wiring, and keyboard handling are generated.
+
+  5. HOW TO CHANGE THE PALETTE / TYPE / SPACING
+     Every color, size, radius, shadow and transition is a CSS
+     custom property in :root at the top of the STYLE block. There are no
+     hardcoded color values anywhere below :root. Rebranding is a
+     :root edit and nothing else.
+
+  6. WHERE THE CALCULATOR MATH LIVES
+     Function `computeCalc()` in the script, directly under the
+     "CALCULATOR ENGINE" banner. Formulas:
+       unarchived[y] = size * (1 + growth)^y
+       archived[y]   = size * (1 - archivable) * (1 + growth)^y
+       costAvoided   = SUM(y=1..5) (unarchived[y]-archived[y]) * costPerTB
+       tbRemovedYear1 = size * archivable
+     Slider bounds/defaults are in CONFIG.calculator.
+
+  7. FINDING A SECTION
+     Every section sits between a pair of HTML comments reading
+       ==== SECTION: NAME — START ====
+       ==== SECTION: NAME — END ====
+     Grep for "SECTION: CALCULATOR" to jump straight to it
+     instead of loading the whole file.
+
+  NOTE TO WHOEVER EDITS THIS BLOCK: it is an HTML comment. Never
+  write a closing-comment sequence, an opening STYLE tag, or an
+  opening SCRIPT tag inside it. Any of those terminate or hijack
+  the comment and dump this text onto the live page.
+  ============================================================
+-->
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — the only place colors/sizes are defined.
+   Nothing below this block uses a literal color value.
+   ============================================================ */
+:root{
+  /* --- Color: core palette — "Ink & Electric Blue" ---
+     TWO accents by design. AMBER carries primary emphasis (CTAs, key
+     figures). ELECTRIC BLUE carries secondary emphasis (eyebrows, links,
+     borders, glow fields). Measured contrast on --c-navy / --c-navy-elev:
+       --c-text       18.1 / 15.3
+       --c-gold       11.4 /  8.8   AA anywhere
+       --c-blue-text   7.5 /  6.3   AA anywhere — use for SMALL text
+       --c-muted       7.4 /  6.2
+       --c-blue        5.2 /  4.3   large text, icons, borders, fills ONLY
+     Do not set small text in --c-blue; it fails AA on the elevated
+     surface. Use --c-blue-text.
+
+     NOTE: the gradient fields lighten the surface beneath text. Worst
+     case is roughly a 20% blue lift on --c-navy-elev, which drops a
+     #60A5FA/#94A3B8 pairing to ~4.4:1 — under AA. --c-blue-text and
+     --c-muted are therefore set one step lighter than the raw Tailwind
+     values so they hold 5.1:1+ even at the brightest point of a field.
+     If you darken these, re-check contrast over --field-cool.          */
+  --c-navy:#0A1020;          /* base — navy-black */
+  --c-navy-elev:#14213D;     /* elevated surface — deep blue */
+  --c-blue:#3B82F6;          /* electric blue */
+  --c-blue-text:#7DB3FB;     /* lighter tint for small text */
+  --c-gold:#FBBF24;          /* amber — primary accent */
+  --c-text:#F8FAFC;
+  --c-muted:#A3B0C2;
+
+  /* --- Color: derived surfaces & lines --- */
+  --c-surface-sunk:#070B16;
+  --c-surface-deep:#0D1526;
+  --c-surface-indigo:#161B3D;
+  --c-hairline:rgba(248,250,252,0.09);
+  --c-hairline-strong:rgba(248,250,252,0.16);
+  --c-gold-line:rgba(251,191,36,0.42);
+  --c-gold-soft:rgba(251,191,36,0.13);
+  --c-gold-softer:rgba(251,191,36,0.06);
+  --c-gold-glow:rgba(251,191,36,0.20);
+  --c-gold-ink:#0A1020;
+  --c-blue-line:rgba(59,130,246,0.42);
+  --c-blue-soft:rgba(59,130,246,0.14);
+  --c-blue-softer:rgba(59,130,246,0.07);
+  --c-blue-glow:rgba(59,130,246,0.26);
+  --c-card-a:rgba(59,130,246,0.06);
+  --c-card-b:rgba(59,130,246,0);
+  --c-nav-bg:rgba(10,16,32,0.80);
+  --c-overlay-bg:rgba(10,16,32,0.985);
+  --c-dot:rgba(148,163,184,0.16);
+  --c-shadow:rgba(0,0,0,0.55);
+  --mask-full:rgb(0,0,0);
+  --mask-mid:rgba(0,0,0,0.35);
+  --mask-none:rgba(0,0,0,0);
+  --c-shadow-gold:rgba(251,191,36,0.26);
+  --c-shadow-blue:rgba(59,130,246,0.26);
+  --c-track:rgba(248,250,252,0.13);
+  --c-grid:rgba(148,163,184,0.10);
+  --c-chart-muted:#3B82F6;
+  --c-chart-gold:#FBBF24;
+  --c-chart-fill:rgba(251,191,36,0.15);
+  --c-danger:#F87171;
+  --c-danger-soft:rgba(248,113,113,0.13);
+  --c-ok:#34D399;
+
+  /* --- Generated background fields (no image files, no licensing) ---
+     Each is a stack of soft radial gradients. If you add a photo via
+     CONFIG.images, it is layered UNDER these and over the base colour,
+     so the palette stays consistent whether or not a photo is present. */
+  --field-hero:
+    radial-gradient(70% 56% at 4% -6%, rgba(96,165,250,0.50), transparent 64%),
+    radial-gradient(46% 42% at 98% 62%, rgba(251,191,36,0.26), transparent 66%),
+    radial-gradient(100% 58% at 42% 116%, rgba(96,165,250,0.34), transparent 70%);
+  --field-cool:
+    radial-gradient(85% 60% at 100% -8%, rgba(59,130,246,0.16), transparent 64%),
+    radial-gradient(50% 40% at 0% 108%, rgba(59,130,246,0.09), transparent 68%);
+  --field-warm:
+    radial-gradient(75% 58% at 0% 104%, rgba(251,191,36,0.13), transparent 66%),
+    radial-gradient(55% 45% at 100% -6%, rgba(59,130,246,0.13), transparent 68%);
+  --field-focus:
+    radial-gradient(62% 48% at 94% -4%, rgba(251,191,36,0.15), transparent 66%),
+    radial-gradient(85% 62% at 0% 104%, rgba(59,130,246,0.24), transparent 70%);
+  --field-convert:
+    radial-gradient(78% 58% at 50% -10%, rgba(59,130,246,0.26), transparent 68%),
+    radial-gradient(48% 45% at 94% 98%, rgba(251,191,36,0.16), transparent 70%);
+  --rule-spectrum:linear-gradient(90deg,transparent,var(--c-blue-line) 25%,var(--c-gold-line) 62%,transparent);
+  /* Scrim laid over any photo so text stays AA-legible regardless of image */
+  --scrim-hero:linear-gradient(180deg,rgba(10,16,32,0.86) 0%,rgba(10,16,32,0.78) 45%,rgba(10,16,32,0.94) 100%);
+  --scrim-band:linear-gradient(180deg,rgba(10,16,32,0.90),rgba(10,16,32,0.90));
+
+  /* --- Type --- */
+  --font-sans:'Inter','Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;
+  --fs-hero:clamp(2.75rem,6vw,5rem);
+  --fs-h2:clamp(2rem,3.5vw,3rem);
+  --fs-h3:1.375rem;
+  --fs-h4:1.0625rem;
+  --fs-lead:clamp(1.125rem,1.6vw,1.3125rem);
+  --fs-body:1.125rem;
+  --fs-sm:0.9375rem;
+  --fs-xs:0.8125rem;
+  --fs-eyebrow:0.75rem;
+  --fs-figure:clamp(2.5rem,4vw,3.5rem);
+  --fs-figure-sm:clamp(1.75rem,2.6vw,2.25rem);
+  --lh-tight:1.02;
+  --lh-head:1.14;
+  --lh-body:1.75;
+  --ls-hero:-0.03em;
+  --ls-head:-0.02em;
+  --ls-eyebrow:0.18em;
+  --ls-label:0.10em;
+  --measure:68ch;
+
+  /* --- Space --- */
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
+  --s-6:32px; --s-7:48px; --s-8:64px; --s-9:88px; --s-10:120px;
+  --section-y:clamp(72px,10vw,152px);
+  --gutter:clamp(20px,5vw,48px);
+  --maxw:1200px;
+  --maxw-narrow:820px;
+  --nav-h:72px;
+
+  /* --- Radius / shadow / motion --- */
+  --r-sm:4px; --r-md:8px; --r-lg:14px; --r-pill:999px;
+  --shadow-lift:0 14px 34px var(--c-shadow);
+  --shadow-cta:0 10px 26px var(--c-shadow-gold);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:200ms var(--ease-out);
+  --t-med:320ms var(--ease-out);
+  --t-reveal:500ms var(--ease-out);
+  --focus-ring:2px solid var(--c-gold);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--c-navy);color:var(--c-text);
+  font-family:var(--font-sans);font-size:var(--fs-body);line-height:var(--lh-body);
+  font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img,svg{max-width:100%}
+h1,h2,h3,h4{margin:0;font-weight:700;line-height:var(--lh-head)}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:var(--focus-ring);outline-offset:3px;border-radius:var(--r-sm)}
+::selection{background:var(--c-gold);color:var(--c-gold-ink)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.wrap-narrow{max-width:var(--maxw-narrow)}
+.section{padding-block:var(--section-y);position:relative;isolation:isolate}
+.section--elev{background:var(--c-navy-elev)}
+.section--sunk{background:var(--c-surface-sunk)}
+.measure{max-width:var(--measure)}
+
+/* ============================================================
+   GENERATED BACKGROUND FIELDS
+   Soft gradient light applied per section so the page changes
+   temperature top-to-bottom instead of being one flat navy.
+   Painted on a ::before at z-index -1 so content is untouched.
+   ============================================================ */
+.field{position:relative;isolation:isolate}
+.field::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:var(--field, none);
+}
+.field--cool::before{background:var(--field-cool)}
+.field--warm::before{background:var(--field-warm)}
+.field--focus::before{background:var(--field-focus)}
+.field--convert::before{background:var(--field-convert)}
+
+/* Optional photo layer. Set --photo via CONFIG.images at runtime; when
+   unset the element is simply absent and only the gradient field shows. */
+.photo-layer{
+  position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
+  background-image:var(--scrim-hero),var(--photo);
+  background-size:cover,cover;background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+}
+.photo-layer--band{background-image:var(--scrim-band),var(--photo)}
+
+/* Section seams: a spectrum hairline instead of a hard edge.
+   Uses border-image rather than a pseudo-element on purpose — ::before and
+   ::after are already spoken for by .field (gradient) and .hero (aurora),
+   and a second rule targeting the same pseudo silently overwrites them. */
+.seam{
+  border-bottom:1px solid transparent;
+  border-image-source:var(--rule-spectrum);
+  border-image-slice:1;
+}
+
+/* Luminous key figures — the numbers should feel lit, not painted on */
+.stat__val,.result__val,.case__metric b,.card__fig{text-shadow:0 0 32px var(--c-gold-glow)}
+.result__val.is-muted{text-shadow:0 0 32px var(--c-blue-glow)}
+
+.eyebrow{
+  font-size:var(--fs-eyebrow);font-weight:600;letter-spacing:var(--ls-eyebrow);
+  text-transform:uppercase;color:var(--c-blue-text);margin:0 0 var(--s-5);line-height:1.4;
+}
+.eyebrow--muted{color:var(--c-muted)}
+h2.h2{font-size:var(--fs-h2);letter-spacing:var(--ls-head);font-weight:700;max-width:22ch}
+.section-intro{color:var(--c-muted);font-size:var(--fs-lead);margin-top:var(--s-5);max-width:60ch}
+.rule{height:1px;background:var(--c-hairline);border:0;margin:0}
+.rule-gold{height:2px;width:56px;background:var(--c-gold);border:0;margin:0}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);
+  padding:16px 28px;border-radius:var(--r-md);border:1px solid transparent;
+  font-size:var(--fs-sm);font-weight:600;letter-spacing:0.01em;cursor:pointer;
+  transition:transform var(--t-fast),box-shadow var(--t-fast),background var(--t-fast),border-color var(--t-fast),color var(--t-fast);
+  text-align:center;
+}
+.btn--gold{background:var(--c-gold);color:var(--c-gold-ink);border-color:var(--c-gold)}
+.btn--gold:hover{transform:translateY(-2px);box-shadow:var(--shadow-cta)}
+.btn--ghost{background:transparent;color:var(--c-text);border-color:var(--c-hairline-strong)}
+.btn--ghost:hover{transform:translateY(-2px);border-color:var(--c-gold-line);color:var(--c-gold)}
+.btn--nav{padding:10px 18px;font-size:var(--fs-xs);border-color:var(--c-gold-line);color:var(--c-gold)}
+.btn--nav:hover{background:var(--c-gold-soft);transform:translateY(-1px)}
+.btn--block{width:100%}
+.link-gold{
+  color:var(--c-gold);font-weight:600;font-size:var(--fs-sm);
+  display:inline-flex;gap:var(--s-2);align-items:center;
+  border-bottom:1px solid var(--c-gold-line);padding-bottom:2px;
+  transition:gap var(--t-fast),border-color var(--t-fast);
+}
+.link-gold:hover{gap:var(--s-3);border-color:var(--c-gold)}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:sticky;top:0;z-index:50;height:var(--nav-h);
+  background:var(--c-nav-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--c-hairline);
+}
+.nav::after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:var(--rule-spectrum);opacity:0.7;pointer-events:none;
+}
+.nav__inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:var(--s-5)}
+.brand{display:flex;align-items:center;gap:var(--s-3);font-weight:600;font-size:var(--fs-sm);letter-spacing:-0.01em}
+.brand__mark{width:32px;height:32px;flex:none}
+.brand__name{display:none}
+.nav__links{display:none;align-items:center;gap:var(--s-6)}
+.nav__links a{
+  font-size:var(--fs-xs);font-weight:500;letter-spacing:var(--ls-label);text-transform:uppercase;
+  color:var(--c-muted);transition:color var(--t-fast);padding:6px 0;
+}
+.nav__links a:hover{color:var(--c-text)}
+.nav__cta{display:none}
+.burger{
+  display:inline-flex;flex-direction:column;justify-content:center;gap:5px;
+  width:44px;height:44px;padding:0 10px;background:transparent;border:1px solid var(--c-hairline);
+  border-radius:var(--r-sm);cursor:pointer;
+}
+.burger span{display:block;height:1.5px;background:var(--c-text);transition:transform var(--t-fast),opacity var(--t-fast)}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.menu{
+  position:fixed;inset:var(--nav-h) 0 0;z-index:49;background:var(--c-overlay-bg);
+  display:flex;flex-direction:column;justify-content:center;gap:var(--s-2);
+  padding:var(--gutter);
+}
+.menu[hidden]{display:none}
+.menu a{
+  font-size:1.75rem;font-weight:600;letter-spacing:var(--ls-head);
+  padding:var(--s-3) 0;border-bottom:1px solid var(--c-hairline);
+}
+.menu .btn{margin-top:var(--s-6)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;min-height:calc(100svh - var(--nav-h));
+  display:flex;align-items:center;padding-block:var(--s-9) var(--s-8);overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--c-dot) 1px,transparent 1px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(to bottom,var(--mask-full) 0%,var(--mask-mid) 55%,var(--mask-none) 88%);
+  mask-image:linear-gradient(to bottom,var(--mask-full) 0%,var(--mask-mid) 55%,var(--mask-none) 88%);
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;background:var(--field-hero);
+}
+/* Decorative "data strata" — bars compressing downward, echoing the logo
+   and the archiving story. Hidden below 1024px and from assistive tech. */
+.strata{
+  position:absolute;right:0;bottom:7%;width:min(34vw,430px);height:auto;
+  z-index:0;pointer-events:none;display:none;
+}
+.hero__inner{position:relative;z-index:1;width:100%}
+.hero__content{max-width:900px}
+h1.hero__title{
+  font-size:var(--fs-hero);letter-spacing:var(--ls-hero);line-height:var(--lh-tight);font-weight:700;
+  margin:0 0 var(--s-6);
+}
+h1.hero__title em{font-style:normal;color:var(--c-gold)}
+.hero__sub{color:var(--c-muted);font-size:var(--fs-lead);max-width:60ch;line-height:1.6}
+.hero__actions{display:flex;flex-wrap:wrap;gap:var(--s-4);margin-top:var(--s-7)}
+.hero__foot{display:flex;align-items:center;gap:var(--s-4);margin-top:var(--s-9);color:var(--c-muted);font-size:var(--fs-xs);letter-spacing:var(--ls-label);text-transform:uppercase}
+.hero__foot .rule-gold{flex:none}
+.scroll-cue{width:14px;height:22px;border:1px solid var(--c-hairline-strong);border-radius:var(--r-pill);position:relative;flex:none}
+.scroll-cue::after{
+  content:"";position:absolute;left:50%;top:5px;width:2px;height:5px;border-radius:1px;
+  background:var(--c-gold);transform:translateX(-50%);animation:cue 2s var(--ease-out) infinite;
+}
+@keyframes cue{0%,100%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}70%{opacity:0;transform:translate(-50%,7px)}}
+
+/* ============================================================
+   CREDIBILITY BAR
+   ============================================================ */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--c-hairline);border-left:1px solid var(--c-hairline)}
+.stat{padding:var(--s-6) var(--s-5);border-right:1px solid var(--c-hairline);border-bottom:1px solid var(--c-hairline)}
+.stat__val{font-size:var(--fs-figure-sm);font-weight:700;color:var(--c-gold);font-variant-numeric:tabular-nums;letter-spacing:var(--ls-head);line-height:1.1}
+.stat__label{margin-top:var(--s-3);color:var(--c-muted);font-size:var(--fs-xs);letter-spacing:var(--ls-label);text-transform:uppercase;line-height:1.5}
+.stats-note{margin-top:var(--s-5);color:var(--c-muted);font-size:var(--fs-xs)}
+
+/* ============================================================
+   INDUSTRIES
+   ============================================================ */
+.industries{padding-block:var(--s-8);border-bottom:1px solid var(--c-hairline)}
+.industries__list{display:flex;flex-wrap:wrap;gap:var(--s-4) var(--s-6);align-items:center}
+.industries__list li{
+  font-size:var(--fs-xs);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;
+  color:var(--c-muted);font-weight:500;
+}
+.industries__list li+li{position:relative;padding-left:var(--s-6)}
+.industries__list li+li::before{content:"";position:absolute;left:0;top:50%;width:1px;height:12px;background:var(--c-hairline-strong);transform:translateY(-50%)}
+
+/* ============================================================
+   CARDS (shared)
+   ============================================================ */
+.grid{display:grid;gap:var(--s-4)}
+.card{
+  position:relative;background:linear-gradient(180deg,var(--c-card-a),var(--c-card-b)),var(--c-navy-elev);
+  border:1px solid var(--c-hairline);border-radius:var(--r-lg);
+  padding:var(--s-6);transition:border-color var(--t-med),box-shadow var(--t-med),transform var(--t-med);
+}
+/* top-edge light catch */
+.card::after{
+  content:"";position:absolute;left:var(--s-6);right:var(--s-6);top:-1px;height:1px;
+  background:var(--rule-spectrum);opacity:0.5;pointer-events:none;
+}
+.card:hover{border-color:var(--c-blue-line);box-shadow:0 0 0 1px var(--c-blue-softer),0 18px 44px var(--c-shadow)}
+.card:hover::after{opacity:1}
+.card__fig{font-size:var(--fs-figure-sm);font-weight:700;color:var(--c-gold);font-variant-numeric:tabular-nums;letter-spacing:var(--ls-head);line-height:1.1}
+.card__claim{font-size:var(--fs-h4);font-weight:600;margin-top:var(--s-4);letter-spacing:-0.01em;line-height:1.4}
+.card__body{margin-top:var(--s-3);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.65}
+
+/* Services */
+.svc{position:relative;padding:var(--s-7) var(--s-6) var(--s-6)}
+.svc__num{
+  position:absolute;top:var(--s-6);right:var(--s-6);
+  font-size:var(--fs-xs);font-weight:700;letter-spacing:var(--ls-eyebrow);color:var(--c-blue-text);
+  font-variant-numeric:tabular-nums;
+}
+.svc__title{font-size:var(--fs-h3);font-weight:650;letter-spacing:var(--ls-head);max-width:16ch}
+.svc__body{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.7}
+.svc__outcome{
+  margin-top:var(--s-5);padding-top:var(--s-5);border-top:1px solid var(--c-hairline);
+  font-size:var(--fs-sm);font-weight:500;color:var(--c-text);
+}
+.svc__outcome span{color:var(--c-gold);font-weight:600}
+
+/* ============================================================
+   CALCULATOR
+   ============================================================ */
+.calc{display:grid;gap:var(--s-6);margin-top:var(--s-8)}
+.calc__panel{background:var(--c-navy-elev);border:1px solid var(--c-hairline);border-radius:var(--r-lg);padding:var(--s-6)}
+.calc__panel h3{font-size:var(--fs-xs);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--c-muted);font-weight:600;margin-bottom:var(--s-6)}
+.field+.field{margin-top:var(--s-6)}
+.field__top{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-4);margin-bottom:var(--s-3)}
+.field__top label{font-size:var(--fs-sm);font-weight:500;color:var(--c-text)}
+.field__val{font-size:var(--fs-sm);font-weight:700;color:var(--c-gold);font-variant-numeric:tabular-nums;white-space:nowrap}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:pointer;margin:0;
+}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--c-track);border-radius:var(--r-pill)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--c-gold);border:3px solid var(--c-navy-elev);margin-top:-7.5px;
+  transition:transform var(--t-fast);
+}
+input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
+input[type=range]::-moz-range-track{height:3px;background:var(--c-track);border-radius:var(--r-pill)}
+input[type=range]::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;background:var(--c-gold);
+  border:3px solid var(--c-navy-elev);cursor:pointer;
+}
+.field__scale{display:flex;justify-content:space-between;color:var(--c-muted);font-size:var(--fs-xs);margin-top:var(--s-1);font-variant-numeric:tabular-nums}
+select,input[type=text],input[type=email],textarea{
+  width:100%;background:var(--c-surface-sunk);color:var(--c-text);
+  border:1px solid var(--c-hairline-strong);border-radius:var(--r-md);
+  padding:14px 14px;font-family:var(--font-sans);font-size:var(--fs-sm);line-height:1.5;
+  transition:border-color var(--t-fast);
+}
+select:hover,input:hover,textarea:hover{border-color:var(--c-muted)}
+select:focus-visible,input:focus-visible,textarea:focus-visible{outline:var(--focus-ring);outline-offset:2px;border-color:var(--c-gold)}
+textarea{resize:vertical;min-height:120px}
+.calc__note{margin-top:var(--s-5);color:var(--c-muted);font-size:var(--fs-xs);line-height:1.6}
+.results{display:grid;gap:var(--s-4);grid-template-columns:1fr}
+.result{background:var(--c-surface-sunk);border:1px solid var(--c-hairline);border-radius:var(--r-md);padding:var(--s-5)}
+.result__label{font-size:var(--fs-xs);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--c-muted);line-height:1.5}
+.result__val{margin-top:var(--s-3);font-size:var(--fs-figure-sm);font-weight:700;color:var(--c-gold);font-variant-numeric:tabular-nums;letter-spacing:var(--ls-head);line-height:1.1}
+.result__sub{margin-top:var(--s-2);font-size:var(--fs-xs);color:var(--c-muted)}
+.result--split{display:flex;flex-wrap:wrap;gap:var(--s-5)}
+.result--split>div{flex:1 1 120px}
+.result--split .result__val{font-size:var(--fs-h3)}
+.result--split .result__val.is-muted{color:var(--c-muted)}
+.chart-shell{margin-top:var(--s-6);position:relative;height:300px}
+.chart-legend{display:flex;flex-wrap:wrap;gap:var(--s-5);margin-top:var(--s-5);font-size:var(--fs-xs);color:var(--c-muted)}
+.chart-legend span{display:inline-flex;align-items:center;gap:var(--s-2)}
+.swatch{width:14px;height:3px;border-radius:2px;flex:none}
+.swatch--gold{background:var(--c-gold)}
+.swatch--muted{background:var(--c-chart-muted)}
+.calc__foot{margin-top:var(--s-6);display:flex;flex-wrap:wrap;gap:var(--s-5);align-items:center;justify-content:space-between}
+.platform-note{color:var(--c-muted);font-size:var(--fs-xs);line-height:1.6;margin-top:var(--s-4);border-left:2px solid var(--c-gold-line);padding-left:var(--s-4)}
+
+/* ============================================================
+   APPROACH
+   ============================================================ */
+.phases{margin-top:var(--s-8);display:grid;gap:var(--s-6)}
+.phase{position:relative;padding-left:var(--s-8)}
+.phase::before{
+  content:"";position:absolute;left:11px;top:6px;width:1px;height:calc(100% + var(--s-6));
+  background:var(--c-gold-line);
+}
+.phase:last-child::before{display:none}
+.phase__dot{
+  position:absolute;left:4px;top:6px;width:15px;height:15px;border-radius:50%;
+  border:1px solid var(--c-gold);background:var(--c-navy);
+}
+.phase__dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--c-gold)}
+.phase__num{font-size:var(--fs-xs);font-weight:700;letter-spacing:var(--ls-eyebrow);color:var(--c-blue-text);font-variant-numeric:tabular-nums}
+.phase__title{font-size:var(--fs-h3);font-weight:650;letter-spacing:var(--ls-head);margin-top:var(--s-2)}
+.phase__body{margin-top:var(--s-3);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.7;max-width:62ch}
+.phase__deliv{margin-top:var(--s-4);font-size:var(--fs-sm);line-height:1.6;max-width:62ch}
+.phase__deliv b{color:var(--c-gold);font-weight:600}
+
+/* ============================================================
+   CASE RESULTS
+   ============================================================ */
+.case__ind{font-size:var(--fs-xs);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--c-blue-text);font-weight:600;line-height:1.5}
+.case__sit{margin-top:var(--s-4);font-size:var(--fs-h4);font-weight:500;line-height:1.5;color:var(--c-text)}
+.case__metric{margin-top:var(--s-5);display:flex;align-items:baseline;gap:var(--s-3);flex-wrap:wrap}
+.case__metric b{font-size:var(--fs-figure-sm);font-weight:700;color:var(--c-gold);font-variant-numeric:tabular-nums;letter-spacing:var(--ls-head);line-height:1}
+.case__metric span{font-size:var(--fs-xs);color:var(--c-muted);letter-spacing:var(--ls-label);text-transform:uppercase;max-width:24ch;line-height:1.5}
+.case__detail{margin-top:var(--s-5);padding-top:var(--s-5);border-top:1px solid var(--c-hairline);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.65}
+
+/* ============================================================
+   FEDERAL
+   ============================================================ */
+.federal{
+  border-top:1px solid var(--c-blue-line);border-bottom:1px solid var(--c-blue-line);
+  background:linear-gradient(180deg,var(--c-blue-softer),var(--c-gold-softer)),var(--c-surface-indigo);
+}
+.federal__grid{display:grid;gap:var(--s-7);margin-top:var(--s-7)}
+.caps{display:grid;gap:var(--s-4)}
+.caps li{display:flex;gap:var(--s-4);align-items:flex-start;font-size:var(--fs-sm);line-height:1.6;color:var(--c-text)}
+.caps svg{width:18px;height:18px;flex:none;margin-top:4px;color:var(--c-blue)}
+.federal__note{color:var(--c-muted);font-size:var(--fs-xs);margin-top:var(--s-6);line-height:1.6}
+
+/* ============================================================
+   ABOUT + EXPERTISE MATRIX
+   ============================================================ */
+.about__body p{margin-top:var(--s-5);color:var(--c-muted);line-height:var(--lh-body);max-width:var(--measure)}
+.about__body p:first-child{margin-top:var(--s-6)}
+.about__body strong{color:var(--c-text);font-weight:600}
+.creds{margin-top:var(--s-7);padding:var(--s-5);border-left:2px solid var(--c-gold);font-size:var(--fs-sm);line-height:1.7;color:var(--c-text);background:var(--c-gold-softer)}
+.matrix{display:grid;gap:var(--s-6);margin-top:var(--s-9);border-top:1px solid var(--c-hairline);padding-top:var(--s-7)}
+.matrix__col h3{font-size:var(--fs-xs);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--c-blue-text);font-weight:700;margin-bottom:var(--s-4)}
+.matrix__col ul{display:grid;gap:var(--s-2)}
+.matrix__col li{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--c-muted);line-height:1.6;letter-spacing:-0.01em}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq{margin-top:var(--s-7);border-top:1px solid var(--c-hairline);max-width:900px}
+.faq__item{border-bottom:1px solid var(--c-hairline)}
+.faq__q{
+  width:100%;display:flex;gap:var(--s-5);align-items:center;justify-content:space-between;
+  background:transparent;border:0;cursor:pointer;text-align:left;
+  padding:var(--s-5) 0;font-size:var(--fs-h4);font-weight:600;letter-spacing:-0.01em;line-height:1.45;
+  transition:color var(--t-fast);
+}
+.faq__q:hover{color:var(--c-gold)}
+.faq__icon{width:16px;height:16px;flex:none;position:relative}
+.faq__icon::before,.faq__icon::after{content:"";position:absolute;background:var(--c-gold);border-radius:1px;transition:transform var(--t-fast),opacity var(--t-fast)}
+.faq__icon::before{left:0;top:7px;width:16px;height:1.5px}
+.faq__icon::after{left:7px;top:0;width:1.5px;height:16px}
+.faq__q[aria-expanded="true"] .faq__icon::after{transform:rotate(90deg);opacity:0}
+.faq__a{overflow:hidden}
+.faq__a[hidden]{display:none}
+.faq__a p{padding:0 0 var(--s-6);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.75;max-width:64ch}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact__grid{display:grid;gap:var(--s-8);margin-top:var(--s-7)}
+.contact__aside p{color:var(--c-muted);font-size:var(--fs-sm);line-height:1.7;max-width:52ch}
+.contact__aside p+p{margin-top:var(--s-5)}
+.form{background:var(--c-navy-elev);border:1px solid var(--c-hairline);border-radius:var(--r-lg);padding:var(--s-6)}
+.form__row{display:grid;gap:var(--s-5)}
+.form__row+.form__row{margin-top:var(--s-5)}
+.form label.lbl{display:block;font-size:var(--fs-xs);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--c-muted);font-weight:600;margin-bottom:var(--s-2)}
+.form .req{color:var(--c-gold)}
+.form__actions{margin-top:var(--s-6)}
+.form__legal{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-xs);line-height:1.6}
+.form__msg{margin-top:var(--s-5);padding:var(--s-4);border-radius:var(--r-md);font-size:var(--fs-sm);line-height:1.6}
+.form__msg[hidden]{display:none}
+.form__msg--err{background:var(--c-danger-soft);border:1px solid var(--c-danger);color:var(--c-danger)}
+.success{
+  background:var(--c-navy-elev);border:1px solid var(--c-gold-line);border-radius:var(--r-lg);
+  padding:var(--s-8) var(--s-6);text-align:center;
+}
+.success svg{width:44px;height:44px;color:var(--c-gold)}
+.success h3{font-size:var(--fs-h3);margin-top:var(--s-5);letter-spacing:var(--ls-head)}
+.success p{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);max-width:44ch;margin-inline:auto;line-height:1.7}
+button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{border-top:1px solid var(--c-hairline);padding-block:var(--s-8);background:var(--c-surface-sunk)}
+.footer__top{display:flex;flex-wrap:wrap;gap:var(--s-6);justify-content:space-between;align-items:flex-start}
+.footer__meta{color:var(--c-muted);font-size:var(--fs-xs);line-height:1.8;margin-top:var(--s-4)}
+.footer__links{display:flex;gap:var(--s-6);flex-wrap:wrap}
+.footer__links a{font-size:var(--fs-xs);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--c-muted);transition:color var(--t-fast)}
+.footer__links a:hover{color:var(--c-gold)}
+.footer__bottom{margin-top:var(--s-7);padding-top:var(--s-5);border-top:1px solid var(--c-hairline);display:flex;flex-wrap:wrap;gap:var(--s-4);justify-content:space-between}
+.footer__bottom p{color:var(--c-muted);font-size:var(--fs-xs);line-height:1.7;max-width:70ch}
+
+/* ============================================================
+   MOTION
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity var(--t-reveal),transform var(--t-reveal)}
+.reveal.is-in{opacity:1;transform:none}
+
+/* ============================================================
+   BREAKPOINTS — 640 / 768 / 1024 / 1280
+   ============================================================ */
+@media (min-width:640px){
+  .brand__name{display:inline}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .results{grid-template-columns:1fr 1fr}
+  .result--wide{grid-column:1 / -1}
+  .form__row--2{grid-template-columns:1fr 1fr;align-items:end}
+  /* keeps side-by-side inputs baseline-aligned when one label wraps to two lines */
+  .form__row--2>div{display:flex;flex-direction:column;justify-content:flex-end}
+  .form__row--2>div>.lbl{margin-top:auto}
+  .matrix{grid-template-columns:1fr 1fr}
+}
+@media (min-width:768px){
+  .grid--2{grid-template-columns:repeat(2,1fr)}
+  .grid--3{grid-template-columns:repeat(2,1fr)}
+  .card{padding:var(--s-7) var(--s-6)}
+  .svc{padding:var(--s-8) var(--s-7) var(--s-7)}
+  .federal__grid{grid-template-columns:1fr 1fr;gap:var(--s-8)}
+  .caps{grid-template-columns:1fr;gap:var(--s-5)}
+  .chart-shell{height:360px}
+}
+@media (min-width:1024px){
+  .strata{display:block}
+  .burger{display:none}
+  .menu{display:none!important}
+  .nav__links,.nav__cta{display:flex}
+  .stats{grid-template-columns:repeat(5,1fr)}
+  .stat{padding:var(--s-7) var(--s-5)}
+  .grid--3{grid-template-columns:repeat(3,1fr)}
+  .calc{grid-template-columns:minmax(320px,0.85fr) 1.15fr;align-items:start}
+  .calc__panel{padding:var(--s-7)}
+  .matrix{grid-template-columns:repeat(4,1fr)}
+  .contact__grid{grid-template-columns:0.85fr 1.15fr;gap:var(--s-9)}
+  .phases{gap:var(--s-7)}
+  .phase{padding-left:var(--s-9)}
+  .phase::before{left:15px;height:calc(100% + var(--s-7))}
+  .phase__dot{left:8px;width:15px}
+  .form{padding:var(--s-7)}
+}
+@media (min-width:1280px){
+  .card{padding:var(--s-7)}
+  .chart-shell{height:400px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:0.001ms!important;animation-iteration-count:1!important;transition-duration:0.001ms!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .scroll-cue::after{animation:none;opacity:1}
+  .btn:hover,.card:hover{transform:none!important}
+}
+</style>
+
+<body>
+<a class="sr-only" href="#main">Skip to main content</a>
+
+<!-- ==== SECTION: NAV — START ==== -->
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top" aria-label="Brito Consulting Services LLC — home">
+      <svg class="brand__mark" viewBox="0 0 32 32" role="img" aria-label="Brito Consulting monogram: stacked data tiers forming the letter B">
+        <g fill="currentColor">
+          <rect x="4" y="5" width="4.5" height="22" rx="1"></rect>
+          <rect x="4" y="5" width="22" height="4.5" rx="1"></rect>
+          <rect x="4" y="11.5" width="18" height="4.5" rx="1"></rect>
+          <rect x="4" y="18" width="14" height="4.5" rx="1"></rect>
+        </g>
+        <rect x="4" y="24.5" width="10" height="4.5" rx="1" fill="var(--c-gold)"></rect>
+      </svg>
+      <span class="brand__name">Brito Consulting Services</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#approach">Approach</a>
+      <a href="#results">Results</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a class="btn btn--nav nav__cta" href="#contact">Schedule a consultation</a>
+
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="menu" id="mobileMenu" aria-label="Mobile" hidden>
+  <a href="#services">Services</a>
+  <a href="#calculator">Calculator</a>
+  <a href="#approach">Approach</a>
+  <a href="#results">Results</a>
+  <a href="#contact">Contact</a>
+  <a class="btn btn--gold" href="#contact">Schedule a 30-minute consultation</a>
+</nav>
+<!-- ==== SECTION: NAV — END ==== -->
+
+<main id="main">
+
+<!-- ==== SECTION: HERO — START ==== -->
+<section class="hero seam" id="top" aria-labelledby="heroTitle">
+  <div class="photo-layer" id="heroPhoto" aria-hidden="true" hidden></div>
+  <svg class="strata" viewBox="0 0 600 520" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="strataFill" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="var(--c-blue)" stop-opacity="0"/>
+        <stop offset="50%" stop-color="var(--c-blue)" stop-opacity="0.60"/>
+        <stop offset="100%" stop-color="var(--c-gold)" stop-opacity="0.70"/>
+      </linearGradient>
+    </defs>
+    <g fill="url(#strataFill)">
+      <rect x="60"  y="0"     width="540" height="14"  rx="3"/>
+      <rect x="88"  y="48"    width="512" height="13.6" rx="3"/>
+      <rect x="116" y="93.9"  width="484" height="13.2" rx="3"/>
+      <rect x="144" y="137.7" width="456" height="12.8" rx="3"/>
+      <rect x="172" y="179.4" width="428" height="12.4" rx="3"/>
+      <rect x="200" y="219"   width="400" height="12"   rx="3"/>
+      <rect x="228" y="256.5" width="372" height="11.6" rx="3"/>
+      <rect x="256" y="291.9" width="344" height="11.2" rx="3"/>
+      <rect x="284" y="325.2" width="316" height="10.8" rx="3"/>
+      <rect x="312" y="356.4" width="288" height="10.4" rx="3"/>
+      <rect x="340" y="385.5" width="260" height="10"   rx="3"/>
+      <rect x="368" y="412.5" width="232" height="9.6"  rx="3"/>
+      <rect x="396" y="437.4" width="204" height="9.2"  rx="3"/>
+      <rect x="424" y="460.2" width="176" height="8.8"  rx="3"/>
+      <rect x="452" y="480.9" width="148" height="8.4"  rx="3"/>
+      <rect x="480" y="499.5" width="120" height="8"    rx="3"/>
+    </g>
+  </svg>
+  <div class="wrap hero__inner">
+    <div class="hero__content">
+      <p class="eyebrow">SAP Information Lifecycle Management &amp; Data Archiving</p>
+      <h1 class="hero__title" id="heroTitle">Your SAP database is a cost and compliance liability. <em>I make it a managed asset.</em></h1>
+      <p class="hero__sub" id="heroSub"></p>
+      <div class="hero__actions">
+        <a class="btn btn--gold" href="#contact">Schedule a 30-minute consultation</a>
+        <a class="btn btn--ghost" href="#calculator">Estimate your savings</a>
+      </div>
+      <div class="hero__foot">
+        <hr class="rule-gold">
+        <span>Independent practice &middot; Remote nationwide</span>
+        <span class="scroll-cue" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==== SECTION: HERO — END ==== -->
+
+<!-- ==== SECTION: CREDIBILITY BAR — START ==== -->
+<section class="section--elev" aria-label="Engagement outcomes at a glance" style="padding-block:var(--s-8)">
+  <div class="wrap">
+    <ul class="stats" id="statsMount"></ul>
+    <p class="stats-note">Figures reflect delivered engagement outcomes.</p>
+  </div>
+</section>
+<!-- ==== SECTION: CREDIBILITY BAR — END ==== -->
+
+<!-- ==== SECTION: INDUSTRIES STRIP — START ==== -->
+<section class="industries" aria-label="Industries served">
+  <div class="wrap">
+    <ul class="industries__list" id="industriesMount"></ul>
+  </div>
+</section>
+<!-- ==== SECTION: INDUSTRIES STRIP — END ==== -->
+
+<!-- ==== SECTION: THE COST OF DOING NOTHING — START ==== -->
+<section class="section field field--cool seam" id="cost" aria-labelledby="costH">
+  <div class="wrap">
+    <p class="eyebrow reveal">The cost of doing nothing</p>
+    <h2 class="h2 reveal" id="costH">Unmanaged SAP data does not stay still. It compounds.</h2>
+    <p class="section-intro reveal">Six mechanisms that turn an unmanaged database into a budget line and an audit finding.</p>
+    <div class="grid grid--3" id="costMount" style="margin-top:var(--s-8)"></div>
+  </div>
+</section>
+<!-- ==== SECTION: THE COST OF DOING NOTHING — END ==== -->
+
+<!-- ==== SECTION: SERVICES — START ==== -->
+<section class="section section--elev field field--warm seam" id="services" aria-labelledby="svcH">
+  <div class="wrap">
+    <p class="eyebrow reveal">Services</p>
+    <h2 class="h2 reveal" id="svcH">Four engagements, one discipline.</h2>
+    <p class="section-intro reveal">Scoped independently or run end to end, from first growth analysis through a sustained operating model.</p>
+    <div class="grid grid--2" id="servicesMount" style="margin-top:var(--s-8)"></div>
+  </div>
+</section>
+<!-- ==== SECTION: SERVICES — END ==== -->
+
+<!-- ==== SECTION: CALCULATOR — START ==== -->
+<section class="section field field--focus seam" id="calculator" aria-labelledby="calcH">
+  <div class="wrap">
+    <p class="eyebrow reveal">Interactive estimate</p>
+    <h2 class="h2 reveal" id="calcH">What does five years of unmanaged growth cost you?</h2>
+    <p class="section-intro reveal">Move the inputs to your landscape. Nothing is submitted, nothing is stored, no email required.</p>
+
+    <div class="calc">
+      <form class="calc__panel reveal" id="calcForm" novalidate>
+        <h3>Your landscape</h3>
+
+        <div class="field">
+          <div class="field__top">
+            <label for="inSize">Current database size</label>
+            <output class="field__val" id="outSize" for="inSize"></output>
+          </div>
+          <input type="range" id="inSize">
+          <div class="field__scale"><span id="sizeMin"></span><span id="sizeMax"></span></div>
+        </div>
+
+        <div class="field">
+          <div class="field__top">
+            <label for="inGrowth">Annual growth rate</label>
+            <output class="field__val" id="outGrowth" for="inGrowth"></output>
+          </div>
+          <input type="range" id="inGrowth">
+          <div class="field__scale"><span id="growthMin"></span><span id="growthMax"></span></div>
+        </div>
+
+        <div class="field">
+          <div class="field__top">
+            <label for="inArch">Estimated archivable share</label>
+            <output class="field__val" id="outArch" for="inArch"></output>
+          </div>
+          <input type="range" id="inArch">
+          <div class="field__scale"><span id="archMin"></span><span id="archMax"></span></div>
+        </div>
+
+        <div class="field">
+          <div class="field__top">
+            <label for="inCost">Annual storage + license cost per TB</label>
+            <output class="field__val" id="outCost" for="inCost"></output>
+          </div>
+          <input type="range" id="inCost">
+          <div class="field__scale"><span id="costMin"></span><span id="costMax"></span></div>
+        </div>
+
+        <div class="field">
+          <div class="field__top"><label for="inPlatform">Platform</label></div>
+          <select id="inPlatform"></select>
+          <p class="platform-note" id="platformNote"></p>
+        </div>
+      </form>
+
+      <div class="reveal">
+        <div class="results" aria-live="polite">
+          <div class="result result--wide result--split">
+            <div>
+              <p class="result__label">Database size in 5 years &mdash; unarchived</p>
+              <p class="result__val is-muted" id="resUnarch"></p>
+            </div>
+            <div>
+              <p class="result__label">Database size in 5 years &mdash; with archiving</p>
+              <p class="result__val" id="resArch"></p>
+            </div>
+          </div>
+          <div class="result">
+            <p class="result__label">Cumulative 5-year cost avoided</p>
+            <p class="result__val" id="resCost"></p>
+            <p class="result__sub">Storage and licensing on the volume never carried</p>
+          </div>
+          <div class="result">
+            <p class="result__label">Removed from primary storage, year 1</p>
+            <p class="result__val" id="resTb"></p>
+            <p class="result__sub">Moved to archive files or cold storage tiers</p>
+          </div>
+        </div>
+
+        <div class="chart-shell"><canvas id="calcChart" aria-label="Projected database size over five years, with and without active archiving" role="img"></canvas></div>
+        <div class="chart-legend">
+          <span><i class="swatch swatch--muted" aria-hidden="true"></i> Without archiving</span>
+          <span><i class="swatch swatch--gold" aria-hidden="true"></i> With active archiving</span>
+        </div>
+        <p class="calc__note">Directional estimate based on your inputs. Actual archiving potential depends on document type distribution, residence time requirements, and retention obligations &mdash; which is what an assessment determines.</p>
+        <div class="calc__foot">
+          <a class="link-gold" href="#contact">Validate these numbers against your system &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==== SECTION: CALCULATOR — END ==== -->
+
+<!-- ==== SECTION: APPROACH — START ==== -->
+<section class="section section--elev field field--cool seam" id="approach" aria-labelledby="apprH">
+  <div class="wrap">
+    <p class="eyebrow reveal">Approach</p>
+    <h2 class="h2 reveal" id="apprH">Four phases. Every one ends in a deliverable you keep.</h2>
+    <div class="phases" id="approachMount"></div>
+  </div>
+</section>
+<!-- ==== SECTION: APPROACH — END ==== -->
+
+<!-- ==== SECTION: CASE RESULTS — START ==== -->
+<section class="section field field--warm seam" id="results" aria-labelledby="resH">
+  <div class="wrap">
+    <p class="eyebrow reveal">Case results</p>
+    <h2 class="h2 reveal" id="resH">Delivered outcomes, anonymized.</h2>
+    <p class="section-intro reveal">Clients are not named. Descriptors indicate scale and regulatory context only.</p>
+    <div class="grid grid--3" id="casesMount" style="margin-top:var(--s-8)"></div>
+  </div>
+</section>
+<!-- ==== SECTION: CASE RESULTS — END ==== -->
+
+<!-- ==== SECTION: FEDERAL CAPABILITY — START ==== -->
+<section class="section federal" id="federal" aria-labelledby="fedH">
+  <div class="wrap">
+    <p class="eyebrow reveal">Federal capability</p>
+    <h2 class="h2 reveal" id="fedH">Cleared, trained, and experienced in federal retention.</h2>
+    <div class="federal__grid">
+      <div class="reveal">
+        <ul class="caps" id="fedMount"></ul>
+      </div>
+      <div class="reveal">
+        <p class="section-intro" style="margin-top:0">Federal archiving work is governed less by cost than by mandate: retention horizons measured in decades, destruction that must be provable, and records that must remain retrievable long after the originating system is gone.</p>
+        <p class="federal__note">Stated at capability level only. No system architecture, agency identification, or program names are published on this site or discussed before appropriate agreements are in place.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==== SECTION: FEDERAL CAPABILITY — END ==== -->
+
+<!-- ==== SECTION: ABOUT — START ==== -->
+<section class="section field field--cool seam" id="about" aria-labelledby="aboutH">
+  <div class="wrap">
+    <p class="eyebrow reveal">About</p>
+    <h2 class="h2 reveal" id="aboutH">One discipline, for two decades.</h2>
+    <div class="about__body reveal" id="aboutMount"></div>
+    <div class="matrix reveal" id="matrixMount"></div>
+  </div>
+</section>
+<!-- ==== SECTION: ABOUT — END ==== -->
+
+<!-- ==== SECTION: FAQ — START ==== -->
+<section class="section section--elev field field--warm seam" id="faq" aria-labelledby="faqH">
+  <div class="wrap">
+    <p class="eyebrow reveal">Questions</p>
+    <h2 class="h2 reveal" id="faqH">What technical buyers ask first.</h2>
+    <div class="faq reveal" id="faqMount"></div>
+  </div>
+</section>
+<!-- ==== SECTION: FAQ — END ==== -->
+
+<!-- ==== SECTION: CONTACT — START ==== -->
+<section class="section field field--convert" id="contact" aria-labelledby="contactH">
+  <div class="photo-layer photo-layer--band" id="contactPhoto" aria-hidden="true" hidden></div>
+  <div class="wrap">
+    <p class="eyebrow reveal">Contact</p>
+    <h2 class="h2 reveal" id="contactH">Schedule a 30-minute consultation</h2>
+    <div class="contact__grid">
+      <div class="contact__aside reveal">
+        <p>Send a few details about your landscape and I&rsquo;ll come back with an initial read on where the volume is and what&rsquo;s realistically archivable. No cost, no obligation.</p>
+        <p>If it turns out archiving is not your bottleneck, I will tell you that instead of scoping a project around it.</p>
+      </div>
+
+      <div class="reveal">
+        <form class="form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+          <!-- WEB3FORMS KEY --> <input type="hidden" name="access_key" id="w3fKey" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" id="w3fSubject" value="">
+          <input type="hidden" name="from_name" value="Brito Consulting Website">
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+
+          <div class="form__row form__row--2">
+            <div>
+              <label class="lbl" for="fName">Name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="fName" name="name" required autocomplete="name">
+            </div>
+            <div>
+              <label class="lbl" for="fEmail">Work email <span class="req" aria-hidden="true">*</span></label>
+              <input type="email" id="fEmail" name="email" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div>
+              <label class="lbl" for="fCompany">Company <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="fCompany" name="company" required autocomplete="organization">
+            </div>
+          </div>
+
+          <div class="form__row form__row--2">
+            <div>
+              <label class="lbl" for="fSize">Approximate SAP database size</label>
+              <select id="fSize" name="database_size">
+                <option>Under 1 TB</option>
+                <option>1&ndash;5 TB</option>
+                <option>5&ndash;15 TB</option>
+                <option>15 TB+</option>
+                <option selected>Not sure</option>
+              </select>
+            </div>
+            <div>
+              <label class="lbl" for="fSystem">System</label>
+              <select id="fSystem" name="system">
+                <option>SAP ECC</option>
+                <option>SAP S/4HANA</option>
+                <option>SAP ECC on HANA</option>
+                <option>Multiple</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div>
+              <label class="lbl" for="fDriver">What&rsquo;s driving this?</label>
+              <textarea id="fDriver" name="driver" placeholder="S/4HANA migration, HANA memory cost, an upcoming audit, a divestiture, period-end performance&hellip;"></textarea>
+            </div>
+          </div>
+
+          <div class="form__actions">
+            <button class="btn btn--gold btn--block" type="submit" id="submitBtn">Schedule a 30-minute consultation</button>
+            <p class="form__legal">Your details are used to respond to this enquiry only. No newsletter, no list, no third-party sharing.</p>
+          </div>
+          <div class="form__msg form__msg--err" id="formErr" role="alert" hidden></div>
+        </form>
+
+        <div class="success" id="formSuccess" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.5 2.5L16 9.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <h3>Message received.</h3>
+          <p>I read every enquiry personally and reply within one business day. If your timeline is tighter than that, say so in a follow-up and I will prioritise it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==== SECTION: CONTACT — END ==== -->
+</main>
+
+<!-- ==== SECTION: FOOTER — START ==== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <a class="brand" href="#top" aria-label="Brito Consulting Services LLC — back to top">
+          <svg class="brand__mark" viewBox="0 0 32 32" role="img" aria-label="Brito Consulting monogram">
+            <g fill="currentColor">
+              <rect x="4" y="5" width="4.5" height="22" rx="1"></rect>
+              <rect x="4" y="5" width="22" height="4.5" rx="1"></rect>
+              <rect x="4" y="11.5" width="18" height="4.5" rx="1"></rect>
+              <rect x="4" y="18" width="14" height="4.5" rx="1"></rect>
+            </g>
+            <rect x="4" y="24.5" width="10" height="4.5" rx="1" fill="var(--c-gold)"></rect>
+          </svg>
+          <span class="brand__name">Brito Consulting Services LLC</span>
+        </a>
+        <p class="footer__meta">SAP ILM &amp; Data Archiving &middot; United States &middot; Remote nationwide</p>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#services">Services</a>
+        <a href="#calculator">Calculator</a>
+        <a href="#results">Results</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a id="liLink" href="#" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span id="year"></span> Brito Consulting Services LLC. All rights reserved.</p>
+      <p>SAP, S/4HANA, and SAP HANA are trademarks of SAP SE. Brito Consulting Services LLC is an independent consultancy and is not affiliated with or endorsed by SAP SE.</p>
+    </div>
+  </div>
+</footer>
+<!-- ==== SECTION: FOOTER — END ==== -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js" defer></script>
+<script type="application/ld+json" id="ldjson"></script>
+<script>
+/* ============================================================
+   EDIT ZONE — CONFIG
+   Change business content here. Nothing below this block needs
+   editing for routine content updates.
+   ============================================================ */
+const CONFIG = {
+
+  /* --- Company --- */
+  company: {
+    legalName: 'Brito Consulting Services LLC',
+    shortName: 'Brito Consulting',
+    principal: 'Neehal Brito',
+    role: 'Senior SAP ILM & Data Archiving Consultant',
+    areaServed: 'United States',
+    delivery: 'Remote nationwide',
+    url: 'https://britoconsulting.github.io',
+    linkedin: 'https://linkedin.com/in/neehalbrito'
+  },
+
+  /* --- Optional background photography ---------------------------------
+     Leave both '' and the site uses its generated gradient fields only
+     (recommended default: no external requests, no licensing, instant load).
+
+     To add a photo, put a URL or a local path here, e.g.
+       hero: 'images/hero.jpg'
+       hero: 'https://images.unsplash.com/photo-XXXX?auto=format&fit=crop&w=2400&q=70'
+
+     A dark scrim is layered over whatever you supply, so text stays
+     legible and the palette holds regardless of the image.
+
+     WHAT TO PICK — this matters more than whether you use a photo at all.
+     Good:  abstract long-exposure light trails · fibre-optic strands ·
+            server-aisle geometry shot dark and tight · architectural
+            structure/lattice · macro circuitry. Dark, cool, no focal
+            subject, nothing recognisable competing with the headline.
+     Avoid: people in suits shaking hands · glowing "digital brain" or
+            hologram composites · cityscape-at-dusk (that is the exact
+            shot the incumbent SAP consultancies all use) · anything with
+            a face, a logo, or visible screen text.
+     Source: Unsplash or Pexels (free, commercial use, no attribution
+     required). Download and commit to images/ rather than hotlinking if
+     you want the page to keep working when a CDN changes a URL.        */
+  images: {
+    hero: '',
+    contact: ''
+  },
+
+  /* --- Web3Forms: paste your access key here (web3forms.com) --- */
+  web3formsKey: 'YOUR_WEB3FORMS_ACCESS_KEY_HERE',
+  formSubject: 'New consultation request — Brito Consulting website',
+
+  /* --- Hero --- */
+  heroSub: '20+ years in one discipline: SAP ILM (Information Lifecycle Management), data archiving, and DVM (Data Volume Management). HANA footprints reduced, hardware spend deferred, audits passed — across Fortune 500 commercial and federal defense landscapes.',
+
+  /* --- Credibility bar. animate:false renders the text as-is. --- */
+  stats: [
+    { value: 20,  decimals: 0, suffix: '+',   label: 'Years in SAP ILM &amp; archiving' },
+    { value: 100, decimals: 0, suffix: '%',   label: 'Audit pass rate' },
+    { value: 1,   decimals: 0, prefix: '$', suffix: 'M+', label: 'Hardware spend deferred' },
+    { value: 2.5, decimals: 1, suffix: ' TB', label: 'Archived on a single federal program' },
+    { display: 'Active', animate: false,      label: 'Secret clearance' }
+  ],
+
+  industries: [
+    'Defense &amp; Public Sector', 'Retail', 'Automotive',
+    'Pharmaceutical &amp; Life Sciences', 'Energy &amp; Utilities', 'Manufacturing'
+  ],
+
+  /* --- Cost of doing nothing. Qualitative only: never add a
+         statistic here that is not a delivered engagement outcome. --- */
+  costOfInaction: [
+    { fig: 'Compounding', claim: 'Database growth is not linear. It compounds.',
+      body: 'Every uncontrolled year raises the base the next year grows from. On SAP HANA that lands directly on memory sizing and licensing, where the cost of a terabyte is at its highest.' },
+    { fig: 'Blocked', claim: 'Oversized datasets break S/4HANA migration windows.',
+      body: 'Conversion and migration runtimes scale with volume. Data you were never obliged to keep extends the downtime window, and can force a cutover to be rolled back mid-weekend.' },
+    { fig: 'Exposure', claim: 'Records held past their retention period stay discoverable.',
+      body: 'Data retained beyond its legal retention obligation remains subject to audit and e-discovery. Volume you cannot justify keeping is volume you must still produce and defend.' },
+    { fig: 'Liability', claim: 'Personal data never destroyed at end of purpose is standing GDPR and CCPA risk.',
+      body: 'EoP (End-of-Purpose) is a positive obligation, not housekeeping. Without enforced blocking and deletion, the system retains personal data indefinitely by default.' },
+    { fig: 'Irreversible', claim: 'The harder failure is destroying data that was under legal hold.',
+      body: 'Over-retention is a finding. Destroying held records is a sanctionable event no restore corrects, because the destruction was authorised. Hold enforcement must exist before destruction is enabled.' },
+    { fig: 'Overrun', claim: 'Backup and recovery windows expand past the maintenance window.',
+      body: 'Backup duration, restore time and recovery point objectives all track database size. Growth quietly erodes a recovery commitment that was signed off years earlier.' }
+  ],
+
+  services: [
+    { num: '01', title: 'Data Volume Assessment',
+      body: 'Database growth analysis via DB02 (Database Performance Monitor) and TAANA (Table Analysis), table-level growth profiling, archiving potential quantified object by object, and a prioritised roadmap with projected footprint reduction.',
+      outcome: 'You leave with a defensible number: <span>how much is archivable, from where, and in what order</span>.' },
+    { num: '02', title: 'Data Archiving Implementation',
+      body: 'Archiving object configuration and deployment across FI/CO, MM, SD, HR/Payroll and IDOC using ADK (Archive Development Kit) through SARA (Archive Administration) and SARI (Archive Information System). Residence time design, AIS (Archive Information Structure) design for business read-access, write and delete job scheduling, reconciliation and integrity validation.',
+      outcome: 'A smaller live database, with <span>archived data still readable by the business</span>.' },
+    { num: '03', title: 'SAP ILM &amp; Retention Management',
+      body: 'Audit Areas, Policies and Rules under IRM (Information Retention Manager), Legal Hold, Blocking &amp; Deletion, End-of-Purpose checks, and IRF (Information Retrieval Framework). Translating GDPR, CCPA, IRS, FDA/GxP and DoD retention mandates into enforceable system configuration.',
+      outcome: 'Retention stops being a policy document and becomes <span>configuration the system enforces</span>.' },
+    { num: '04', title: 'Decommissioning &amp; Carve-Out',
+      body: 'Legacy SAP retirement into the ILM Retention Warehouse using the Context Data Extractor. Divestiture and carve-out data segregation with separated archive stores per entity.',
+      outcome: 'Legacy data stays <span>legally accessible for 10+ years after the hardware is switched off</span>.' }
+  ],
+
+  approach: [
+    { num: '01', title: 'Assess',
+      body: 'DB02 and TAANA growth analysis, document type profiling, and retention requirement gathering with Legal, Tax and Compliance.',
+      deliverable: 'Quantified archiving potential by object, with a prioritised sequence.' },
+    { num: '02', title: 'Design',
+      body: 'Residence times, archiving object selection, Archive Information Structures for business read-access, and ILM policies and audit areas where retention enforcement is in scope.',
+      deliverable: 'A design document with a rollback path and a test plan per object.' },
+    { num: '03', title: 'Pilot',
+      body: 'Configuration in a non-production system, write and delete execution on a bounded dataset, reconciliation of deletion logs against database tables, and business validation of archived-data read-access.',
+      deliverable: 'A verified archiving ratio and a signed-off test record.' },
+    { num: '04', title: 'Scale &amp; Sustain',
+      body: 'Production rollout, job scheduling and monitoring, error handling and restart procedures, and ongoing growth reporting.',
+      deliverable: 'A repeatable operating model your team runs without me.' }
+  ],
+
+  /* --- Case results. Anonymized descriptors ONLY.
+         Never a client, employer, agency or program name. --- */
+  caseResults: [
+    { industry: 'Fortune 50 home improvement retailer',
+      situation: 'ECC-on-HANA landscape processing 500K+ orders daily.',
+      metric: '~25%', metricLabel: 'HANA memory footprint reduction, deferring $1M+ in hardware upgrades',
+      detail: '5M+ archived documents migrated off legacy OpenText infrastructure with zero data loss. Data Aging and a multi-temperature data strategy for cold data; DART (Data Retention Tool) configured for IRS audit readiness.' },
+
+    { industry: 'U.S. federal defense logistics program',
+      situation: 'Mission-critical logistics databases, classified and unclassified.',
+      metric: '2.5 TB', metricLabel: 'archived under a sustained DVM program, 100% compliant with DoD federal retention mandates',
+      detail: 'Immutable 25+ year retention policies implemented through ILM Audit Areas, Policies and Rules. 15+ business-process-owner workshops from requirements gathering through hypercare.' },
+
+    { industry: 'Global automotive OEM, North America',
+      situation: 'CCPA and GDPR obligations across North American operations on S/4HANA.',
+      metric: '100%', metricLabel: 'compliance achieved',
+      detail: 'ILM Legal Hold and Blocking &amp; Deletion for automated destruction enforcement. Granular Audit Areas, IRM Rules and the Information Retrieval Framework enabling rapid e-discovery and End-of-Purpose checks.' },
+
+    { industry: 'Global technology distributor — legal divestiture',
+      situation: 'Court- and contract-deadline-driven carve-out separating two organisations&rsquo; data.',
+      metric: '100%', metricLabel: 'data-segregation accuracy inside a 4-month window',
+      detail: '30+ archiving objects deployed via ADK across both entities, with custom Archive Information Structures preserving 7+ years of business read-access after separation.' },
+
+    { industry: 'Global pharmaceutical manufacturer',
+      situation: 'Legacy SAP retirement under FDA/GxP validation.',
+      metric: 'Validated', metricLabel: 'decommissioning into a secure ILM Retention Warehouse',
+      detail: 'Fully documented validation protocol and test cases. Retention enforcement automated through Audit Areas, Policies and Rules mapped to healthcare regulatory requirements.' },
+
+    { industry: 'Global building products manufacturer',
+      situation: 'High-growth Controlling tables degrading period-end performance.',
+      metric: '~15%', metricLabel: 'reduction in month-end close processing time',
+      detail: '15+ functional and technical archiving objects across MM, SD, FI and IDOC delivered in 6 months, with automated reconciliation of deletion logs against database tables at 99.9% verified integrity.' }
+  ],
+
+  federalCapabilities: [
+    'Active Secret clearance',
+    'DoD federal records retention mandates',
+    'Classified and unclassified environment experience',
+    'Immutable long-horizon retention policy design (25+ years)',
+    'DISA PII and DISA Cyber Security trained',
+    'Direct experience with federal business process owners and compliance stakeholders'
+  ],
+
+  about: {
+    paragraphs: [
+      'Most SAP consultants list archiving as one skill among twenty. For me it is the entire practice, and has been for over twenty years. Two decades on one discipline buys a kind of pattern recognition you cannot get from a rotation: I have seen how these projects fail, and it is almost never the configuration.',
+      'The technical stack is the easy half — ADK (Archive Development Kit), SARA and SARI, OpenText Archive Server, SAP ArchiveLink, SAP Content Server, DART (Data Retention Tool), and the ILM policy framework on top of them. I am equally comfortable in the other room: the one where Legal, Tax and Compliance decide how long a record must be kept and who is accountable if it is destroyed early.',
+      'Archiving projects fail at exactly that seam. A technically flawless write job is worthless if the residence time was never agreed, and a perfect retention policy is worthless if the business cannot read an archived invoice. I work both sides deliberately, which is why the deliverable at the end of an engagement is an operating model your team runs — not a dependency on me.'
+    ],
+    credentials: '<strong>Credentials:</strong> Records and Information Management certified &middot; Active Secret clearance &middot; DISA PII and DISA Cyber Security trained &middot; PGDBM and BBM in Finance &amp; Marketing.'
+  },
+
+  expertiseMatrix: [
+    { title: 'SAP ILM', items: ['Retention Management','Retention Warehouse','Legal Hold','Blocking &amp; Deletion','End-of-Purpose (EoP)','Audit Areas','Policies &amp; Rules (IRM)','Information Retrieval Framework (IRF)'] },
+    { title: 'Data Archiving', items: ['ADK (Archive Development Kit)','SARA','SARI','Archive Information Structures (AIS)','TAANA','DB02','Data Aging','Multi-temperature data strategy'] },
+    { title: 'Content &amp; Storage', items: ['OpenText Archive Server (IXOS)','SAP ArchiveLink','SAP Content Server','PBS ContentLink','FileNet','IBM CommonStore','SAP S/4HANA','SAP ECC 6.0 / R/3 4.6c+'] },
+    { title: 'Compliance &amp; Tax', items: ['GDPR','CCPA','DoD / federal retention','IRS audit readiness','FDA / GxP validation','DART (Data Retention Tool)','e-Discovery','Legal Case Management'] }
+  ],
+
+  faq: [
+    { q: 'Will archived data still be accessible to the business?',
+      a: 'Yes. Archived records are written to ADK (Archive Development Kit) files and stay readable through SARI (Archive Information System) via Archive Information Structures — index tables built at archive time so users can retrieve documents by the fields they actually search on. Many standard transactions read archived records directly. Access is designed per object during the design phase: what business users must still see determines which structures get built, not the other way around.' },
+    { q: 'How is this different from a database backup?',
+      a: 'A backup is a copy taken for recovery. The data stays in the database and keeps consuming memory, licence and runtime. Archiving removes records from the database: it writes them to separate, self-describing archive files, verifies the write, then deletes the rows from the source tables. The result is a smaller live database plus a permanent, legally readable record of what was removed. A backup shrinks nothing.' },
+    { q: 'How long does a first archiving project take?',
+      a: 'For a first wave, typically three to six months from assessment to production, depending on how many archiving objects are in scope and how quickly Legal, Tax and Compliance can confirm retention requirements. The technical configuration is rarely the constraint. Residence time sign-off, business validation of read-access, and change-control windows set the pace. A single high-volume object moves considerably faster when the retention position is already documented.' },
+    { q: 'Will this survive a tax or regulatory audit?',
+      a: 'That is what the design is for. Archived data is retained, not discarded. Residence time controls when a record leaves the database; retention period controls when it may legally be destroyed. The two are set independently, and conflating them is the most common design error I am called in to correct. For tax specifically, DART (Data Retention Tool) extracts remain available for auditor requests, and SAP ILM records the policy applied at the point of destruction as an audit trail.' },
+    { q: 'What happens to data under legal hold?',
+      a: 'Legal hold in SAP ILM suspends destruction for the records it covers, overriding the retention rule that would otherwise permit deletion — even after the retention period has expired. Holds are set and released through Legal Case Management and are enforced at the point of destruction, not by convention or manual process. The hard failure mode in this discipline is not keeping too much data; it is destroying data that was under hold. Hold enforcement is designed before any destruction run is enabled.' },
+    { q: 'Do we need SAP ILM, or is data archiving enough?',
+      a: 'Archiving alone solves volume: it removes data from the database and keeps it readable. It does not enforce when data must be destroyed. If you carry GDPR or CCPA end-of-purpose obligations, statutory retention you must be able to prove, legal hold, or a system you intend to decommission and still answer questions about, you need ILM retention policies, audit areas and destruction capability. Where the driver is purely cost and performance, archiving alone is often the correct scope — and the cheaper one.' }
+  ],
+
+  /* --- Calculator: bounds, defaults, horizon --- */
+  calculator: {
+    years: 5,
+    size:    { min: 0.5,  max: 50,    step: 0.5, def: 6 },      /* TB */
+    growth:  { min: 5,    max: 40,    step: 1,   def: 18 },     /* % per year */
+    arch:    { min: 10,   max: 70,    step: 5,   def: 40 },     /* % archivable */
+    cost:    { min: 1000, max: 10000, step: 500, def: 4000 },   /* USD per TB per year */
+    platforms: [
+      { label: 'SAP ECC', note: 'On classic SAP ECC the return shows up as disk, backup runtime and transaction performance. Cost per terabyte is usually your lowest input — set it accordingly.' },
+      { label: 'SAP S/4HANA', note: 'On SAP S/4HANA the archived volume is memory-resident data you stop paying for, so cost per terabyte is typically your highest input. Data Aging can complement archiving for warm data.' },
+      { label: 'SAP ECC on HANA', note: 'On SAP ECC running on HANA the same in-memory economics apply as S/4HANA, with one addition: archiving before conversion directly shortens the S/4HANA migration downtime window.' }
+    ]
+  }
+};
+
+/* ============================================================
+   Below this line: rendering, calculator engine, and behaviour.
+   Routine content changes should not require edits past here.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var $  = function (s, r) { return (r || document).querySelector(s); };
+  var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  var nfInt = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+  var nfUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  function tb(n) { return (Math.round(n * 10) / 10).toFixed(1) + ' TB'; }
+
+  function mount(id, html) { var el = document.getElementById(id); if (el) el.innerHTML = html; }
+
+  /* Reveal a .photo-layer only when CONFIG supplies a source. */
+  function applyPhoto(id, src) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (!src) { el.hidden = true; return; }
+    el.style.setProperty('--photo', 'url("' + String(src).replace(/"/g, '%22') + '")');
+    el.hidden = false;
+  }
+
+  /* ---------- RENDER: content sections from CONFIG ---------- */
+  function render() {
+    var C = CONFIG;
+
+    $('#heroSub').textContent = C.heroSub;
+
+    mount('statsMount', C.stats.map(function (s, i) {
+      var initial = (s.animate === false || reduceMotion)
+        ? (s.display || ((s.prefix || '') + s.value.toFixed(s.decimals || 0) + (s.suffix || '')))
+        : (s.display || ((s.prefix || '') + '0' + (s.suffix || '')));
+      return '<li class="stat reveal">'
+        + '<p class="stat__val" data-stat="' + i + '">' + initial + '</p>'
+        + '<p class="stat__label">' + s.label + '</p></li>';
+    }).join(''));
+
+    mount('industriesMount', C.industries.map(function (n) { return '<li>' + n + '</li>'; }).join(''));
+
+    mount('costMount', C.costOfInaction.map(function (c) {
+      return '<article class="card reveal">'
+        + '<p class="card__fig">' + c.fig + '</p>'
+        + '<h3 class="card__claim">' + c.claim + '</h3>'
+        + '<p class="card__body">' + c.body + '</p></article>';
+    }).join(''));
+
+    mount('servicesMount', C.services.map(function (s) {
+      return '<article class="card svc reveal">'
+        + '<span class="svc__num" aria-hidden="true">' + s.num + '</span>'
+        + '<h3 class="svc__title">' + s.title + '</h3>'
+        + '<p class="svc__body">' + s.body + '</p>'
+        + '<p class="svc__outcome">' + s.outcome + '</p></article>';
+    }).join(''));
+
+    mount('approachMount', C.approach.map(function (p) {
+      return '<article class="phase reveal">'
+        + '<span class="phase__dot" aria-hidden="true"></span>'
+        + '<p class="phase__num">' + p.num + '</p>'
+        + '<h3 class="phase__title">' + p.title + '</h3>'
+        + '<p class="phase__body">' + p.body + '</p>'
+        + '<p class="phase__deliv"><b>Deliverable:</b> ' + p.deliverable + '</p></article>';
+    }).join(''));
+
+    mount('casesMount', C.caseResults.map(function (c) {
+      return '<article class="card reveal">'
+        + '<h3 class="case__ind">' + c.industry + '</h3>'
+        + '<p class="case__sit">' + c.situation + '</p>'
+        + '<p class="case__metric"><b>' + c.metric + '</b><span>' + c.metricLabel + '</span></p>'
+        + '<p class="case__detail">' + c.detail + '</p></article>';
+    }).join(''));
+
+    mount('fedMount', C.federalCapabilities.map(function (t) {
+      return '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">'
+        + '<path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
+        + '<span>' + t + '</span></li>';
+    }).join(''));
+
+    mount('aboutMount',
+      C.about.paragraphs.map(function (p) { return '<p>' + p + '</p>'; }).join('')
+      + '<p class="creds">' + C.about.credentials + '</p>');
+
+    mount('matrixMount', C.expertiseMatrix.map(function (col) {
+      return '<div class="matrix__col"><h3>' + col.title + '</h3><ul>'
+        + col.items.map(function (i) { return '<li>' + i + '</li>'; }).join('')
+        + '</ul></div>';
+    }).join(''));
+
+    mount('faqMount', C.faq.map(function (f, i) {
+      return '<div class="faq__item">'
+        + '<h3><button class="faq__q" type="button" id="faqBtn' + i + '" aria-expanded="false" aria-controls="faqPanel' + i + '">'
+        + '<span>' + f.q + '</span><span class="faq__icon" aria-hidden="true"></span></button></h3>'
+        + '<div class="faq__a" id="faqPanel' + i + '" role="region" aria-labelledby="faqBtn' + i + '" hidden><p>' + f.a + '</p></div>'
+        + '</div>';
+    }).join(''));
+
+    /* Optional background photos — absent unless CONFIG.images is filled in */
+    applyPhoto('heroPhoto', (C.images || {}).hero);
+    applyPhoto('contactPhoto', (C.images || {}).contact);
+
+    /* Contact + footer values that come from CONFIG */
+    $('#w3fKey').value = CONFIG.web3formsKey;
+    $('#w3fSubject').value = CONFIG.formSubject;
+    $('#liLink').href = CONFIG.company.linkedin;
+    $('#year').textContent = new Date().getFullYear();
+
+    /* JSON-LD */
+    $('#ldjson').textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: CONFIG.company.legalName,
+      url: CONFIG.company.url,
+      description: 'Independent SAP Information Lifecycle Management (ILM) and data archiving consultancy specialising in retention management, ADK archiving, Data Volume Management and SAP system decommissioning.',
+      areaServed: { '@type': 'Country', name: CONFIG.company.areaServed },
+      serviceType: ['SAP Information Lifecycle Management','SAP Data Archiving','SAP Data Volume Management','SAP System Decommissioning'],
+      founder: { '@type': 'Person', name: CONFIG.company.principal, jobTitle: CONFIG.company.role },
+      sameAs: [CONFIG.company.linkedin],
+      knowsAbout: ['SAP ILM','SAP Data Archiving','ADK','SARA','SARI','Archive Information Structures','Retention Warehouse','Legal Hold','GDPR','CCPA','DART','SAP S/4HANA']
+    });
+  }
+
+  /* ============================================================
+     CALCULATOR ENGINE
+     unarchived[y] = size * (1 + growth)^y
+     archived[y]   = size * (1 - archivable) * (1 + growth)^y
+     costAvoided   = SUM(y=1..YEARS) (unarchived[y] - archived[y]) * costPerTB
+     tbRemovedYear1 = size * archivable
+     ============================================================ */
+  var chart = null;
+
+  function computeCalc(size, growthPct, archPct, costPerTB, years) {
+    var g = growthPct / 100, a = archPct / 100;
+    var unarchived = [], archived = [], costAvoided = 0, y;
+    for (y = 0; y <= years; y++) {
+      var u = size * Math.pow(1 + g, y);
+      var ar = size * (1 - a) * Math.pow(1 + g, y);
+      unarchived.push(u); archived.push(ar);
+      if (y >= 1) costAvoided += (u - ar) * costPerTB;
+    }
+    return {
+      unarchived: unarchived,
+      archived: archived,
+      costAvoided: costAvoided,
+      tbRemovedYear1: size * a
+    };
+  }
+
+  function cssVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  function initCalculator() {
+    var K = CONFIG.calculator;
+    var pairs = [
+      ['inSize', K.size, 'outSize', 'sizeMin', 'sizeMax', function (v) { return tb(v); }],
+      ['inGrowth', K.growth, 'outGrowth', 'growthMin', 'growthMax', function (v) { return v + '%'; }],
+      ['inArch', K.arch, 'outArch', 'archMin', 'archMax', function (v) { return v + '%'; }],
+      ['inCost', K.cost, 'outCost', 'costMin', 'costMax', function (v) { return nfUSD.format(v) + ' / TB'; }]
+    ];
+
+    pairs.forEach(function (p) {
+      var el = $('#' + p[0]), b = p[1];
+      el.min = b.min; el.max = b.max; el.step = b.step; el.value = b.def;
+      $('#' + p[3]).textContent = p[5](b.min);
+      $('#' + p[4]).textContent = p[5](b.max);
+    });
+
+    var sel = $('#inPlatform');
+    sel.innerHTML = K.platforms.map(function (p, i) {
+      return '<option value="' + i + '"' + (i === 1 ? ' selected' : '') + '>' + p.label + '</option>';
+    }).join('');
+
+    function update() {
+      var size = parseFloat($('#inSize').value);
+      var growth = parseFloat($('#inGrowth').value);
+      var arch = parseFloat($('#inArch').value);
+      var cost = parseFloat($('#inCost').value);
+
+      pairs.forEach(function (p) { $('#' + p[2]).textContent = p[5](parseFloat($('#' + p[0]).value)); });
+      $('#platformNote').textContent = CONFIG.calculator.platforms[parseInt(sel.value, 10)].note;
+
+      var r = computeCalc(size, growth, arch, cost, K.years);
+      $('#resUnarch').textContent = tb(r.unarchived[K.years]);
+      $('#resArch').textContent   = tb(r.archived[K.years]);
+      $('#resCost').textContent   = nfUSD.format(r.costAvoided);
+      $('#resTb').textContent     = tb(r.tbRemovedYear1);
+
+      drawChart(r);
+    }
+
+    function drawChart(r) {
+      var canvas = $('#calcChart');
+      if (typeof Chart === 'undefined' || !canvas) return;
+      var labels = [];
+      for (var y = 0; y <= K.years; y++) { labels.push(y === 0 ? 'Today' : 'Year ' + y); }
+
+      if (chart) {
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = r.unarchived;
+        chart.data.datasets[1].data = r.archived;
+        chart.update(reduceMotion ? 'none' : undefined);
+        return;
+      }
+
+      var gold = cssVar('--c-chart-gold'), muted = cssVar('--c-chart-muted');
+      var grid = cssVar('--c-grid'), fill = cssVar('--c-chart-fill');
+      var ink = cssVar('--c-text'), panel = cssVar('--c-surface-sunk');
+      /* axis furniture stays neutral — --c-chart-muted is a SERIES colour */
+      var axis = cssVar('--c-muted');
+
+      chart = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            { label: 'Without archiving', data: r.unarchived, borderColor: muted, backgroundColor: muted,
+              borderWidth: 2.5, tension: 0.35, pointRadius: 3, pointHoverRadius: 6, fill: false, borderDash: [6, 5] },
+            { label: 'With active archiving', data: r.archived, borderColor: gold, backgroundColor: fill,
+              borderWidth: 2.5, tension: 0.35, pointRadius: 3, pointHoverRadius: 6, fill: 'origin' }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: reduceMotion ? false : { duration: 500 },
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: panel, titleColor: ink, bodyColor: ink,
+              borderColor: grid, borderWidth: 1, padding: 12, displayColors: true,
+              callbacks: { label: function (c) { return c.dataset.label + ': ' + tb(c.parsed.y); } }
+            }
+          },
+          scales: {
+            x: { grid: { color: grid }, border: { display: false }, ticks: { color: axis, font: { size: 11 } } },
+            y: { beginAtZero: true, grid: { color: grid }, border: { display: false },
+                 ticks: { color: axis, font: { size: 11 }, callback: function (v) { return nfInt.format(v) + ' TB'; } } }
+          }
+        }
+      });
+    }
+
+    $('#calcForm').addEventListener('input', update);
+    $('#calcForm').addEventListener('change', update);
+    $('#calcForm').addEventListener('submit', function (e) { e.preventDefault(); });
+    update();
+  }
+
+  /* ---------- NAV: mobile menu ---------- */
+  function initNav() {
+    var burger = $('#burger'), menu = $('#mobileMenu');
+    function close() { menu.hidden = true; burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu'); }
+    burger.addEventListener('click', function () {
+      var open = burger.getAttribute('aria-expanded') === 'true';
+      if (open) { close(); } else {
+        menu.hidden = false; burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Close menu');
+      }
+    });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 1024) close(); });
+  }
+
+  /* ---------- FAQ accordion ---------- */
+  function initFaq() {
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.faq__q'));
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        btns.forEach(function (b) {
+          b.setAttribute('aria-expanded', 'false');
+          document.getElementById(b.getAttribute('aria-controls')).hidden = true;
+        });
+        if (!open) {
+          btn.setAttribute('aria-expanded', 'true');
+          document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
+        }
+      });
+    });
+  }
+
+  /* ---------- CONTACT FORM (Web3Forms, no redirect) ---------- */
+  function initForm() {
+    var form = $('#contactForm'), btn = $('#submitBtn'), err = $('#formErr'), ok = $('#formSuccess');
+    var original = btn.textContent; /* captured once, so a retry always restores the real label */
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.hidden = true;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data && data.success) {
+            form.hidden = true;
+            ok.hidden = false;
+            ok.setAttribute('tabindex', '-1');
+            ok.focus();
+          } else {
+            throw new Error((data && data.message) || 'Submission failed');
+          }
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = original;
+          err.hidden = false;
+          err.textContent = 'That did not send. Please try again — or reach out via the LinkedIn link in the footer if it keeps failing.';
+        });
+    });
+  }
+
+  /* ---------- MOTION: reveal + count-up ---------- */
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function countUp(el, spec) {
+    var dur = 1300, start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var v = spec.value * easeOutCubic(p);
+      el.textContent = (spec.prefix || '') + v.toFixed(spec.decimals || 0) + (spec.suffix || '');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function finalizeStat(el, animate) {
+    var stat = el.querySelector('[data-stat]');
+    if (!stat || stat.dataset.done) return;
+    stat.dataset.done = '1';
+    var s = CONFIG.stats[parseInt(stat.getAttribute('data-stat'), 10)];
+    if (s.animate === false || !animate) {
+      stat.textContent = s.display || ((s.prefix || '') + s.value.toFixed(s.decimals || 0) + (s.suffix || ''));
+    } else {
+      countUp(stat, s);
+    }
+  }
+
+  /* Reveal one element. delay = stagger in ms. */
+  function activate(el, delay, animate) {
+    if (el.classList.contains('is-in')) return;
+    if (delay) { setTimeout(function () { el.classList.add('is-in'); }, delay); }
+    else { el.classList.add('is-in'); }
+    finalizeStat(el, animate !== false);
+  }
+
+  /* Safety net: anything already in or above the viewport is shown immediately.
+     Needed because a deep link (e.g. /#faq) scrolls before CONFIG has rendered,
+     so those elements may never trigger an intersection callback. */
+  function revealInView() {
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function (el) {
+      if (el.classList.contains('is-in')) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) { activate(el, 0, true); }
+      else if (r.bottom <= 0) { activate(el, 0, false); }
+    });
+  }
+
+  /* Re-apply the URL hash after render, since the target had no height at parse time. */
+  function applyHash() {
+    if (!location.hash) return;
+    var t;
+    try { t = document.querySelector(location.hash); } catch (e) { return; }
+    if (!t) return;
+    var html = document.documentElement, prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    t.scrollIntoView();
+    html.style.scrollBehavior = prev;
+  }
+
+  function initMotion() {
+    var revealables = document.querySelectorAll('.reveal');
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(revealables, function (el) { el.classList.add('is-in'); finalizeStat(el, false); });
+      applyHash();
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        var sibs = el.parentElement ? Array.prototype.slice.call(el.parentElement.children).filter(function (c) { return c.classList.contains('reveal'); }) : [el];
+        var idx = Math.max(0, sibs.indexOf(el));
+        activate(el, Math.min(idx, 8) * 60, true);
+        io.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+    Array.prototype.forEach.call(revealables, function (el) { io.observe(el); });
+
+    requestAnimationFrame(function () { applyHash(); revealInView(); });
+    window.addEventListener('load', function () { applyHash(); revealInView(); });
+  }
+
+  /* ---------- BOOT ---------- */
+  function boot() {
+    render();
+    initNav();
+    initFaq();
+    initForm();
+    initCalculator();
+    initMotion();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+
+</script>
+
+</body>
+</html>
