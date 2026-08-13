@@ -6,7 +6,12 @@ Management) and data archiving practice.
 - **Live URL:** https://britoconsulting.github.io
 - **Repo:** `britoconsulting/britoconsulting.github.io`
 - **Stack:** one `index.html`. No build step, no npm, no framework.
-- **External dependencies:** Google Fonts (Inter) and Chart.js **4.5.0** from cdnjs. Nothing else.
+- **External dependencies:** Google Fonts (Archivo, Inter, JetBrains Mono — one
+  request) and Chart.js **4.5.0** from cdnjs. Nothing else.
+- **Measured weight:** 317 KB excluding fonts (budget: 500 KB), 179 KB of fonts,
+  497 KB transferred in total across 6 requests. Chart.js is 208 KB of that — by
+  far the largest single asset. Time to interactive on a throttled 4G profile
+  (9 Mbit/s, 150 ms RTT, 4× CPU slowdown) is **0.62 s**.
 
 **Previewing changes locally.** Double-clicking the file works, but serve it over HTTP
 if you want an exact match to production:
@@ -117,9 +122,21 @@ large text, icons, borders and fills only. For small text use `--c-blue-text`
 comment above the palette in `:root`.
 
 The gradient fields lighten the surface under text, so `--c-blue-text` and
-`--c-muted` are set one step lighter than the raw Tailwind values. That keeps
-them at 5.1:1 or better even at the brightest point of a field, where the naive
-values fell to 4.4:1.
+`--c-muted` are set one step lighter than the raw Tailwind values.
+
+**Field peaks must be measured, not assumed.** An earlier version of this file
+claimed the fields held 5.1:1 "or better" at their brightest point. That was not
+true of the hero. `--field-hero` opened with `rgba(96,165,250,0.50)` centred at
+`4% -6%`, which composited to `#2E4E7B` — exactly where the eyebrow and `h1` sit
+— and dropped `--c-muted` to **3.83:1** and `--c-blue-text` to **3.90:1**, both
+failing AA for normal text. Peak alpha on every field is now capped (0.20 on the
+hero), and all 62 text/background pairings are measured programmatically at the
+brightest point of the compositing stack rather than on the flat base colour.
+The worst pairing on the page is now 5.78:1 for normal text and 4.54:1 for large.
+
+If you change a `--field-*` value, re-measure. Compositing several soft radial
+gradients makes the peak much brighter than any single layer's alpha suggests,
+and eyeballing it in a browser will not catch a 3.8:1.
 
 **Backgrounds are generated, not photographed.** Each section gets a soft
 gradient "field" (`--field-hero`, `--field-cool`, `--field-warm`, `--field-focus`,
@@ -205,6 +222,8 @@ Everything is in `index.html`, in this order:
 | Where | What |
 |---|---|
 | `<head>` | Title, meta description, Open Graph / Twitter cards, canonical, inline SVG favicon, Google Fonts |
+| `<style>` → type | Three families, one job each. **Archivo** (variable, `wdth` + `wght`) is the display cut — headlines, key figures, case metrics. **Inter** is body copy. **JetBrains Mono** is the technical voice — eyebrows, section numerals, labels, scale ticks, engineering detail lines. Never set body copy in the display face or headlines in mono. |
+| `<style>` → motion | One easing curve (`--ease`), three durations (`--t-fast` 140ms / `--t-med` 280ms / `--t-slow` 560ms). Nothing may exceed `--t-slow`. Reveals fire once and are unobserved. `prefers-reduced-motion` disables every transform and scroll effect outright. |
 | `<!-- MAINTENANCE NOTES -->` | Orientation block — read it first |
 | `<style>` → `:root` | Every colour, type size, spacing step, radius, shadow and transition. No hardcoded colours exist below this block. |
 | `<style>` → rest | Base, components, then breakpoints at 640 / 768 / 1024 / 1280, then `prefers-reduced-motion` |
