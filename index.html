@@ -31,82 +31,11 @@
 </head>
 
 <!--
-  ============================================================
-  MAINTENANCE NOTES — read this first
-  ============================================================
-  This site is ONE self-contained file. No build step, no npm,
-  no framework. Edit it, commit it, GitHub Pages serves it.
-
-  1. WHERE CONFIG LIVES
-     Open the single SCRIPT block at the bottom of the page.
-     The very first thing in it is `const CONFIG = { ... }`,
-     wrapped in an "EDIT ZONE — CONFIG" banner comment.
-     Essentially all business content on this page is data in
-     CONFIG and is rendered into the HTML at runtime. You should
-     almost never need to touch the HTML markup itself.
-
-  2. WEB3FORMS ACCESS KEY
-     Two places, both must match:
-       a) CONFIG.web3formsKey
-       b) the hidden input marked with the "WEB3FORMS KEY" comment
-          in the CONTACT section (the script overwrites it from CONFIG
-          on load, so (a) is the authoritative one).
-     Get a free key at web3forms.com; it is bound to the
-     destination email address, which is NOT stored in this file.
-
-  3. HOW TO ADD A CASE RESULT
-     Append an object to CONFIG.caseResults:
-       { industry:'...', situation:'...', metric:'25%',
-         metricLabel:'...', detail:'...' }
-     Never name a client, employer, agency, or program.
-
-  4. HOW TO ADD AN FAQ ITEM
-     Append { q:'...', a:'...' } to CONFIG.faq. The accordion
-     markup, ARIA wiring, and keyboard handling are generated.
-
-  5. HOW TO CHANGE THE PALETTE / TYPE / SPACING
-     Every color, size, radius, shadow and transition is a CSS
-     custom property in :root at the top of the STYLE block. There are no
-     hardcoded color values anywhere below :root. Rebranding is a
-     :root edit and nothing else.
-
-  6. WHERE THE CALCULATOR MATH LIVES
-     Function `computeCalc()` in the script, directly under the
-     "CALCULATOR ENGINE" banner. Formulas:
-       unarchived[y] = size * (1 + growth)^y
-       archived[y]   = size * (1 - archivable) * (1 + growth)^y
-       costAvoided   = SUM(y=1..YEARS) (unarchived[y]-archived[y]) * costPerTB
-       tbRemovedYear1 = size * archivable
-     Slider bounds/defaults are in CONFIG.calculator.
-
-  7. FINDING A SECTION
-     Every section sits between a pair of HTML comments reading
-       ==== SECTION: NAME — START ====
-       ==== SECTION: NAME — END ====
-     Grep for "SECTION: CALCULATOR" to jump straight to it
-     instead of loading the whole file.
-
-  8. TYPE SYSTEM
-     Three families, each with one job. ARCHIVO (variable, wdth +
-     wght axes) is the display cut — headlines, key figures,
-     metrics. INTER is body copy. JETBRAINS MONO is the technical
-     voice — eyebrows, section numerals, labels, scale ticks and
-     the engineering detail lines. Do not set body copy in the
-     display face or headlines in mono.
-
-  9. MOTION SPEC — hold to it
-     ONE easing curve (--ease). THREE durations: --t-fast 140ms,
-     --t-med 280ms, --t-slow 560ms. Nothing on this page may run
-     longer than --t-slow. Scroll reveals fire ONCE and are
-     unobserved; they never re-fire on scroll-back. Every
-     transform and scroll effect is disabled outright under
-     prefers-reduced-motion.
-
-  NOTE TO WHOEVER EDITS THIS BLOCK: it is an HTML comment. Never
-  write a closing-comment sequence, an opening STYLE tag, or an
-  opening SCRIPT tag inside it. Any of those terminate or hijack
-  the comment and dump this text onto the live page.
-  ============================================================
+  All page content is data in the CONFIG object at the top of the
+  script block below. Colours, type and spacing are CSS custom
+  properties in :root. Sections are delimited by
+  "==== SECTION: NAME - START/END ====" comments.
+  Editing notes are kept outside this repository.
 -->
 
 <style>
