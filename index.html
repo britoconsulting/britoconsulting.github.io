@@ -4,17 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0A1020">
-<title>Brito Consulting Services LLC — SAP ILM &amp; Data Archiving Consultant</title>
-<meta name="description" content="Independent SAP Information Lifecycle Management and data archiving consultancy. 20+ years in one discipline: ILM retention management, ADK archiving, Data Volume Management, and system decommissioning across commercial and federal SAP landscapes.">
-<link rel="canonical" href="https://britoconsulting.github.io">
+<title>Brito Consulting · SAP ILM &amp; Data Archiving | Neehal Brito</title>
+<meta name="description" content="Independent SAP Information Lifecycle Management and data archiving consultancy. 17+ years in one discipline: ILM retention management, ADK archiving, Data Volume Management, and system decommissioning across commercial and federal SAP landscapes.">
+<link rel="canonical" href="https://www.britoconsulting.workers.dev/">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://britoconsulting.github.io">
+<meta property="og:url" content="https://www.britoconsulting.workers.dev/">
 <meta property="og:site_name" content="Brito Consulting Services LLC">
-<meta property="og:title" content="Brito Consulting Services LLC — SAP ILM &amp; Data Archiving">
-<meta property="og:description" content="20+ years dedicated exclusively to SAP ILM, data archiving, Data Volume Management, and decommissioning. Nationwide, remote. Commercial and federal.">
+<meta property="og:title" content="Brito Consulting Services LLC · SAP ILM &amp; Data Archiving">
+<meta property="og:description" content="17+ years dedicated exclusively to SAP ILM, data archiving, Data Volume Management, and decommissioning. Nationwide, remote. Commercial and federal.">
+<!-- og:image points at an asset that is not committed yet. Create
+     images/og-card.png at 1200x630 and commit it; until then social
+     cards fall back to the platform default rather than a broken image. -->
+<meta property="og:image" content="https://www.britoconsulting.workers.dev/images/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Brito Consulting Services LLC · SAP ILM and data archiving">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Brito Consulting Services LLC — SAP ILM &amp; Data Archiving">
-<meta name="twitter:description" content="20+ years dedicated exclusively to SAP ILM, data archiving, Data Volume Management, and decommissioning. Nationwide, remote. Commercial and federal.">
+<meta name="twitter:image" content="https://www.britoconsulting.workers.dev/images/og-card.png">
+<meta name="twitter:title" content="Brito Consulting Services LLC · SAP ILM &amp; Data Archiving">
+<meta name="twitter:description" content="17+ years dedicated exclusively to SAP ILM, data archiving, Data Volume Management, and decommissioning. Nationwide, remote. Commercial and federal.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='6'%20fill='%230A1020'/%3E%3Cg%20fill='%23F8FAFC'%3E%3Crect%20x='4'%20y='5'%20width='4.5'%20height='22'%20rx='1'/%3E%3Crect%20x='4'%20y='5'%20width='17'%20height='4.5'%20rx='1'/%3E%3Crect%20x='16.5'%20y='5'%20width='4.5'%20height='13.25'%20rx='1'/%3E%3Crect%20x='4'%20y='13.75'%20width='19'%20height='4.5'%20rx='1'/%3E%3Crect%20x='18.5'%20y='13.75'%20width='4.5'%20height='13.25'%20rx='1'/%3E%3C/g%3E%3Crect%20x='4'%20y='22.5'%20width='14.5'%20height='4.5'%20rx='1'%20fill='%23FBBF24'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +40,7 @@
 
 <!--
   All page content is data in the CONFIG object at the top of the
-  script block below. Colours, type and spacing are CSS custom
+  script block below. Colors, type and spacing are CSS custom
   properties in :root. Sections are delimited by
   "==== SECTION: NAME - START/END ====" comments.
   Editing notes are kept outside this repository.
@@ -51,7 +59,7 @@
 
      MEASURED CONTRAST. Every ratio below is computed, not estimated, at
      the BRIGHTEST point of the gradient field that sits over each surface
-     — not on the flat base colour. Ratios on the flat bases:
+     and not on the flat base color. Ratios on the flat bases:
        --c-text       18.1 / 15.3   (navy / navy-elev)
        --c-gold       11.4 /  8.8   AA anywhere
        --c-blue-text   7.5 /  6.3   AA anywhere — use for SMALL text
@@ -67,7 +75,7 @@
      The full 62-pairing table is reproduced in README.
 
      HERO FIELD — READ BEFORE EDITING. The previous --field-hero opened
-     with rgba(96,165,250,0.50) centred at 4% -6%, which lifted the
+     with rgba(96,165,250,0.50) centered at 4% -6%, which lifted the
      surface to #2E4E7B exactly where the eyebrow and H1 sit and dropped
      --c-muted to 3.83:1 — a real AA failure. Peak alpha on the hero
      field is now capped at 0.20. If you raise it, re-measure at the
@@ -113,7 +121,7 @@
 
   /* --- Generated background fields (no image files, no licensing) ---
      Each is a stack of soft radial gradients. If you add a photo via
-     CONFIG.images, it is layered UNDER these and over the base colour,
+     CONFIG.images, it is layered UNDER these and over the base color,
      so the palette stays consistent whether or not a photo is present.
      Peak alphas are deliberately capped — see the contrast note above. */
   --field-hero:
@@ -349,7 +357,7 @@ button{font:inherit;color:inherit}
 .btn--ghost:hover{border-color:var(--c-gold-line);color:var(--c-gold)}
 .btn--nav{padding:11px 18px;border-color:var(--c-gold-line);color:var(--c-gold)}
 .btn--nav:hover{background:var(--c-gold-soft)}
-.btn--block{width:100%}
+.btn--block{width:100%;white-space:normal}
 .link-gold{
   font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:0.06em;
   color:var(--c-gold);display:inline-flex;gap:var(--s-3);align-items:center;
@@ -802,6 +810,38 @@ textarea{resize:vertical;min-height:120px}
 .about__body p{color:var(--c-muted);line-height:var(--lh-body);max-width:var(--measure)}
 .about__body p+p{margin-top:var(--s-5)}
 .about__body strong{color:var(--c-text);font-weight:600}
+/* The principal bio is third person and the practice paragraphs below it are
+   first person. The step down in size and the spectrum rule are what mark the
+   change of voice, so the two blocks do not read as one confused narrator. */
+.about__body .about__lead{color:var(--c-text);font-size:var(--fs-lead);line-height:1.55}
+.about__body .about__lead+.about__lead{margin-top:var(--s-4)}
+.about__rule{
+  height:var(--bd-thin);border:0;margin:var(--s-7) 0;
+  background:var(--rule-spectrum);max-width:var(--measure);
+}
+/* Headshot slot. Fixed 4:5 frame so the section height does not move when a
+   real photograph lands; the monogram is the placeholder, not empty space. */
+.about__side{display:grid;gap:var(--s-7);align-content:start}
+.portrait{margin:0;display:grid;gap:var(--s-5);max-width:18rem}
+.portrait__frame{
+  aspect-ratio:4/5;display:grid;place-items:center;overflow:hidden;
+  background:var(--c-navy-elev);
+  border:var(--bd-thin) solid var(--c-hairline-strong);
+  background-size:cover;background-position:center;
+}
+.portrait__frame.has-photo .portrait__mark{display:none}
+.portrait__mark{width:46%;height:auto;color:var(--c-muted);opacity:0.42}
+.portrait__cap b{
+  display:block;font-family:var(--f-display);font-weight:600;
+  font-variation-settings:'wdth' var(--wd-norm);
+  font-size:var(--fs-md);color:var(--c-text);letter-spacing:var(--tr-head);
+}
+.portrait__cap span{
+  display:block;margin-top:var(--s-2);
+  font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.6;
+  letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
+}
+.creds strong{font-weight:600}
 .creds{
   margin-top:var(--s-7);padding:var(--s-5);
   border-left:var(--bd-thick) solid var(--c-gold);
@@ -961,6 +1001,9 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
   .burger{display:none}
   .menu{display:none!important}
   .nav__links,.nav__cta{display:flex}
+  /* Six links plus the CTA do not fit at 48px between them; one step down on
+     the gap holds the whole bar inside 1024. Restored to --s-7 at 1280. */
+  .nav__links{gap:var(--s-6)}
   /* Base values are tuned for 390, where vertical space is the scarce
      resource. Desktop gets the room back here. */
   .hero{padding-block:var(--s-8) var(--s-7)}
@@ -986,8 +1029,14 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
   .grid--3 .cell:nth-child(2n+1){border-left:var(--bd-thin) solid var(--c-hairline)}
   .grid--3 .cell:nth-child(3n+1){border-left:0}
   .calc{grid-template-columns:minmax(300px,0.8fr) 1.2fr}
-  .matrix{grid-template-columns:repeat(4,1fr)}
-  .about__grid{grid-template-columns:minmax(0,1fr) minmax(0,0.85fr);gap:var(--s-9)}
+  /* Five columns only once there is width for them; three above 1024 keeps
+     every column past the 120px floor where the mono list starts to shred. */
+  .matrix{grid-template-columns:repeat(3,1fr)}
+  .about__grid{grid-template-columns:minmax(0,1fr) minmax(0,20rem);gap:var(--s-9)}
+  .portrait{max-width:none}
+  /* The creds panel joins the portrait in the right track, so the column does
+     not run out of content two thirds of the way down the body copy. */
+  .about__side .creds{margin-top:0}
   .contact__grid{grid-template-columns:0.8fr 1.2fr;gap:var(--s-9)}
   .shead{grid-template-columns:minmax(0,1fr) minmax(0,26rem);align-items:end;column-gap:var(--s-8)}
   .shead__lead{grid-column:1/-1}
@@ -1012,6 +1061,8 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 @media (min-width:1280px){
   .chart-shell{height:380px}
   .tiles{grid-template-columns:repeat(4,1fr)}
+  .matrix{grid-template-columns:repeat(5,1fr)}
+  .nav__links{gap:var(--s-7)}
 }
 
 /* ============================================================
@@ -1043,7 +1094,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 <!-- ==== SECTION: NAV — START ==== -->
 <header class="nav">
   <div class="wrap nav__inner">
-    <a class="brand" href="#top" aria-label="Brito Consulting Services LLC — home">
+    <a class="brand" href="#top" aria-label="Brito Consulting Services LLC, home">
       <!-- Monogram. The two right-hand rects are the BOWLS: they close the
            tiers back to the spine, which is what makes this read as a B and
            not an E. Without them it is a spine with four loose bars. The
@@ -1067,6 +1118,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
       <a href="#calculator">Calculator</a>
       <a href="#approach">Approach</a>
       <a href="#results">Results</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
 
@@ -1082,6 +1134,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
   <a href="#calculator">Calculator</a>
   <a href="#approach">Approach</a>
   <a href="#results">Results</a>
+  <a href="#about">About</a>
   <a href="#contact">Contact</a>
   <a class="btn btn--gold" href="#contact">Schedule a 30-minute consultation</a>
 </nav>
@@ -1255,14 +1308,14 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
       <div class="reveal">
         <div class="tiles" aria-live="polite">
           <div class="tile">
-            <span class="tile__k">Year 5 &mdash; unarchived</span>
+            <span class="tile__k">Year 5, unarchived</span>
             <span class="tile__val is-muted" id="resUnarch"></span>
             <span class="tile__n">Compounding on the volume you keep carrying</span>
           </div>
           <div class="tile">
-            <span class="tile__k">Year 5 &mdash; archived</span>
+            <span class="tile__k">Year 5, archived</span>
             <span class="tile__val" id="resArch"></span>
-            <span class="tile__n">The live database you actually run and licence</span>
+            <span class="tile__n">The live database you actually run and license</span>
           </div>
           <div class="tile">
             <span class="tile__k">5-year cost avoided</span>
@@ -1287,7 +1340,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
           <div class="chart-shell"><canvas id="calcChart" aria-label="Projected database size over five years, with and without active archiving" role="img"></canvas></div>
         </div>
 
-        <p class="calc__note">Directional estimate based on your inputs. Actual archiving potential depends on document type distribution, residence time requirements, and retention obligations &mdash; which is what an assessment determines.</p>
+        <p class="calc__note">Directional estimate based on your inputs. Actual archiving potential depends on document type distribution, residence time requirements, and retention obligations. That&rsquo;s what an assessment determines.</p>
         <div class="calc__foot">
           <a class="link-gold" href="#contact">Validate these numbers against your system <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
         </div>
@@ -1365,15 +1418,37 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
         <span class="shead__num" aria-hidden="true">07</span>
         <span class="shead__eyebrow">About</span>
       </div>
-      <h2 class="shead__h" id="aboutH">One discipline, for two decades.</h2>
-      <p class="shead__tail">Two decades on one discipline buys pattern recognition you cannot get from a rotation.</p>
+      <h2 class="shead__h" id="aboutH">One discipline, 17+ years.</h2>
+      <p class="shead__tail">A single discipline, held that long, buys pattern recognition you cannot get from a rotation.</p>
     </div>
     <div class="about__grid">
       <div class="about__body reveal" id="aboutMount"></div>
-      <div class="reveal">
-        <div class="matrix" id="matrixMount" style="margin-top:0;border-top:0;padding-top:0"></div>
+      <!-- Headshot slot. Empty by design: the frame ships with the house
+           monogram in it, and supplying CONFIG.images.portrait swaps in a
+           photograph without touching this markup. -->
+      <div class="about__side reveal">
+      <figure class="portrait">
+        <div class="portrait__frame" id="portraitFrame">
+          <svg class="portrait__mark" viewBox="0 0 32 32" role="img" aria-label="Brito Consulting monogram">
+            <g fill="currentColor">
+              <rect x="4" y="5" width="4.5" height="22" rx="1"></rect>
+              <rect x="4" y="5" width="17" height="4.5" rx="1"></rect>
+              <rect x="16.5" y="5" width="4.5" height="13.25" rx="1"></rect>
+              <rect x="4" y="13.75" width="19" height="4.5" rx="1"></rect>
+              <rect x="18.5" y="13.75" width="4.5" height="13.25" rx="1"></rect>
+            </g>
+            <rect x="4" y="22.5" width="14.5" height="4.5" rx="1" fill="var(--c-gold)"></rect>
+          </svg>
+        </div>
+        <figcaption class="portrait__cap" id="portraitCap"></figcaption>
+      </figure>
+      <p class="creds" id="credsMount"></p>
       </div>
     </div>
+    <!-- The matrix ran four columns inside the 0.85fr right-hand track, which
+         measured 95px per column at 1280. A fifth column would have been 76px.
+         It is full-width now so five columns get room. -->
+    <div class="matrix reveal" id="matrixMount"></div>
   </div>
 </section>
 <!-- ==== SECTION: ABOUT — END ==== -->
@@ -1471,7 +1546,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 
           <div class="form__actions">
             <button class="btn btn--gold btn--block" type="submit" id="submitBtn">Schedule a 30-minute consultation</button>
-            <p class="form__legal">Your details are used to respond to this enquiry only. No newsletter, no list, no third-party sharing.</p>
+            <p class="form__legal">Your details are used to respond to this inquiry only. No newsletter, no list, no third-party sharing.</p>
           </div>
           <div class="form__msg form__msg--err" id="formErr" role="alert" hidden></div>
         </form>
@@ -1481,7 +1556,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
             <circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.5 2.5L16 9.5" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
           <h3>Message received.</h3>
-          <p>I read every enquiry personally and reply within one business day. If your timeline is tighter than that, say so in a follow-up and I will prioritise it.</p>
+          <p>I read every inquiry personally and reply within one business day. If your timeline is tighter than that, say so in a follow-up and I will prioritize it.</p>
         </div>
       </div>
     </div>
@@ -1497,7 +1572,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
     <div class="footer__body">
       <div class="footer__grid">
         <div class="footer__col">
-          <a class="brand" href="#top" aria-label="Brito Consulting Services LLC — back to top">
+          <a class="brand" href="#top" aria-label="Brito Consulting Services LLC, back to top">
             <!-- Keep in sync with the nav mark and the favicon in <head>. -->
             <svg class="brand__mark" viewBox="0 0 32 32" role="img" aria-label="Brito Consulting monogram">
               <g fill="currentColor">
@@ -1566,7 +1641,7 @@ const CONFIG = {
     role: 'Senior SAP ILM & Data Archiving Consultant',
     areaServed: 'United States',
     delivery: 'Remote nationwide',
-    url: 'https://britoconsulting.github.io',
+    url: 'https://www.britoconsulting.workers.dev/',
     linkedin: 'https://linkedin.com/in/neehalbrito'
   },
 
@@ -1585,7 +1660,7 @@ const CONFIG = {
      Good:  abstract long-exposure light trails · fibre-optic strands ·
             server-aisle geometry shot dark and tight · architectural
             structure/lattice · macro circuitry. Dark, cool, no focal
-            subject, nothing recognisable competing with the headline.
+            subject, nothing recognizable competing with the headline.
      Avoid: people in suits shaking hands · glowing "digital brain" or
             hologram composites · cityscape-at-dusk (that is the exact
             shot the incumbent SAP consultancies all use) · anything with
@@ -1595,29 +1670,31 @@ const CONFIG = {
      you want the page to keep working when a CDN changes a URL.        */
   images: {
     hero: '',
-    contact: ''
+    contact: '',
+    /* Headshot for the About section. Empty renders the monogram placeholder. */
+    portrait: ''
   },
 
   /* --- Web3Forms: paste your access key here (web3forms.com) --- */
   web3formsKey: '21b46105-f006-4fd7-b8e3-2e6132fd06c4',
-  formSubject: 'New consultation request — Brito Consulting website',
+  formSubject: 'New consultation request from the Brito Consulting website',
 
   /* --- Hero --- */
-  heroSub: '20+ years in one discipline: SAP ILM (Information Lifecycle Management), data archiving, and DVM (Data Volume Management). HANA footprints reduced, hardware spend deferred, audits passed — across Fortune 500 commercial and federal defense landscapes.',
+  heroSub: '17+ years in one discipline: SAP ILM (Information Lifecycle Management), data archiving, and DVM (Data Volume Management). HANA footprints reduced, hardware spend deferred, and audits passed across Fortune 500 commercial and federal defense landscapes.',
 
   /* --- Hero spec list. Puts credibility above the fold.
          RULE: every value here must restate a fact already asserted
          elsewhere in CONFIG. Never introduce a new claim here. --- */
   heroSpec: [
     { k: 'Discipline', v: 'SAP ILM · Archiving · DVM' },
-    { k: 'Experience', v: '20+ years, one practice' },
+    { k: 'Experience', v: '17+ years, one practice' },
     { k: 'Delivery',   v: 'Independent · Remote nationwide' },
     { k: 'Clearance',  v: 'Active Secret' }
   ],
 
   /* --- Credibility bar. animate:false renders the text as-is. --- */
   stats: [
-    { value: 20,  decimals: 0, suffix: '+',   label: 'Years in SAP ILM &amp; archiving' },
+    { value: 17,  decimals: 0, suffix: '+',   label: 'Years in SAP ILM &amp; archiving' },
     { value: 100, decimals: 0, suffix: '%',   label: 'Audit pass rate' },
     { value: 1,   decimals: 0, prefix: '$', suffix: 'M+', label: 'Hardware spend deferred' },
     { value: 2.5, decimals: 1, suffix: ' TB', label: 'Archived on a single federal program' },
@@ -1641,14 +1718,14 @@ const CONFIG = {
     { fig: 'Liability', claim: 'Personal data never destroyed at end of purpose is standing GDPR and CCPA risk.',
       body: 'EoP (End-of-Purpose) is a positive obligation, not housekeeping. Without enforced blocking and deletion, the system retains personal data indefinitely by default.' },
     { fig: 'Irreversible', claim: 'The harder failure is destroying data that was under legal hold.',
-      body: 'Over-retention is a finding. Destroying held records is a sanctionable event no restore corrects, because the destruction was authorised. Hold enforcement must exist before destruction is enabled.' },
+      body: 'Over-retention is a finding. Destroying held records is a sanctionable event no restore corrects, because the destruction was authorized. Hold enforcement must exist before destruction is enabled.' },
     { fig: 'Overrun', claim: 'Backup and recovery windows expand past the maintenance window.',
       body: 'Backup duration, restore time and recovery point objectives all track database size. Growth quietly erodes a recovery commitment that was signed off years earlier.' }
   ],
 
   services: [
     { num: '01', title: 'Data Volume Assessment',
-      body: 'Database growth analysis via DB02 (Database Performance Monitor) and TAANA (Table Analysis), table-level growth profiling, archiving potential quantified object by object, and a prioritised roadmap with projected footprint reduction.',
+      body: 'Database growth analysis via DB02 (Database Performance Monitor) and TAANA (Table Analysis), table-level growth profiling, archiving potential quantified object by object, and a prioritized roadmap with projected footprint reduction.',
       outcome: 'You leave with a defensible number: <span>how much is archivable, from where, and in what order</span>.' },
     { num: '02', title: 'Data Archiving Implementation',
       body: 'Archiving object configuration and deployment across FI/CO, MM, SD, HR/Payroll and IDOC using ADK (Archive Development Kit) through SARA (Archive Administration) and SARI (Archive Information System). Residence time design, AIS (Archive Information Structure) design for business read-access, write and delete job scheduling, reconciliation and integrity validation.',
@@ -1664,7 +1741,7 @@ const CONFIG = {
   approach: [
     { num: '01', title: 'Assess',
       body: 'DB02 and TAANA growth analysis, document type profiling, and retention requirement gathering with Legal, Tax and Compliance.',
-      deliverable: 'Quantified archiving potential by object, with a prioritised sequence.' },
+      deliverable: 'Quantified archiving potential by object, with a prioritized sequence.' },
     { num: '02', title: 'Design',
       body: 'Residence times, archiving object selection, Archive Information Structures for business read-access, and ILM policies and audit areas where retention enforcement is in scope.',
       deliverable: 'A design document with a rollback path and a test plan per object.' },
@@ -1694,8 +1771,8 @@ const CONFIG = {
       metric: '100%', metricLabel: 'compliance achieved',
       detail: 'ILM Legal Hold and Blocking &amp; Deletion for automated destruction enforcement. Granular Audit Areas, IRM Rules and the Information Retrieval Framework enabling rapid e-discovery and End-of-Purpose checks.' },
 
-    { industry: 'Global technology distributor — legal divestiture',
-      situation: 'Court- and contract-deadline-driven carve-out separating two organisations&rsquo; data.',
+    { industry: 'Global technology distributor, legal divestiture',
+      situation: 'Court- and contract-deadline-driven carve-out separating two organizations&rsquo; data.',
       metric: '100%', metricLabel: 'data-segregation accuracy inside a 4-month window',
       detail: '30+ archiving objects deployed via ADK across both entities, with custom Archive Information Structures preserving 7+ years of business read-access after separation.' },
 
@@ -1720,10 +1797,24 @@ const CONFIG = {
   ],
 
   about: {
+    /* PRINCIPAL BIO. Third person throughout, on purpose. This is the
+       statement of record: it is what the Person entity in the JSON-LD
+       quotes, and it is what a stranger reads before the first-person
+       practice paragraphs below. Never write "I" in this block, and never
+       name an employer, client or agency in it. */
+    principalBio: {
+      paragraphs: [
+        'Neehal Brito is the founder and principal consultant of Brito Consulting Services LLC. For more than 17 years, his practice has covered a single discipline: SAP Information Lifecycle Management and data archiving. That focus has run across Fortune 50 retail operations processing 500,000 orders daily, global manufacturing and automotive landscapes under GDPR and CCPA, pharmaceutical environments under FDA/GxP validation, and a U.S. federal defense program governed by 25-year retention mandates.',
+        'He holds an active Secret clearance and is certified in Records and Information Management. He is based in Orlando, Florida, and delivers engagements remotely, nationwide.'
+      ],
+      locality: 'Orlando',
+      region: 'FL',
+      country: 'US'
+    },
     paragraphs: [
-      'Most SAP consultants list archiving as one skill among twenty. For me it is the entire practice, and has been for over twenty years. Two decades on one discipline buys a kind of pattern recognition you cannot get from a rotation: I have seen how these projects fail, and it is almost never the configuration.',
-      'The technical stack is the easy half — ADK (Archive Development Kit), SARA and SARI, OpenText Archive Server, SAP ArchiveLink, SAP Content Server, DART (Data Retention Tool), and the ILM policy framework on top of them. I am equally comfortable in the other room: the one where Legal, Tax and Compliance decide how long a record must be kept and who is accountable if it is destroyed early.',
-      'Archiving projects fail at exactly that seam. A technically flawless write job is worthless if the residence time was never agreed, and a perfect retention policy is worthless if the business cannot read an archived invoice. I work both sides deliberately, which is why the deliverable at the end of an engagement is an operating model your team runs — not a dependency on me.'
+      'Most SAP consultants list archiving as one skill among twenty. For me it is the entire practice, and has been for over 17 years. Holding one discipline that long buys a kind of pattern recognition you cannot get from a rotation: I have seen how these projects fail, and it is almost never the configuration.',
+      'The technical stack is the easy half: ADK (Archive Development Kit), SARA and SARI, OpenText Archive Server, SAP ArchiveLink, SAP Content Server, DART (Data Retention Tool), and the ILM policy framework on top of them. I am equally comfortable in the other room, the one where Legal, Tax and Compliance decide how long a record must be kept and who is accountable if it is destroyed early.',
+      'Archiving projects fail at exactly that seam. A technically flawless write job is worthless if the residence time was never agreed, and a perfect retention policy is worthless if the business cannot read an archived invoice. I work both sides deliberately, which is why the deliverable at the end of an engagement is an operating model your team runs, not a dependency on me.'
     ],
     credentials: '<strong>Credentials:</strong> Records and Information Management certified &middot; Active Secret clearance &middot; DISA PII and DISA Cyber Security trained &middot; PGDBM and BBM in Finance &amp; Marketing.'
   },
@@ -1731,23 +1822,24 @@ const CONFIG = {
   expertiseMatrix: [
     { title: 'SAP ILM', items: ['Retention Management','Retention Warehouse','Legal Hold','Blocking &amp; Deletion','End-of-Purpose (EoP)','Audit Areas','Policies &amp; Rules (IRM)','Information Retrieval Framework (IRF)'] },
     { title: 'Data Archiving', items: ['ADK (Archive Development Kit)','SARA','SARI','Archive Information Structures (AIS)','TAANA','DB02','Data Aging','Multi-temperature data strategy'] },
-    { title: 'Content &amp; Storage', items: ['OpenText Archive Server (IXOS)','SAP ArchiveLink','SAP Content Server','PBS ContentLink','FileNet','IBM CommonStore','SAP S/4HANA','SAP ECC 6.0 / R/3 4.6c+'] },
+    { title: 'Content &amp; Storage', items: ['OpenText Archive Server (IXOS)','SAP ArchiveLink','SAP Content Server','PBS ContentLink','FileNet','IBM CommonStore'] },
+    { title: 'Platforms', items: ['SAP S/4HANA','SAP ECC 6.0','SAP R/3 4.6c+'] },
     { title: 'Compliance &amp; Tax', items: ['GDPR','CCPA','DoD / federal retention','IRS audit readiness','FDA / GxP validation','DART (Data Retention Tool)','e-Discovery','Legal Case Management'] }
   ],
 
   faq: [
     { q: 'Will archived data still be accessible to the business?',
-      a: 'Yes. Archived records are written to ADK (Archive Development Kit) files and stay readable through SARI (Archive Information System) via Archive Information Structures — index tables built at archive time so users can retrieve documents by the fields they actually search on. Many standard transactions read archived records directly. Access is designed per object during the design phase: what business users must still see determines which structures get built, not the other way around.' },
+      a: 'Yes. Archived records are written to ADK (Archive Development Kit) files and stay readable through SARI (Archive Information System) via Archive Information Structures, index tables built at archive time so users can retrieve documents by the fields they actually search on. Many standard transactions read archived records directly. Access is designed per object during the design phase: what business users must still see determines which structures get built, not the other way around.' },
     { q: 'How is this different from a database backup?',
-      a: 'A backup is a copy taken for recovery. The data stays in the database and keeps consuming memory, licence and runtime. Archiving removes records from the database: it writes them to separate, self-describing archive files, verifies the write, then deletes the rows from the source tables. The result is a smaller live database plus a permanent, legally readable record of what was removed. A backup shrinks nothing.' },
+      a: 'A backup is a copy taken for recovery. The data stays in the database and keeps consuming memory, license and runtime. Archiving removes records from the database: it writes them to separate, self-describing archive files, verifies the write, then deletes the rows from the source tables. The result is a smaller live database plus a permanent, legally readable record of what was removed. A backup shrinks nothing.' },
     { q: 'How long does a first archiving project take?',
       a: 'For a first wave, typically three to six months from assessment to production, depending on how many archiving objects are in scope and how quickly Legal, Tax and Compliance can confirm retention requirements. The technical configuration is rarely the constraint. Residence time sign-off, business validation of read-access, and change-control windows set the pace. A single high-volume object moves considerably faster when the retention position is already documented.' },
     { q: 'Will this survive a tax or regulatory audit?',
       a: 'That is what the design is for. Archived data is retained, not discarded. Residence time controls when a record leaves the database; retention period controls when it may legally be destroyed. The two are set independently, and conflating them is the most common design error I am called in to correct. For tax specifically, DART (Data Retention Tool) extracts remain available for auditor requests, and SAP ILM records the policy applied at the point of destruction as an audit trail.' },
     { q: 'What happens to data under legal hold?',
-      a: 'Legal hold in SAP ILM suspends destruction for the records it covers, overriding the retention rule that would otherwise permit deletion — even after the retention period has expired. Holds are set and released through Legal Case Management and are enforced at the point of destruction, not by convention or manual process. The hard failure mode in this discipline is not keeping too much data; it is destroying data that was under hold. Hold enforcement is designed before any destruction run is enabled.' },
+      a: 'Legal hold in SAP ILM suspends destruction for the records it covers, overriding the retention rule that would otherwise permit deletion, even after the retention period has expired. Holds are set and released through Legal Case Management and are enforced at the point of destruction, not by convention or manual process. The hard failure mode in this discipline is not keeping too much data; it is destroying data that was under hold. Hold enforcement is designed before any destruction run is enabled.' },
     { q: 'Do we need SAP ILM, or is data archiving enough?',
-      a: 'Archiving alone solves volume: it removes data from the database and keeps it readable. It does not enforce when data must be destroyed. If you carry GDPR or CCPA end-of-purpose obligations, statutory retention you must be able to prove, legal hold, or a system you intend to decommission and still answer questions about, you need ILM retention policies, audit areas and destruction capability. Where the driver is purely cost and performance, archiving alone is often the correct scope — and the cheaper one.' }
+      a: 'Archiving alone solves volume: it removes data from the database and keeps it readable. It does not enforce when data must be destroyed. If you carry GDPR or CCPA end-of-purpose obligations, statutory retention you must be able to prove, legal hold, or a system you intend to decommission and still answer questions about, you need ILM retention policies, audit areas and destruction capability. Where the driver is purely cost and performance, archiving alone is often the correct scope, and the cheaper one.' }
   ],
 
   /* --- Calculator: bounds, defaults, horizon --- */
@@ -1758,7 +1850,7 @@ const CONFIG = {
     arch:    { min: 10,   max: 70,    step: 5,   def: 40 },     /* % archivable */
     cost:    { min: 1000, max: 10000, step: 500, def: 4000 },   /* USD per TB per year */
     platforms: [
-      { label: 'SAP ECC', note: 'On classic SAP ECC the return shows up as disk, backup runtime and transaction performance. Cost per terabyte is usually your lowest input — set it accordingly.' },
+      { label: 'SAP ECC', note: 'On classic SAP ECC the return shows up as disk, backup runtime and transaction performance. Cost per terabyte is usually your lowest input. Set it accordingly.' },
       { label: 'SAP S/4HANA', note: 'On SAP S/4HANA the archived volume is memory-resident data you stop paying for, so cost per terabyte is typically your highest input. Data Aging can complement archiving for warm data.' },
       { label: 'SAP ECC on HANA', note: 'On SAP ECC running on HANA the same in-memory economics apply as S/4HANA, with one addition: archiving before conversion directly shortens the S/4HANA migration downtime window.' }
     ]
@@ -1766,7 +1858,7 @@ const CONFIG = {
 };
 
 /* ============================================================
-   Below this line: rendering, calculator engine, and behaviour.
+   Below this line: rendering, calculator engine, and behavior.
    Routine content changes should not require edits past here.
    ============================================================ */
 (function () {
@@ -1790,6 +1882,13 @@ const CONFIG = {
   var T_SLOW = msVar('--t-slow', 560);
 
   function mount(id, html) { var el = document.getElementById(id); if (el) el.innerHTML = html; }
+  /* CONFIG strings destined for innerHTML already carry their own entities.
+     company.role does not: it is also serialised into JSON-LD, where a raw
+     ampersand is the correct form. Escape it at the HTML boundary only. */
+  function esc(s) {
+    return String(s).replace(/&(?![a-zA-Z#][a-zA-Z0-9]*;)/g, '&amp;')
+      .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
 
   /* Reveal a .photo-layer only when CONFIG supplies a source. */
   function applyPhoto(id, src) {
@@ -1862,9 +1961,16 @@ const CONFIG = {
         + '<span>' + t + '</span></li>';
     }).join(''));
 
+    /* Bio first (third person), spectrum rule, then the practice voice. */
     mount('aboutMount',
-      C.about.paragraphs.map(function (p) { return '<p>' + p + '</p>'; }).join('')
-      + '<p class="creds">' + C.about.credentials + '</p>');
+      C.about.principalBio.paragraphs.map(function (p) { return '<p class="about__lead">' + p + '</p>'; }).join('')
+      + '<hr class="about__rule" aria-hidden="true">'
+      + C.about.paragraphs.map(function (p) { return '<p>' + p + '</p>'; }).join(''));
+
+    mount('credsMount', C.about.credentials);
+
+    /* Portrait caption restates CONFIG facts only; it never adds a claim. */
+    mount('portraitCap', '<b>' + esc(C.company.principal) + '</b><span>' + esc(C.company.role) + '</span>');
 
     mount('matrixMount', C.expertiseMatrix.map(function (col) {
       return '<div class="matrix__col"><h3>' + col.title + '</h3><ul>'
@@ -1884,24 +1990,72 @@ const CONFIG = {
     applyPhoto('heroPhoto', (C.images || {}).hero);
     applyPhoto('contactPhoto', (C.images || {}).contact);
 
+    /* Headshot slot: the frame is always present. A source swaps the monogram
+       for the photograph; no source leaves the monogram placeholder in place. */
+    (function (src) {
+      var f = document.getElementById('portraitFrame');
+      if (!f || !src) return;
+      f.style.backgroundImage = 'url("' + String(src).replace(/"/g, '%22') + '")';
+      f.classList.add('has-photo');
+    })((C.images || {}).portrait);
+
     /* Contact + footer values that come from CONFIG */
     $('#w3fKey').value = CONFIG.web3formsKey;
     $('#w3fSubject').value = CONFIG.formSubject;
     $('#liLink').href = CONFIG.company.linkedin;
     $('#year').textContent = new Date().getFullYear();
 
-    /* JSON-LD */
+    /* JSON-LD. A @graph rather than a lone ProfessionalService, so the
+       principal is a first-class Person that search engines can attach to the
+       business instead of an inline founder stub with no identity of its own.
+       The two nodes reference each other by @id in both directions. */
+    var ORIGIN = String(CONFIG.company.url).replace(/\/+$/, '');
+    var ORG_ID = ORIGIN + '/#organization';
+    var PERSON_ID = ORIGIN + '/#principal';
+    var KNOWS = ['SAP ILM','SAP Data Archiving','ADK','SARA','SARI','Archive Information Structures',
+                 'Retention Warehouse','Legal Hold','GDPR','CCPA','DART','SAP S/4HANA'];
+    var BIO = CONFIG.about.principalBio;
+
     $('#ldjson').textContent = JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'ProfessionalService',
-      name: CONFIG.company.legalName,
-      url: CONFIG.company.url,
-      description: 'Independent SAP Information Lifecycle Management (ILM) and data archiving consultancy specialising in retention management, ADK archiving, Data Volume Management and SAP system decommissioning.',
-      areaServed: { '@type': 'Country', name: CONFIG.company.areaServed },
-      serviceType: ['SAP Information Lifecycle Management','SAP Data Archiving','SAP Data Volume Management','SAP System Decommissioning'],
-      founder: { '@type': 'Person', name: CONFIG.company.principal, jobTitle: CONFIG.company.role },
-      sameAs: [CONFIG.company.linkedin],
-      knowsAbout: ['SAP ILM','SAP Data Archiving','ADK','SARA','SARI','Archive Information Structures','Retention Warehouse','Legal Hold','GDPR','CCPA','DART','SAP S/4HANA']
+      '@graph': [
+        {
+          '@type': 'ProfessionalService',
+          '@id': ORG_ID,
+          name: CONFIG.company.legalName,
+          alternateName: CONFIG.company.shortName,
+          url: ORIGIN + '/',
+          description: 'Independent SAP Information Lifecycle Management (ILM) and data archiving consultancy specializing in retention management, ADK archiving, Data Volume Management and SAP system decommissioning.',
+          areaServed: { '@type': 'Country', name: CONFIG.company.areaServed },
+          serviceType: ['SAP Information Lifecycle Management','SAP Data Archiving','SAP Data Volume Management','SAP System Decommissioning'],
+          founder: { '@id': PERSON_ID },
+          employee: { '@id': PERSON_ID },
+          sameAs: [CONFIG.company.linkedin],
+          knowsAbout: KNOWS
+        },
+        {
+          '@type': 'Person',
+          '@id': PERSON_ID,
+          name: CONFIG.company.principal,
+          jobTitle: CONFIG.company.role,
+          description: BIO.paragraphs.join(' '),
+          worksFor: { '@id': ORG_ID },
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: BIO.locality,
+            addressRegion: BIO.region,
+            addressCountry: BIO.country
+          },
+          sameAs: [CONFIG.company.linkedin],
+          knowsAbout: KNOWS,
+          hasCredential: [
+            { '@type': 'EducationalOccupationalCredential', credentialCategory: 'certification',
+              name: 'Records and Information Management certified' },
+            { '@type': 'EducationalOccupationalCredential', credentialCategory: 'security clearance',
+              name: 'Active Secret clearance' }
+          ]
+        }
+      ]
     });
   }
 
@@ -2032,7 +2186,7 @@ const CONFIG = {
       var gold = cssVar('--c-chart-gold'), muted = cssVar('--c-chart-muted');
       var grid = cssVar('--c-grid'), fill = cssVar('--c-chart-fill');
       var ink = cssVar('--c-text'), panel = cssVar('--c-surface-sunk');
-      /* axis furniture stays neutral — --c-chart-muted is a SERIES colour */
+      /* axis furniture stays neutral: --c-chart-muted is a SERIES color */
       var axis = cssVar('--c-muted');
       var mono = cssVar('--f-mono');
 
@@ -2166,7 +2320,7 @@ const CONFIG = {
           btn.disabled = false;
           btn.textContent = original;
           err.hidden = false;
-          err.textContent = 'That did not send. Please try again — or reach out via the LinkedIn link in the footer if it keeps failing.';
+          err.textContent = 'That did not send. Please try again, or reach out via the LinkedIn link in the footer if it keeps failing.';
         });
     });
   }
