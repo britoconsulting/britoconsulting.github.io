@@ -800,10 +800,11 @@ textarea{resize:vertical;min-height:120px}
   font-size:var(--fs-metric);font-weight:400;line-height:0.86;letter-spacing:-0.045em;
   color:var(--c-gold);white-space:nowrap;
 }
-/* Not every metric is a short number. "Validated" and "2.5 TB" overflow the
-   column at --fs-metric and collide with the detail line, so anything longer
-   than four characters steps down to a word-sized cut. Applied in render()
-   from the string length — do not set it by hand per case. */
+/* Not every metric is a number. A word such as "Validated" overflows the column
+   at --fs-metric and collides with the detail line, so it steps down to a
+   word-sized cut that wraps. Applied in render() from what the value is: a
+   number, percentage or measurement keeps the numeric cut at any length, however
+   many characters it prints. Never set by hand per case. */
 .case__met b.is-word{
   font-size:var(--fs-metric-word);line-height:var(--lh-tight);
   letter-spacing:var(--tr-display);
@@ -2000,8 +2001,21 @@ const CONFIG = {
     }).join(''));
 
     mount('casesMount', C.caseResults.map(function (c) {
-      /* Word metrics ("Validated") overflow the column at the numeric size. */
-      var isWord = String(c.metric).length > 4;
+      /* Pick the cut from what the value IS, not from how long it prints. A
+         number, percentage or measurement takes the numeric cut however many
+         characters it needs: optional approximation or comparison sign, optional
+         currency symbol, the number itself (decimals, thousands groups, a ratio
+         such as 24/7), and an optional unit, meaning "%", a multiplication sign,
+         or a short abbreviation like TB. Anything else is a genuine word such as
+         "Validated" and takes the word cut, which wraps instead of overflowing
+         the column. Measured: at --fs-metric "2.5 TB" sits within a few percent
+         of the width of "~25%", which already ships at that size, while
+         "Validated" is half as wide again, which is what the word cut exists for.
+         A numeric metric far longer than these (say "1,250.5 TB") would still
+         outgrow the column. That is a content decision, not one to make back here
+         by counting characters. */
+      var metric = String(c.metric).replace(/\u00a0/g, ' ').trim();
+      var isWord = !/^[~≈<>+-]?\s*[$€£]?\d+(?:[.,]\d+)*(?:\/\d+)?\s*(?:%|×|[A-Za-z]{1,2})?$/.test(metric);
       return '<article class="case reveal">'
         + '<div class="case__who"><h3 class="case__ind">' + c.industry + '</h3></div>'
         + '<p class="case__sit">' + c.situation + '</p>'
