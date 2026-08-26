@@ -161,23 +161,36 @@
   --fs-xs:0.875rem;                                        /* 14px floor */
   --fs-sm:0.9375rem;                                       /* 15px */
   --fs-base:1.0625rem;                                     /* 17px body */
-  --fs-md:1.25rem;
-  --fs-lead:clamp(1.125rem,0.95rem + 0.6vw,1.375rem);
+  --fs-md:1.25rem;                                         /* 20px */
+  /* Lead paragraphs sit a full step above body and never below --fs-md.
+     At the old 1.125rem floor the step down from the lead voice into
+     --fs-base was 1px at phone widths, so the change of voice the About
+     section documents was invisible exactly where the page is read most. */
+  --fs-lead:clamp(1.25rem,0.95rem + 0.6vw,1.375rem);
   --fs-d4:clamp(1.375rem,1.10rem + 0.90vw,1.75rem);
   --fs-d3:clamp(1.875rem,1.30rem + 1.90vw,2.75rem);
-  --fs-d2:clamp(2.25rem,1.50rem + 3.40vw,4.25rem);
   --fs-d1:clamp(2.25rem,1.35rem + 3.20vw,4rem);
   --fs-metric:clamp(3rem,1.60rem + 6.40vw,7.25rem);
   --fs-metric-word:clamp(1.75rem,1rem + 2.60vw,3.25rem);
-  --fs-stat:clamp(2.25rem,1.40rem + 3.40vw,4rem);
+  /* The credibility numerals ARE the --fs-d1 step. They used to carry a
+     near-duplicate curve of their own that drifted from it by ~1.4px at
+     1280 for no reason anyone could name. Alias, do not re-derive. */
+  --fs-stat:var(--fs-d1);
   /* Result tiles sit four-across on a 1280 grid; they need their own step
-     rather than borrowing --fs-d2, which wraps the figure at that width. */
+     rather than borrowing a display step tuned for headings, which wraps
+     the figure at that width. */
   --fs-tile:clamp(1.75rem,1.10rem + 2.20vw,2.75rem);
+  /* Decorative footer wordmark. Its own step by role, declared here so that
+     no font-size literal lives below this block. */
+  --fs-wordmark:clamp(2.5rem,11vw,9rem);
 
   --lh-tight:0.96;
-  --lh-snug:1.08;
   --lh-head:1.20;
   --lh-body:1.65;
+  /* JetBrains Mono wants a little more leading than Inter at the same size.
+     Without a token for it the page had drifted to four different mono
+     leadings (1.6 / 1.65 / 1.7 / 1.75 / 1.8) for one role. */
+  --lh-mono:1.7;
   --tr-display:-0.035em;
   --tr-head:-0.02em;
   --tr-eyebrow:0.16em;
@@ -249,7 +262,7 @@ button{font:inherit;color:inherit}
 }
 .u-mono{
   font-family:var(--f-mono);font-size:var(--fs-xs);
-  letter-spacing:var(--tr-mono);color:var(--c-muted);line-height:1.7;
+  letter-spacing:var(--tr-mono);color:var(--c-muted);line-height:var(--lh-mono);
 }
 
 /* ============================================================
@@ -320,11 +333,12 @@ button{font:inherit;color:inherit}
 .shead__num{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);color:var(--c-blue-text);
-  font-variant-numeric:tabular-nums;
+  line-height:var(--lh-mono);font-variant-numeric:tabular-nums;
 }
 .shead__eyebrow{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
+  line-height:var(--lh-mono);
 }
 .shead__h{
   font-family:var(--f-display);font-variation-settings:"wdth" var(--wd-wide),"wght" 600;
@@ -332,8 +346,8 @@ button{font:inherit;color:inherit}
   font-weight:400;max-width:20ch;text-wrap:balance;
 }
 .shead__tail{
-  font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.75;
-  color:var(--c-muted);max-width:52ch;
+  font-family:var(--f-mono);font-size:var(--fs-xs);line-height:var(--lh-mono);
+  letter-spacing:var(--tr-mono);color:var(--c-muted);max-width:52ch;
 }
 
 /* ============================================================
@@ -343,7 +357,7 @@ button{font:inherit;color:inherit}
   display:inline-flex;align-items:center;justify-content:center;gap:var(--s-3);
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;
-  padding:16px 26px;border-radius:var(--r-sm);
+  padding:var(--s-4) var(--s-5);border-radius:var(--r-sm);
   border:var(--bd-thin) solid transparent;cursor:pointer;text-align:center;
   transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
              border-color var(--t-fast) var(--ease),box-shadow var(--t-med) var(--ease),
@@ -355,13 +369,13 @@ button{font:inherit;color:inherit}
 .btn--gold:hover{transform:translateY(-2px);box-shadow:var(--shadow-cta)}
 .btn--ghost{background:transparent;color:var(--c-text);border-color:var(--c-hairline-strong)}
 .btn--ghost:hover{border-color:var(--c-gold-line);color:var(--c-gold)}
-.btn--nav{padding:11px 18px;border-color:var(--c-gold-line);color:var(--c-gold)}
+.btn--nav{padding:var(--s-3) var(--s-4);border-color:var(--c-gold-line);color:var(--c-gold)}
 .btn--nav:hover{background:var(--c-gold-soft)}
 .btn--block{width:100%;white-space:normal}
 .link-gold{
   font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:0.06em;
   color:var(--c-gold);display:inline-flex;gap:var(--s-3);align-items:center;
-  border-bottom:var(--bd-thin) solid var(--c-gold-line);padding-bottom:4px;
+  border-bottom:var(--bd-thin) solid var(--c-gold-line);padding-bottom:var(--s-1);
   transition:gap var(--t-med) var(--ease),border-color var(--t-fast) var(--ease);
 }
 .link-gold:hover{gap:var(--s-4);border-color:var(--c-gold)}
@@ -415,12 +429,18 @@ button{font:inherit;color:inherit}
   padding:var(--gutter);
 }
 .menu[hidden]{display:none}
-.menu a{
+/* :not(.btn) matters. Without it this rule outweighed .btn on the menu CTA
+   (0,1,1 beats 0,1,0), so the one gold button on the phone menu rendered as
+   26px display type with no horizontal padding, and its label was clipped by
+   80px. The menu's links are the display voice; its button is a button. */
+.menu a:not(.btn){
   font-family:var(--f-display);font-variation-settings:"wdth" var(--wd-wide),"wght" 600;
-  font-size:1.625rem;font-weight:400;letter-spacing:var(--tr-head);
+  font-size:var(--fs-d3);font-weight:400;letter-spacing:var(--tr-head);
   padding:var(--s-4) 0;border-bottom:var(--bd-thin) solid var(--c-hairline);
 }
-.menu .btn{margin-top:var(--s-6)}
+/* This label is the longest button string on the site; it must be allowed to
+   wrap, exactly as the .btn--block submit button does. */
+.menu .btn{margin-top:var(--s-6);white-space:normal}
 
 /* ============================================================
    HERO
@@ -483,7 +503,7 @@ h1.hero__title em{font-style:normal;color:var(--c-gold)}
 .hero__eyebrow{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
-  line-height:1.6;
+  line-height:var(--lh-mono);
 }
 .hero__sub{color:var(--c-muted);font-size:var(--fs-lead);max-width:54ch;line-height:1.55}
 .hero__actions{display:flex;flex-wrap:wrap;gap:var(--s-4);margin-top:var(--s-7)}
@@ -499,11 +519,11 @@ h1.hero__title em{font-style:normal;color:var(--c-gold)}
 }
 .spec__k{
   font-family:var(--f-mono);font-size:var(--fs-xs);color:var(--c-blue-text);
-  letter-spacing:var(--tr-mono);line-height:1.7;
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
 }
 /* dd carries a 40px browser default margin that silently eats the value
    column. Reset it explicitly. */
-.spec__v{margin:0;font-size:var(--fs-sm);color:var(--c-text);line-height:1.6}
+.spec__v{margin:0;font-size:var(--fs-sm);color:var(--c-text);line-height:var(--lh-body)}
 
 /* ============================================================
    CREDIBILITY BAR — breaks the column, full-bleed band
@@ -521,15 +541,17 @@ h1.hero__title em{font-style:normal;color:var(--c-gold)}
 .stat__val{
   display:block;font-family:var(--f-display);
   font-variation-settings:"wdth" var(--wd-norm),"wght" 600;
-  font-size:var(--fs-stat);font-weight:400;line-height:1;color:var(--c-gold);
+  font-size:var(--fs-stat);font-weight:400;line-height:var(--lh-tight);color:var(--c-gold);
   letter-spacing:var(--tr-display);font-variant-numeric:tabular-nums;
 }
 .stat__label{
   display:block;margin-top:var(--s-4);color:var(--c-muted);
-  font-size:var(--fs-xs);font-family:var(--f-mono);line-height:1.7;max-width:24ch;
+  font-size:var(--fs-xs);font-family:var(--f-mono);letter-spacing:var(--tr-mono);
+  line-height:var(--lh-mono);max-width:24ch;
 }
 .stats-note{
   margin-top:var(--s-5);color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
 }
 
 /* ============================================================
@@ -545,7 +567,7 @@ h1.hero__title em{font-style:normal;color:var(--c-gold)}
   border-right:var(--bd-thin) solid var(--c-hairline);
   border-bottom:var(--bd-thin) solid var(--c-hairline);
   font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:var(--tr-mono);
-  color:var(--c-muted);line-height:1.6;
+  color:var(--c-muted);line-height:var(--lh-mono);
   transition:color var(--t-fast) var(--ease),background-color var(--t-fast) var(--ease);
 }
 .industries__list li:hover{color:var(--c-text);background-color:var(--c-navy-elev)}
@@ -569,31 +591,33 @@ h1.hero__title em{font-style:normal;color:var(--c-gold)}
 .cell__fig{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-gold);
+  line-height:var(--lh-mono);
 }
 .cell__claim{
   font-family:var(--f-display);font-variation-settings:"wdth" var(--wd-norm),"wght" 600;
   font-size:var(--fs-d4);font-weight:400;letter-spacing:var(--tr-head);
-  line-height:1.25;margin-top:var(--s-4);text-wrap:pretty;
+  line-height:var(--lh-head);margin-top:var(--s-4);text-wrap:pretty;
 }
-.cell__body{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.7}
+.cell__body{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);line-height:var(--lh-body)}
 
 /* Services */
 .svc{padding-top:var(--s-7)}
 .svc__num{
   position:absolute;top:var(--s-6);right:var(--s-5);
-  font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:var(--tr-eyebrow);
+  font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
+  letter-spacing:var(--tr-eyebrow);line-height:var(--lh-mono);
   color:var(--c-blue-text);font-variant-numeric:tabular-nums;
 }
 .svc__title{
   font-family:var(--f-display);font-variation-settings:"wdth" var(--wd-norm),"wght" 600;
   font-size:var(--fs-d4);font-weight:400;letter-spacing:var(--tr-head);
-  line-height:1.2;max-width:16ch;
+  line-height:var(--lh-head);max-width:16ch;
 }
-.svc__body{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.7;max-width:52ch}
+.svc__body{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);line-height:var(--lh-body);max-width:52ch}
 .svc__outcome{
   margin-top:var(--s-5);padding-top:var(--s-5);
   border-top:var(--bd-thin) solid var(--c-hairline);
-  font-size:var(--fs-sm);color:var(--c-text);line-height:1.6;max-width:52ch;
+  font-size:var(--fs-sm);color:var(--c-text);line-height:var(--lh-body);max-width:52ch;
 }
 .svc__outcome span{color:var(--c-gold)}
 
@@ -608,7 +632,7 @@ h1.hero__title em{font-style:normal;color:var(--c-gold)}
 .calc__panel h3{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
-  padding-bottom:var(--s-4);margin-bottom:var(--s-6);
+  line-height:var(--lh-mono);padding-bottom:var(--s-4);margin-bottom:var(--s-6);
   border-bottom:var(--bd-thin) solid var(--c-hairline);
 }
 .ctrl+.ctrl{margin-top:var(--s-6)}
@@ -616,6 +640,7 @@ h1.hero__title em{font-style:normal;color:var(--c-gold)}
 .ctrl__top label{font-size:var(--fs-sm);color:var(--c-text)}
 .ctrl__val{
   font-family:var(--f-mono);font-size:var(--fs-sm);font-weight:500;color:var(--c-gold);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
   font-variant-numeric:tabular-nums;white-space:nowrap;
 }
 /* Filled track: --fill is written by JS on every input event. */
@@ -648,19 +673,21 @@ input[type=range]:active::-moz-range-thumb{transform:scale(1.28);box-shadow:0 0 
 .ctrl__scale{
   display:flex;justify-content:space-between;margin-top:var(--s-2);
   font-family:var(--f-mono);font-size:var(--fs-xs);color:var(--c-muted);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
   font-variant-numeric:tabular-nums;
 }
 select,input[type=text],input[type=email],textarea{
   width:100%;background:var(--c-surface-sunk);color:var(--c-text);
   border:var(--bd-thin) solid var(--c-hairline-strong);border-radius:var(--r-sm);
-  padding:14px;font-family:var(--f-body);font-size:var(--fs-sm);line-height:1.5;
+  padding:var(--s-4);font-family:var(--f-body);font-size:var(--fs-sm);line-height:1.5;
   transition:border-color var(--t-fast) var(--ease);
 }
 select:hover,input:hover,textarea:hover{border-color:var(--c-muted)}
 select:focus-visible,input:focus-visible,textarea:focus-visible{box-shadow:var(--focus-ring);border-color:var(--c-gold)}
 textarea{resize:vertical;min-height:120px}
 .platform-note{
-  color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.75;
+  color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
   margin-top:var(--s-4);border-left:var(--bd-thick) solid var(--c-blue-line);padding-left:var(--s-4);
 }
 /* Result tiles — the unit is split off the figure so the number can be
@@ -680,15 +707,15 @@ textarea{resize:vertical;min-height:120px}
 .tile__k{
   display:block;font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
-  line-height:1.6;
+  line-height:var(--lh-mono);
 }
 .tile__val{
   display:block;margin-top:var(--s-4);font-family:var(--f-display);
   font-variation-settings:"wdth" var(--wd-norm),"wght" 600;
-  font-size:var(--fs-tile);font-weight:400;line-height:0.95;letter-spacing:-0.04em;
+  font-size:var(--fs-tile);font-weight:400;line-height:var(--lh-tight);letter-spacing:var(--tr-display);
   color:var(--c-gold);font-variant-numeric:tabular-nums;white-space:nowrap;
 }
-.tile__n{display:block;margin-top:var(--s-3);color:var(--c-muted);font-size:var(--fs-xs);line-height:1.6}
+.tile__n{display:block;margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-xs);line-height:var(--lh-body)}
 .chart-panel{
   margin-top:var(--s-6);border:var(--bd-thin) solid var(--c-hairline-strong);
   background-color:var(--c-surface-deep);padding:var(--s-5);
@@ -697,14 +724,20 @@ textarea{resize:vertical;min-height:120px}
   display:flex;flex-wrap:wrap;gap:var(--s-4);justify-content:space-between;
   align-items:baseline;margin-bottom:var(--s-5);
 }
-.chart-head p{font-family:var(--f-mono);font-size:var(--fs-xs);color:var(--c-muted)}
-.chart-legend{display:flex;flex-wrap:wrap;gap:var(--s-5);font-family:var(--f-mono);font-size:var(--fs-xs);color:var(--c-muted)}
+.chart-head p{
+  font-family:var(--f-mono);font-size:var(--fs-xs);color:var(--c-muted);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
+}
+.chart-legend{
+  display:flex;flex-wrap:wrap;gap:var(--s-5);font-family:var(--f-mono);font-size:var(--fs-xs);
+  color:var(--c-muted);letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
+}
 .chart-legend span{display:inline-flex;align-items:center;gap:var(--s-2)}
 .swatch{width:16px;height:2px;flex:none}
 .swatch--gold{background:var(--c-chart-gold)}
 .swatch--muted{background:var(--c-chart-muted)}
 .chart-shell{position:relative;height:280px}
-.calc__note{margin-top:var(--s-5);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.7;max-width:70ch}
+.calc__note{margin-top:var(--s-5);color:var(--c-muted);font-size:var(--fs-sm);line-height:var(--lh-body);max-width:70ch}
 .calc__foot{margin-top:var(--s-6)}
 
 /* ============================================================
@@ -717,17 +750,19 @@ textarea{resize:vertical;min-height:120px}
 }
 .phase__num{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
-  letter-spacing:var(--tr-eyebrow);color:var(--c-blue-text);font-variant-numeric:tabular-nums;
+  letter-spacing:var(--tr-eyebrow);line-height:var(--lh-mono);
+  color:var(--c-blue-text);font-variant-numeric:tabular-nums;
 }
 .phase__title{
   font-family:var(--f-display);font-variation-settings:"wdth" var(--wd-norm),"wght" 600;
-  font-size:var(--fs-d4);font-weight:400;letter-spacing:var(--tr-head);margin-top:var(--s-3);
+  font-size:var(--fs-d4);font-weight:400;letter-spacing:var(--tr-head);margin-top:var(--s-4);
 }
-.phase__body{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.7}
+.phase__body{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);line-height:var(--lh-body)}
 .phase__deliv{
   margin-top:var(--s-5);padding-top:var(--s-4);
   border-top:var(--bd-thin) solid var(--c-hairline);
-  font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.75;color:var(--c-muted);
+  font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:var(--tr-mono);
+  line-height:var(--lh-mono);color:var(--c-muted);
 }
 .phase__deliv b{color:var(--c-gold);font-weight:500}
 
@@ -753,7 +788,7 @@ textarea{resize:vertical;min-height:120px}
 .case__ind{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
-  line-height:1.7;
+  line-height:var(--lh-mono);
 }
 .case__sit{
   font-size:var(--fs-md);line-height:1.4;color:var(--c-text);
@@ -770,12 +805,14 @@ textarea{resize:vertical;min-height:120px}
    than four characters steps down to a word-sized cut. Applied in render()
    from the string length — do not set it by hand per case. */
 .case__met b.is-word{
-  font-size:var(--fs-metric-word);line-height:0.95;
+  font-size:var(--fs-metric-word);line-height:var(--lh-tight);
+  letter-spacing:var(--tr-display);
   white-space:normal;overflow-wrap:anywhere;
 }
-.case__met span{display:block;margin-top:var(--s-3);font-size:var(--fs-sm);color:var(--c-text);line-height:1.5}
+.case__met span{display:block;margin-top:var(--s-4);font-size:var(--fs-sm);color:var(--c-text);line-height:var(--lh-body)}
 .case__detail{
-  font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.6;color:var(--c-muted);
+  font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:var(--tr-mono);
+  line-height:var(--lh-mono);color:var(--c-muted);
   transition:color var(--t-med) var(--ease);
 }
 .case:hover .case__detail{color:var(--c-blue-text)}
@@ -788,10 +825,13 @@ textarea{resize:vertical;min-height:120px}
   background-color:var(--c-surface-indigo);
 }
 .federal__grid{display:grid;gap:var(--s-7)}
-.caps{display:grid;gap:var(--s-4);border-top:var(--bd-thin) solid var(--c-hairline)}
+/* gap:0 on purpose. With a gap AND padding-block on each row the hairline sat
+   a third of the way through the space instead of centered between two items,
+   which is the same construction .spec already uses correctly. */
+.caps{display:grid;gap:0;border-top:var(--bd-thin) solid var(--c-hairline)}
 .caps li{
   display:flex;gap:var(--s-4);align-items:flex-start;
-  font-size:var(--fs-sm);line-height:1.6;color:var(--c-text);
+  font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--c-text);
   padding-block:var(--s-4);border-bottom:var(--bd-thin) solid var(--c-hairline);
 }
 /* --c-blue would pass here as an icon (4.54:1) but that is the thinnest
@@ -799,7 +839,7 @@ textarea{resize:vertical;min-height:120px}
 .caps svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--c-blue-text)}
 .federal__note{
   color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);
-  margin-top:var(--s-6);line-height:1.75;
+  letter-spacing:var(--tr-mono);margin-top:var(--s-6);line-height:var(--lh-mono);
 }
 .federal__lead{color:var(--c-muted);font-size:var(--fs-lead);line-height:1.55}
 
@@ -814,7 +854,9 @@ textarea{resize:vertical;min-height:120px}
    first person. The step down in size and the spectrum rule are what mark the
    change of voice, so the two blocks do not read as one confused narrator. */
 .about__body .about__lead{color:var(--c-text);font-size:var(--fs-lead);line-height:1.55}
-.about__body .about__lead+.about__lead{margin-top:var(--s-4)}
+/* The lead voice is the largest running text on the page; it needs at least
+   the paragraph spacing the smaller body copy below it gets, not less. */
+.about__body .about__lead+.about__lead{margin-top:var(--s-5)}
 .about__rule{
   height:var(--bd-thin);border:0;margin:var(--s-7) 0;
   background:var(--rule-spectrum);max-width:var(--measure);
@@ -833,13 +875,15 @@ textarea{resize:vertical;min-height:120px}
 .portrait__frame.has-photo{border-color:var(--c-navy)}
 .portrait__mark{width:46%;height:auto;color:var(--c-muted);opacity:0.42}
 .portrait__cap b{
-  display:block;font-family:var(--f-display);font-weight:600;
-  font-variation-settings:'wdth' var(--wd-norm);
-  font-size:var(--fs-md);color:var(--c-text);letter-spacing:var(--tr-head);
+  display:block;font-family:var(--f-display);
+  font-variation-settings:"wdth" var(--wd-norm),"wght" 600;
+  font-size:var(--fs-md);font-weight:400;line-height:var(--lh-head);
+  color:var(--c-text);letter-spacing:var(--tr-head);
 }
 .portrait__cap span{
   display:block;margin-top:var(--s-2);
-  font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.6;
+  font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
+  line-height:var(--lh-mono);
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
 }
 .creds strong{font-weight:600}
@@ -847,7 +891,7 @@ textarea{resize:vertical;min-height:120px}
   margin-top:var(--s-7);padding:var(--s-5);
   border-left:var(--bd-thick) solid var(--c-gold);
   background:var(--c-gold-softer);
-  font-size:var(--fs-sm);line-height:1.7;color:var(--c-text);
+  font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--c-text);
 }
 .matrix{
   display:grid;gap:var(--s-6);margin-top:var(--s-8);
@@ -856,10 +900,13 @@ textarea{resize:vertical;min-height:120px}
 .matrix__col h3{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
-  margin-bottom:var(--s-4);
+  line-height:var(--lh-mono);margin-bottom:var(--s-4);
 }
 .matrix__col ul{display:grid;gap:var(--s-2)}
-.matrix__col li{font-family:var(--f-mono);font-size:var(--fs-xs);color:var(--c-muted);line-height:1.7}
+.matrix__col li{
+  font-family:var(--f-mono);font-size:var(--fs-xs);color:var(--c-muted);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
+}
 
 /* ============================================================
    FAQ
@@ -884,13 +931,13 @@ textarea{resize:vertical;min-height:120px}
 .faq__q[aria-expanded="true"] .faq__icon::after{transform:rotate(90deg);opacity:0}
 .faq__a{overflow:hidden}
 .faq__a[hidden]{display:none}
-.faq__a p{padding:0 0 var(--s-6);color:var(--c-muted);font-size:var(--fs-sm);line-height:1.8;max-width:66ch}
+.faq__a p{padding:0 0 var(--s-6);color:var(--c-muted);font-size:var(--fs-sm);line-height:var(--lh-body);max-width:66ch}
 
 /* ============================================================
    CONTACT
    ============================================================ */
 .contact__grid{display:grid;gap:var(--s-8)}
-.contact__aside p{color:var(--c-muted);font-size:var(--fs-sm);line-height:1.75;max-width:52ch}
+.contact__aside p{color:var(--c-muted);font-size:var(--fs-sm);line-height:var(--lh-body);max-width:52ch}
 .contact__aside p+p{margin-top:var(--s-5)}
 .form{
   background-color:var(--c-navy-elev);
@@ -900,12 +947,13 @@ textarea{resize:vertical;min-height:120px}
 .form__row+.form__row{margin-top:var(--s-5)}
 .form label.lbl{
   display:block;font-family:var(--f-mono);font-size:var(--fs-xs);
-  letter-spacing:var(--tr-mono);color:var(--c-blue-text);margin-bottom:var(--s-3);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);
+  color:var(--c-blue-text);margin-bottom:var(--s-3);
 }
 .form .req{color:var(--c-gold)}
 .form__actions{margin-top:var(--s-6)}
-.form__legal{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-xs);line-height:1.7}
-.form__msg{margin-top:var(--s-5);padding:var(--s-4);border-radius:var(--r-sm);font-size:var(--fs-sm);line-height:1.6}
+.form__legal{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-xs);line-height:var(--lh-body)}
+.form__msg{margin-top:var(--s-5);padding:var(--s-4);border-radius:var(--r-sm);font-size:var(--fs-sm);line-height:var(--lh-body)}
 .form__msg[hidden]{display:none}
 .form__msg--err{background:var(--c-danger-soft);border:var(--bd-thin) solid var(--c-danger);color:var(--c-danger)}
 .success{
@@ -917,7 +965,7 @@ textarea{resize:vertical;min-height:120px}
   font-family:var(--f-display);font-variation-settings:"wdth" var(--wd-norm),"wght" 600;
   font-size:var(--fs-d4);font-weight:400;margin-top:var(--s-5);letter-spacing:var(--tr-head);
 }
-.success p{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);max-width:46ch;margin-inline:auto;line-height:1.75}
+.success p{margin-top:var(--s-4);color:var(--c-muted);font-size:var(--fs-sm);max-width:46ch;margin-inline:auto;line-height:var(--lh-body)}
 button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-shadow:none!important}
 
 /* ============================================================
@@ -926,7 +974,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 .footer{border-top:var(--bd-thin) solid var(--c-hairline);background-color:var(--c-surface-sunk);overflow:hidden}
 .footer__mark{
   font-family:var(--f-display);font-variation-settings:"wdth" var(--wd-wide),"wght" 700;
-  font-size:clamp(2.5rem,11vw,9rem);font-weight:400;line-height:0.9;letter-spacing:-0.04em;
+  font-size:var(--fs-wordmark);font-weight:400;line-height:0.9;letter-spacing:-0.04em;
   color:var(--c-ghost);padding-block:var(--s-8) var(--s-6);white-space:nowrap;
   user-select:none;
 }
@@ -935,19 +983,25 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 .footer__col h3{
   font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
   letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-blue-text);
-  margin-bottom:var(--s-4);
+  line-height:var(--lh-mono);margin-bottom:var(--s-4);
 }
 .footer__col ul{display:grid;gap:var(--s-3)}
-.footer__col a,.footer__col li{font-size:var(--fs-sm);color:var(--c-muted);line-height:1.6}
+.footer__col a,.footer__col li{font-size:var(--fs-sm);color:var(--c-muted);line-height:var(--lh-body)}
 .footer__col a{transition:color var(--t-fast) var(--ease)}
 .footer__col a:hover{color:var(--c-gold)}
-.footer__meta{color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.8;margin-top:var(--s-4)}
+.footer__meta{
+  color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);margin-top:var(--s-4);
+}
 .footer__bottom{
   margin-top:var(--s-7);padding-top:var(--s-5);
   border-top:var(--bd-thin) solid var(--c-hairline);
   display:grid;gap:var(--s-4);
 }
-.footer__bottom p{color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);line-height:1.8;max-width:78ch}
+.footer__bottom p{
+  color:var(--c-muted);font-family:var(--f-mono);font-size:var(--fs-xs);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);max-width:78ch;
+}
 
 /* ============================================================
    MOTION — one curve, three durations, fires once
