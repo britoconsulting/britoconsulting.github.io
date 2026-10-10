@@ -3,7 +3,7 @@
 Single-file marketing site for an independent SAP ILM (Information Lifecycle
 Management) and data archiving practice.
 
-- **Live URL:** https://britoconsulting.github.io
+- **Live URL:** https://www.britoconsulting.workers.dev/
 - **Stack:** one `index.html`. No build step, no npm, no framework.
 - **External dependencies:** Google Fonts (Archivo, Inter, JetBrains Mono — one
   request) and Chart.js **4.5.0** from cdnjs. Nothing else.
@@ -29,10 +29,13 @@ Then open http://localhost:8000. `http-server` caches for an hour — append
 
 ## Deploying
 
-The repository is served by GitHub Pages from the `main` branch, `/ (root)`.
-Edit `index.html`, commit, push — Pages redeploys automatically, usually within
-a minute. If the change does not appear, hard-refresh (Ctrl+Shift+R /
-Cmd+Shift+R).
+Production is the Cloudflare static-assets Worker `www`, connected to this
+repository on the `main` branch. The Cloudflare build has no build command,
+root `/`, and deploy command `npx wrangler deploy`. `wrangler.jsonc` serves
+assets from the repository root. GitHub Pages is also enabled.
+
+Use a branch for edits; merging to `main` starts the production build. Verify
+the Cloudflare build is Ready and check the live assets before calling it done.
 
 ## Structure
 

@@ -12,9 +12,7 @@
 <meta property="og:site_name" content="Brito Consulting Services LLC">
 <meta property="og:title" content="Brito Consulting Services LLC · SAP ILM &amp; Data Archiving">
 <meta property="og:description" content="17+ years dedicated exclusively to SAP ILM, data archiving, Data Volume Management, and decommissioning. Nationwide, remote. Commercial and federal.">
-<!-- og:image points at an asset that is not committed yet. Create
-     images/og-card.png at 1200x630 and commit it; until then social
-     cards fall back to the platform default rather than a broken image. -->
+<!-- Branded 1200x630 preview asset, committed with this site. -->
 <meta property="og:image" content="https://www.britoconsulting.workers.dev/images/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -1543,6 +1541,8 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
       <div class="contact__aside reveal">
         <p>Send a few details about your landscape and I&rsquo;ll come back with an initial read on where the volume is and what&rsquo;s realistically archivable.</p>
         <p>If it turns out archiving is not your bottleneck, I will tell you that instead of scoping a project around it.</p>
+        <p><a class="link-gold" href="https://linkedin.com/in/neehalbrito" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+        <p><a class="link-gold" href="brito-consulting-capability-statement.pdf" download>Download capability statement (PDF)</a></p>
       </div>
 
       <div class="reveal">
@@ -1680,7 +1680,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 <!-- ==== SECTION: FOOTER — END ==== -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js" defer></script>
-<script type="application/ld+json" id="ldjson"></script>
+<script type="application/ld+json" id="ldjson">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.britoconsulting.workers.dev/#organization","name":"Brito Consulting Services LLC","alternateName":"Brito Consulting","url":"https://www.britoconsulting.workers.dev/","description":"Independent SAP Information Lifecycle Management (ILM) and data archiving consultancy specializing in retention management, ADK archiving, Data Volume Management and SAP system decommissioning.","areaServed":{"@type":"Country","name":"United States"},"serviceType":["SAP Information Lifecycle Management","SAP Data Archiving","SAP Data Volume Management","SAP System Decommissioning"],"founder":{"@id":"https://www.britoconsulting.workers.dev/#principal"},"employee":{"@id":"https://www.britoconsulting.workers.dev/#principal"},"sameAs":["https://linkedin.com/in/neehalbrito"],"knowsAbout":["SAP ILM","SAP Data Archiving","ADK","SARA","SARI","Archive Information Structures","Retention Warehouse","Legal Hold","GDPR","CCPA","DART","SAP S/4HANA"],"address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"}},{"@type":"Person","@id":"https://www.britoconsulting.workers.dev/#principal","name":"Neehal Brito","jobTitle":"Senior SAP ILM & Data Archiving Architect","description":"Neehal Brito is the founder and principal consultant of Brito Consulting Services LLC. For more than 17 years, his practice has covered a single discipline: SAP Information Lifecycle Management and data archiving. That focus has run across Fortune 50 retail operations processing 500,000 orders daily, global manufacturing and automotive landscapes under GDPR and CCPA, pharmaceutical environments under FDA/GxP validation, and a U.S. federal defense program governed by 25-year retention mandates. He holds an active Secret clearance and is certified in Records and Information Management. He is based in Orlando, Florida, and delivers engagements remotely, nationwide.","worksFor":{"@id":"https://www.britoconsulting.workers.dev/#organization"},"address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},"sameAs":["https://linkedin.com/in/neehalbrito"],"knowsAbout":["SAP ILM","SAP Data Archiving","ADK","SARA","SARI","Archive Information Structures","Retention Warehouse","Legal Hold","GDPR","CCPA","DART","SAP S/4HANA"],"hasCredential":[{"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Records and Information Management certified"},{"@type":"EducationalOccupationalCredential","credentialCategory":"security clearance","name":"Active Secret clearance"}]}]}</script>
 <script>
 /* ============================================================
    EDIT ZONE — CONFIG
@@ -2100,7 +2100,8 @@ const CONFIG = {
           founder: { '@id': PERSON_ID },
           employee: { '@id': PERSON_ID },
           sameAs: [CONFIG.company.linkedin],
-          knowsAbout: KNOWS
+          knowsAbout: KNOWS,
+          address: { '@type': 'PostalAddress', addressLocality: BIO.locality, addressRegion: BIO.region, addressCountry: BIO.country }
         },
         {
           '@type': 'Person',
