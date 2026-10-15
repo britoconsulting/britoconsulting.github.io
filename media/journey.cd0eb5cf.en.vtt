@@ -1,0 +1,132 @@
+WEBVTT
+
+
+c01
+00:00:00.000 --> 00:00:02.850
+Legal says, freeze that PO.
+
+
+c02
+00:00:03.260 --> 00:00:04.830
+It is already archived.
+
+
+c03
+00:00:05.060 --> 00:00:05.890
+Now what?
+
+
+c04
+00:00:06.500 --> 00:00:10.270
+Follow one document through SAP ILM.
+
+
+c05
+00:00:10.540 --> 00:00:12.570
+Business completion and residence checks
+
+
+c06
+00:00:12.600 --> 00:00:15.090
+determine whether it can be archived.
+
+
+c07
+00:00:15.360 --> 00:00:17.850
+Live policies supply retention rules.
+
+
+c08
+00:00:17.920 --> 00:00:20.890
+During archiving, IRM evaluates them
+
+
+c09
+00:00:20.920 --> 00:00:22.850
+and calculates retention dates.
+
+
+c10
+00:00:23.180 --> 00:00:25.750
+The write program creates ADK files.
+
+
+c11
+00:00:25.780 --> 00:00:28.310
+A separate store step transfers them
+
+
+c12
+00:00:28.340 --> 00:00:30.430
+to ILM compliant storage.
+
+
+c13
+00:00:30.540 --> 00:00:33.170
+The delete program removes archived records
+
+
+c14
+00:00:33.200 --> 00:00:34.190
+from the database.
+
+
+c15
+00:00:34.520 --> 00:00:37.070
+Storage and deletion order is configurable.
+
+
+c16
+00:00:37.140 --> 00:00:39.810
+A legal case identifies relevant objects.
+
+
+c17
+00:00:40.120 --> 00:00:42.010
+Scheduled propagation applies holds
+
+
+c18
+00:00:42.040 --> 00:00:43.930
+to existing archived data.
+
+
+c19
+00:00:44.160 --> 00:00:45.650
+Held objects remain protected
+
+
+c20
+00:00:45.680 --> 00:00:47.410
+even after expiration.
+
+
+c21
+00:00:47.640 --> 00:00:48.970
+After minimum retention,
+
+
+c22
+00:00:49.300 --> 00:00:51.090
+eligible data may be destroyed.
+
+
+c23
+00:00:51.440 --> 00:00:53.710
+Maximum retention sets the destruction deadline.
+
+
+c24
+00:00:53.740 --> 00:00:55.150
+Subject to hold.
+
+
+c25
+00:00:55.520 --> 00:00:57.290
+Create the destruction work list.
+
+
+c26
+00:00:57.460 --> 00:00:59.830
+Schedule the run and review the logs.
+

@@ -116,6 +116,8 @@
   --c-chart-fill:rgba(251,191,36,0.14);
   --c-danger:#F87171;
   --c-danger-soft:rgba(248,113,113,0.13);
+  /* Journey player frame: electric blue at 25% */
+  --c-blue-frame:rgba(59,130,246,0.25);
 
   /* --- Generated background fields (no image files, no licensing) ---
      Each is a stack of soft radial gradients. If you add a photo via
@@ -215,6 +217,11 @@
   --t-fast:140ms;
   --t-med:280ms;
   --t-slow:560ms;
+  /* Ambient loops only (hero data-flow pulse). NOT a transition duration and
+     the one deliberate exception to the --t-slow ceiling: it is the period of
+     continuous decorative motion the reader can stop (reduced motion, and it
+     pauses off-screen). Never use it for UI feedback. */
+  --t-ambient:9s;
   /* Two-layer focus ring: a navy spacer so the gold reads on any surface */
   --focus-ring:0 0 0 2px var(--c-navy),0 0 0 4px var(--c-gold);
 }
@@ -1005,11 +1012,210 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 /* ============================================================
    MOTION — one curve, three durations, fires once
    ============================================================ */
-.reveal{
-  opacity:0;transform:translateY(18px);
+/* The hidden state exists only once JS has armed the observer (html.motion-on,
+   added inside initMotion). If the script fails or never runs, every .reveal
+   stays fully visible. Travel is capped at 12px. */
+.motion-on .reveal{
+  opacity:0;transform:translateY(12px);
   transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease);
 }
-.reveal.is-in{opacity:1;transform:none}
+.motion-on .reveal.is-in{opacity:1;transform:none}
+
+/* ============================================================
+   HERO — "Watch the 60-sec lifecycle" entry point
+   ============================================================ */
+.hero__watch{
+  display:inline-flex;align-items:center;gap:var(--s-3);
+  margin-top:var(--s-5);padding-block:var(--s-2);
+  font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:var(--tr-mono);
+  line-height:var(--lh-mono);color:var(--c-text);
+  border-bottom:var(--bd-thin) solid var(--c-hairline-strong);
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease);
+}
+.hero__watch:hover{color:var(--c-gold);border-color:var(--c-gold-line)}
+.play-glyph{width:10px;height:12px;flex:none;fill:var(--c-gold)}
+
+/* ============================================================
+   HERO — data-flow pulse
+   Three records descend the strata and fade at the bottom tier:
+   live -> archive -> destruction. Keyframes trace the stepped left
+   edge of the bars at constant speed (stops = cumulative distance).
+   Translate keyframes, not offset-path: offset-path on SVG elements
+   resolves its coordinate box inconsistently across engines, while
+   translate in SVG user units is exact everywhere.
+   ============================================================ */
+.strata__flow circle{
+  fill:var(--c-gold);opacity:0;
+  filter:drop-shadow(0 0 6px var(--c-gold-glow));
+  animation:flowPath var(--t-ambient) linear infinite,flowFade var(--t-ambient) linear infinite;
+  animation-delay:calc(var(--t-ambient) / 3 * var(--d) + 1s);
+}
+.strata.is-paused .strata__flow circle{animation-play-state:paused}
+@keyframes flowPath{
+  0%{transform:translate(70px,7px)}
+  8.4%{transform:translate(98px,54.8px)}
+  16.6%{transform:translate(126px,100.5px)}
+  24.5%{transform:translate(154px,144.1px)}
+  32.1%{transform:translate(182px,185.6px)}
+  39.5%{transform:translate(210px,225px)}
+  46.6%{transform:translate(238px,262.3px)}
+  53.4%{transform:translate(266px,297.5px)}
+  60%{transform:translate(294px,330.6px)}
+  66.4%{transform:translate(322px,361.6px)}
+  72.5%{transform:translate(350px,390.5px)}
+  78.4%{transform:translate(378px,417.3px)}
+  84.1%{transform:translate(406px,442px)}
+  89.6%{transform:translate(434px,464.6px)}
+  94.9%{transform:translate(462px,485.1px)}
+  100%{transform:translate(490px,503.5px)}
+}
+@keyframes flowFade{
+  0%{opacity:0}
+  6%{opacity:1}
+  82%{opacity:1}
+  100%{opacity:0}
+}
+
+/* ============================================================
+   THE GOVERNED DATA JOURNEY
+   One <video> plays two roles: a muted ambient loop (living poster)
+   and the narrated film. No media is requested from markup; JS
+   assigns every source from CONFIG.journey.media on approach.
+   Mobile order: intro, player, chapter chips.
+   ============================================================ */
+.journey__grid{
+  display:grid;gap:var(--s-6);align-items:start;
+  grid-template-areas:"intro" "stage" "rail";
+}
+.journey__intro{grid-area:intro}
+.journey__intro .shead__h{margin-top:var(--s-4)}
+.journey__stage{grid-area:stage;display:flex;justify-content:center}
+
+/* Chapter rail: chips on mobile, a ruled list from 1024 up */
+.chapters{
+  grid-area:rail;position:relative;display:flex;gap:var(--s-2);
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;
+  padding-block:var(--s-1) var(--s-3);scrollbar-width:thin;
+}
+.chapters li{flex:none;scroll-snap-align:start}
+.chapter{
+  position:relative;display:inline-flex;align-items:baseline;gap:var(--s-2);
+  min-height:44px;padding:var(--s-2) var(--s-4);
+  background:transparent;color:var(--c-text);cursor:pointer;text-align:left;
+  border:var(--bd-thin) solid var(--c-hairline-strong);border-radius:var(--r-pill);
+  font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:var(--tr-mono);
+  line-height:var(--lh-mono);white-space:nowrap;
+  transition:opacity var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease);
+}
+.chapter__n{font-weight:500;font-variant-numeric:tabular-nums}
+/* Timestamp: read by screen readers on chips, shown from 1024 up */
+.chapter__t{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+.chapter:hover{border-color:var(--c-gold-line)}
+/* Dimming starts only once the film runs. Every rail string is --c-text,
+   so at 0.6 it still measures 6.3:1 on --c-navy-elev. --c-muted or
+   --c-blue-text would drop to ~3.5:1 here and fail AA. */
+.journey.is-playing .chapter:not([aria-current]){opacity:0.6}
+.journey.is-playing .chapter:not([aria-current]):hover,
+.journey.is-playing .chapter:not([aria-current]):focus-visible{opacity:1}
+.chapter[aria-current="step"]{border-color:var(--c-gold)}
+.chapter[aria-current="step"] .chapter__n{color:var(--c-gold)}
+.chapter::before{
+  content:"";position:absolute;left:0;top:var(--s-2);bottom:var(--s-2);
+  width:var(--bd-thick);background:var(--c-gold);display:none;
+  transform:scaleY(0);transform-origin:top;transition:transform var(--t-med) var(--ease);
+}
+
+/* Player: 4:5, capped at min(78vh,720px) tall without ever breaking ratio */
+.player{
+  position:relative;width:min(100%,calc(min(78vh,720px) * 0.8));aspect-ratio:4/5;
+  overflow:hidden;isolation:isolate;background-color:var(--c-surface-sunk);
+  border:var(--bd-thin) solid var(--c-blue-frame);border-radius:var(--r-lg);
+}
+.player__video,.player__poster,.player__poster img{
+  position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;
+}
+.player__poster{z-index:1;transition:opacity var(--t-med) var(--ease)}
+.player.is-live .player__poster{opacity:0;pointer-events:none}
+.player__play{
+  position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:inline-flex;align-items:center;gap:var(--s-3);padding:var(--s-4) var(--s-5);
+  font-family:var(--f-mono);font-size:var(--fs-xs);font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--c-text);
+  background-color:var(--c-nav-bg);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border:var(--bd-thin) solid var(--c-gold-line);border-radius:var(--r-pill);cursor:pointer;
+  transition:border-color var(--t-fast) var(--ease),background-color var(--t-fast) var(--ease);
+}
+.player__play:hover{border-color:var(--c-gold);background-color:var(--c-overlay-bg)}
+.player__dur{color:var(--c-muted);font-variant-numeric:tabular-nums}
+.player.is-film .player__play{display:none}
+.player.is-film.is-ended .player__play{display:inline-flex}
+/* Top-right so it never collides with the native control bar */
+.player__bar{position:absolute;z-index:3;top:var(--s-3);right:var(--s-3);display:flex;gap:var(--s-2)}
+.player__ctl{
+  min-height:36px;padding:var(--s-2) var(--s-3);
+  font-family:var(--f-mono);font-size:var(--fs-xs);letter-spacing:var(--tr-mono);line-height:1;
+  color:var(--c-text);background-color:var(--c-nav-bg);cursor:pointer;
+  border:var(--bd-thin) solid var(--c-hairline-strong);border-radius:var(--r-sm);
+  transition:border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease);
+}
+.player__ctl:hover{border-color:var(--c-gold-line)}
+.player__ctl[aria-pressed="true"]{border-color:var(--c-gold);color:var(--c-gold)}
+.player__ctl[hidden]{display:none}
+.player__noscript{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%)}
+
+/* Under the grid: conversion + transcript */
+.journey__foot{
+  margin-top:var(--s-7);padding-top:var(--s-6);display:grid;gap:var(--s-6);
+  border-top:var(--bd-thin) solid var(--c-hairline-strong);
+}
+.journey__cta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-4) var(--s-6)}
+.journey__cta p{font-size:var(--fs-lead);line-height:1.4;color:var(--c-text)}
+.transcript summary{
+  display:inline-flex;align-items:center;gap:var(--s-3);cursor:pointer;list-style:none;
+  padding-block:var(--s-2);font-family:var(--f-mono);font-size:var(--fs-xs);
+  letter-spacing:var(--tr-mono);line-height:var(--lh-mono);color:var(--c-blue-text);
+}
+.transcript summary::-webkit-details-marker{display:none}
+.transcript summary::before{content:"+";width:1ch;color:var(--c-gold);font-weight:500}
+.transcript[open] summary::before{content:"\2212"}
+.transcript__body{margin-top:var(--s-5);display:grid;gap:var(--s-5);max-width:var(--measure)}
+.transcript__body p{color:var(--c-muted);font-size:var(--fs-sm);line-height:var(--lh-body)}
+.transcript__body b{
+  display:block;margin-bottom:var(--s-1);font-family:var(--f-mono);font-size:var(--fs-xs);
+  font-weight:500;letter-spacing:var(--tr-mono);line-height:var(--lh-mono);color:var(--c-blue-text);
+}
+
+/* ============================================================
+   SERVICES — edge-light
+   Pointer-tracked amber on the card BORDER only (mask over a 1px
+   border box; the fill never changes). Fine pointers only. JS writes
+   --mx/--my; reduced motion swaps it for a static border on hover.
+   ============================================================ */
+@media (hover:hover) and (pointer:fine){
+  .svc::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+    border:var(--bd-thin) solid var(--c-gold);
+    -webkit-mask-image:radial-gradient(circle 240px at var(--mx,50%) var(--my,50%),var(--mask-full),var(--mask-none) 70%);
+    mask-image:radial-gradient(circle 240px at var(--mx,50%) var(--my,50%),var(--mask-full),var(--mask-none) 70%);
+    transition:opacity var(--t-med) var(--ease);
+  }
+  .svc.is-lit::after{opacity:1}
+}
+
+/* ============================================================
+   VIEW TRANSITIONS (cross-document)
+   Inert today: the site is one HTML document, and these fire only on
+   same-origin page-to-page navigation. They take effect the moment a
+   second page ships. Nav holds still; content crossfades.
+   ============================================================ */
+@view-transition{navigation:auto}
+.nav{view-transition-name:site-nav}
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root){animation-duration:var(--t-med);animation-timing-function:var(--ease)}
 
 /* ============================================================
    BREAKPOINTS — 640 / 768 / 1024 / 1280
@@ -1111,6 +1317,26 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
   .form{padding:var(--s-7)}
   .calc__panel{padding:var(--s-7)}
   .footer__grid{grid-template-columns:1.4fr 1fr 1fr 1fr}
+  /* Governed Data Journey: 5fr / 6fr, rail under the intro, player right */
+  .journey__grid{
+    grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-rows:auto 1fr;
+    grid-template-areas:"intro stage" "rail stage";column-gap:var(--s-8);
+  }
+  .journey__stage{justify-content:flex-end}
+  .chapters{
+    flex-direction:column;gap:0;overflow:visible;padding:0;
+    border-top:var(--bd-thin) solid var(--c-hairline-strong);
+  }
+  .chapter{
+    display:grid;grid-template-columns:3ch minmax(0,1fr) auto;column-gap:var(--s-4);
+    width:100%;min-height:0;padding:var(--s-3) 0 var(--s-3) var(--s-5);
+    border:0;border-bottom:var(--bd-thin) solid var(--c-hairline);border-radius:0;white-space:normal;
+  }
+  .chapter:hover,.chapter[aria-current="step"]{border-color:var(--c-hairline)}
+  .chapter::before{display:block}
+  .chapter[aria-current="step"]::before{transform:scaleY(1)}
+  .chapter__label{font-family:var(--f-body);font-size:var(--fs-sm);letter-spacing:0}
+  .chapter__t{position:static;width:auto;height:auto;overflow:visible;clip:auto}
 }
 @media (min-width:1280px){
   .chart-shell{height:380px}
@@ -1139,6 +1365,16 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
   .case:hover::before{transform:scaleY(0)!important}
   .nav__links a:hover::after{transform:scaleX(0)!important}
   .btn:hover .btn__arrow{transform:none!important}
+  /* Hero data-flow: static, one dot resting on each of three tiers */
+  .strata__flow circle{opacity:1!important;transform:translate(var(--x),var(--y))!important}
+  /* Journey: the poster is the only image until the visitor starts the film.
+     JS never fetches the loop under this query; this covers a live switch. */
+  .player:not(.is-film) .player__poster{opacity:1!important}
+  /* Edge-light: a static border on hover, no pointer tracking */
+  .svc::after{-webkit-mask-image:none!important;mask-image:none!important;border-color:var(--c-gold-line)!important}
+  .svc:hover::after{opacity:1!important}
+  /* Cross-document transitions off */
+  @view-transition{navigation:none}
 }
 </style>
 
@@ -1227,6 +1463,13 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
       <rect style="--i:13" x="424" y="460.2" width="176" height="8.8"  rx="2"/>
       <rect style="--i:14" x="452" y="480.9" width="148" height="8.4"  rx="2"/>
       <rect style="--i:15" x="480" y="499.5" width="120" height="8"    rx="2"/>
+      <!-- Data-flow pulse: three records descending the tiers. Ambient and
+           decorative; paused off-screen; static under reduced motion. -->
+      <g class="strata__flow">
+        <circle r="4" style="--d:0;--x:154px;--y:144.1px"/>
+        <circle r="4" style="--d:1;--x:294px;--y:330.6px"/>
+        <circle r="4" style="--d:2;--x:434px;--y:464.6px"/>
+      </g>
     </g>
   </svg>
   <div class="wrap hero__inner">
@@ -1239,6 +1482,10 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
           <a class="btn btn--gold" href="#contact">Schedule a consultation <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
           <a class="btn btn--ghost" href="#calculator">Estimate your savings</a>
         </div>
+        <a class="hero__watch" id="heroWatch" href="#journey">
+          <svg class="play-glyph" viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M0 0 10 6 0 12z"/></svg>
+          Watch the 60-sec lifecycle
+        </a>
       </div>
       <!-- Spec list: credibility above the fold. Values come from CONFIG.heroSpec,
            which restates facts already asserted elsewhere — no new claims. -->
@@ -1264,6 +1511,63 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
   </div>
 </section>
 <!-- ==== SECTION: INDUSTRIES STRIP — END ==== -->
+
+<!-- ==== SECTION: GOVERNED DATA JOURNEY — START ==== -->
+<!-- Unnumbered on purpose: a feature band between the credibility strip and
+     the numbered argument (01-09), so no downstream numeral changes.
+     Chapters, transcript and every media path come from CONFIG.journey.
+     Nothing here requests media: JS assigns sources within 200px of view. -->
+<section class="section section--elev field field--warm seam journey" id="journey" aria-labelledby="journeyH">
+  <div class="wrap">
+    <div class="journey__grid">
+      <div class="journey__intro reveal">
+        <div class="shead__lead">
+          <span class="strata-mark" aria-hidden="true"></span>
+          <span class="shead__eyebrow">The governed data journey &middot; 60 sec</span>
+        </div>
+        <h2 class="shead__h" id="journeyH">From live table to defensible destruction.</h2>
+      </div>
+
+      <div class="journey__stage">
+        <div class="player" id="journeyPlayer">
+          <video class="player__video" id="journeyVideo" playsinline preload="none" tabindex="-1"
+                 aria-label="The Governed Data Journey: a 60-second walkthrough of the SAP ILM lifecycle"></video>
+          <picture class="player__poster" id="journeyPoster" aria-hidden="true">
+            <source type="image/avif" data-poster="avif">
+            <source type="image/webp" data-poster="webp">
+            <img alt="" width="1080" height="1350" loading="lazy" decoding="async">
+          </picture>
+          <button class="player__play" id="journeyPlay" type="button">
+            <svg class="play-glyph" viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M0 0 10 6 0 12z"/></svg>
+            <span id="journeyPlayLabel">Play</span>
+            <span class="player__dur" aria-hidden="true">1:00</span>
+            <span class="sr-only"> the 60-second video, with sound</span>
+          </button>
+          <div class="player__bar">
+            <button class="player__ctl" id="journeyLoopToggle" type="button" hidden>Pause motion</button>
+            <button class="player__ctl" id="journeyCc" type="button" aria-pressed="true" aria-label="Captions" hidden>CC</button>
+          </div>
+          <!-- No-JS fallback. Keep this path in sync with CONFIG.journey.media.film1080H264. -->
+          <noscript><a class="player__noscript link-gold" href="/media/journey-1080.4922ad73.h264.mp4">Watch the video (MP4)</a></noscript>
+        </div>
+      </div>
+
+      <ol class="chapters" id="journeyChapters" aria-label="Video chapters"></ol>
+    </div>
+
+    <div class="journey__foot">
+      <div class="journey__cta">
+        <p>Map this to your landscape.</p>
+        <a class="btn btn--gold" href="#contact">Book an assessment <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+      <details class="transcript">
+        <summary>Read the transcript</summary>
+        <div class="transcript__body" id="journeyTranscript"></div>
+      </details>
+    </div>
+  </div>
+</section>
+<!-- ==== SECTION: GOVERNED DATA JOURNEY — END ==== -->
 
 <!-- ==== SECTION: THE COST OF DOING NOTHING — START ==== -->
 <section class="section field field--cool seam" id="cost" aria-labelledby="costH">
@@ -1680,7 +1984,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 <!-- ==== SECTION: FOOTER — END ==== -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js" defer></script>
-<script type="application/ld+json" id="ldjson">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.britoconsulting.workers.dev/#organization","name":"Brito Consulting Services LLC","alternateName":"Brito Consulting","url":"https://www.britoconsulting.workers.dev/","description":"Independent SAP Information Lifecycle Management (ILM) and data archiving consultancy specializing in retention management, ADK archiving, Data Volume Management and SAP system decommissioning.","areaServed":{"@type":"Country","name":"United States"},"serviceType":["SAP Information Lifecycle Management","SAP Data Archiving","SAP Data Volume Management","SAP System Decommissioning"],"founder":{"@id":"https://www.britoconsulting.workers.dev/#principal"},"employee":{"@id":"https://www.britoconsulting.workers.dev/#principal"},"sameAs":["https://linkedin.com/in/neehalbrito"],"knowsAbout":["SAP ILM","SAP Data Archiving","ADK","SARA","SARI","Archive Information Structures","Retention Warehouse","Legal Hold","GDPR","CCPA","DART","SAP S/4HANA"],"address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"}},{"@type":"Person","@id":"https://www.britoconsulting.workers.dev/#principal","name":"Neehal Brito","jobTitle":"Senior SAP ILM & Data Archiving Architect","description":"Neehal Brito is the founder and principal consultant of Brito Consulting Services LLC. For more than 17 years, his practice has covered a single discipline: SAP Information Lifecycle Management and data archiving. That focus has run across Fortune 50 retail operations processing 500,000 orders daily, global manufacturing and automotive landscapes under GDPR and CCPA, pharmaceutical environments under FDA/GxP validation, and a U.S. federal defense program governed by 25-year retention mandates. He holds an active Secret clearance and is certified in Records and Information Management. He is based in Orlando, Florida, and delivers engagements remotely, nationwide.","worksFor":{"@id":"https://www.britoconsulting.workers.dev/#organization"},"address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},"sameAs":["https://linkedin.com/in/neehalbrito"],"knowsAbout":["SAP ILM","SAP Data Archiving","ADK","SARA","SARI","Archive Information Structures","Retention Warehouse","Legal Hold","GDPR","CCPA","DART","SAP S/4HANA"],"hasCredential":[{"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Records and Information Management certified"},{"@type":"EducationalOccupationalCredential","credentialCategory":"security clearance","name":"Active Secret clearance"}]}]}</script>
+<script type="application/ld+json" id="ldjson">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.britoconsulting.workers.dev/#organization","name":"Brito Consulting Services LLC","alternateName":"Brito Consulting","url":"https://www.britoconsulting.workers.dev/","description":"Independent SAP Information Lifecycle Management (ILM) and data archiving consultancy specializing in retention management, ADK archiving, Data Volume Management and SAP system decommissioning.","areaServed":{"@type":"Country","name":"United States"},"serviceType":["SAP Information Lifecycle Management","SAP Data Archiving","SAP Data Volume Management","SAP System Decommissioning"],"founder":{"@id":"https://www.britoconsulting.workers.dev/#principal"},"employee":{"@id":"https://www.britoconsulting.workers.dev/#principal"},"sameAs":["https://linkedin.com/in/neehalbrito"],"knowsAbout":["SAP ILM","SAP Data Archiving","ADK","SARA","SARI","Archive Information Structures","Retention Warehouse","Legal Hold","GDPR","CCPA","DART","SAP S/4HANA"],"address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"}},{"@type":"Person","@id":"https://www.britoconsulting.workers.dev/#principal","name":"Neehal Brito","jobTitle":"Senior SAP ILM & Data Archiving Architect","description":"Neehal Brito is the founder and principal consultant of Brito Consulting Services LLC. For more than 17 years, his practice has covered a single discipline: SAP Information Lifecycle Management and data archiving. That focus has run across Fortune 50 retail operations processing 500,000 orders daily, global manufacturing and automotive landscapes under GDPR and CCPA, pharmaceutical environments under FDA/GxP validation, and a U.S. federal defense program governed by 25-year retention mandates. He holds an active Secret clearance and is certified in Records and Information Management. He is based in Orlando, Florida, and delivers engagements remotely, nationwide.","worksFor":{"@id":"https://www.britoconsulting.workers.dev/#organization"},"address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},"sameAs":["https://linkedin.com/in/neehalbrito"],"knowsAbout":["SAP ILM","SAP Data Archiving","ADK","SARA","SARI","Archive Information Structures","Retention Warehouse","Legal Hold","GDPR","CCPA","DART","SAP S/4HANA"],"hasCredential":[{"@type":"EducationalOccupationalCredential","credentialCategory":"certification","name":"Records and Information Management certified"},{"@type":"EducationalOccupationalCredential","credentialCategory":"security clearance","name":"Active Secret clearance"}]},{"@type":"VideoObject","@id":"https://www.britoconsulting.workers.dev/#journey-video","name":"The Governed Data Journey","description":"A 60-second walkthrough of the SAP ILM lifecycle: one purchase order followed from the live system through retention rules, ADK archive files, ILM-compliant storage, legal holds and defensible destruction.","thumbnailUrl":["https://www.britoconsulting.workers.dev/media/journey-poster.a52a4b37.webp"],"uploadDate":"2026-10-14T09:00:00-04:00","duration":"PT1M0.7S","contentUrl":"https://www.britoconsulting.workers.dev/media/journey-1080.4922ad73.h264.mp4","inLanguage":"en","publisher":{"@id":"https://www.britoconsulting.workers.dev/#organization"},"transcript":"Legal says, freeze that PO. It is already archived. Now what? Follow one document through SAP ILM. Business completion and residence checks determine whether it can be archived. Live policies supply retention rules. During archiving, IRM evaluates them and calculates retention dates. The write program creates ADK files. A separate store step transfers them to ILM compliant storage. The delete program removes archived records from the database. Storage and deletion order is configurable. A legal case identifies relevant objects. Scheduled propagation applies holds to existing archived data. Held objects remain protected even after expiration. After minimum retention, eligible data may be destroyed. Maximum retention sets the destruction deadline. Subject to hold. Create the destruction work list. Schedule the run and review the logs."}]}</script>
 <script>
 /* ============================================================
    EDIT ZONE — CONFIG
@@ -1898,6 +2202,45 @@ const CONFIG = {
       a: 'Archiving alone solves volume: it removes data from the database and keeps it readable. It does not enforce when data must be destroyed. If you carry GDPR or CCPA end-of-purpose obligations, statutory retention you must be able to prove, legal hold, or a system you intend to decommission and still answer questions about, you need ILM retention policies, audit areas and destruction capability. Where the driver is purely cost and performance, archiving alone is often the correct scope, and the cheaper one.' }
   ],
 
+  /* --- The Governed Data Journey (video section) ---
+         One list drives the chapter rail, the transcript and the JSON-LD.
+         Media paths: run hash-media.ps1 and paste its output over `media`.
+         Times are seconds. The VO text matches journey.en.vtt verbatim. */
+  journey: {
+    title: 'The Governed Data Journey',
+    description: 'A 60-second walkthrough of the SAP ILM lifecycle: one purchase order followed from the live system through retention rules, ADK archive files, ILM-compliant storage, legal holds and defensible destruction.',
+    duration: 'PT1M0.7S',
+    /* Set to the deploy timestamp (ISO 8601 with offset) */
+    uploadDate: '2026-10-14T09:00:00-04:00',
+    media: {
+      film1080Av1:  '/media/journey-1080.4603fb7a.av1.mp4',
+      film1080H264: '/media/journey-1080.4922ad73.h264.mp4',
+      film720H264:  '/media/journey-720.cddc446e.h264.mp4',
+      loopAv1:      '/media/journey-loop.f09bf926.av1.mp4',
+      loopH264:     '/media/journey-loop.b69756dc.h264.mp4',
+      posterAvif:   '/media/journey-poster.5908f7bb.avif',
+      posterWebp:   '/media/journey-poster.a52a4b37.webp',
+      captions:     '/media/journey.cd0eb5cf.en.vtt'
+    },
+    chapters: [
+      { n: '01', label: 'Freeze that PO',         start: 0,    end: 10.0,
+        vo: 'Legal says, freeze that PO. It is already archived. Now what? Follow one document through SAP ILM.' },
+      { n: '02', label: 'Live system',            start: 10.0, end: 15.1,
+        vo: 'Business completion and residence checks determine whether it can be archived.' },
+      { n: '03', label: 'Retention rules',        start: 15.1, end: 23.2,
+        vo: 'Live policies supply retention rules. During archiving, IRM evaluates them and calculates retention dates.' },
+      { n: '04', label: 'ADK archive files',      start: 23.2, end: 25.8,
+        vo: 'The write program creates ADK files.' },
+      { n: '05', label: 'ILM-compliant storage',  start: 25.8, end: 37.1,
+        vo: 'A separate store step transfers them to ILM compliant storage. The delete program removes archived records from the database. Storage and deletion order is configurable.' },
+      { n: '06', label: 'Legal holds',            start: 37.1, end: 47.7,
+        vo: 'A legal case identifies relevant objects. Scheduled propagation applies holds to existing archived data. Held objects remain protected even after expiration.' },
+      { n: '07', label: 'Defensible destruction', start: 47.7, end: 59.6,
+        vo: 'After minimum retention, eligible data may be destroyed. Maximum retention sets the destruction deadline. Subject to hold. Create the destruction work list. Schedule the run and review the logs.' },
+      { n: '08', label: 'The takeaway',           start: 59.6, end: 60.7, vo: '' }
+    ]
+  },
+
   /* --- Calculator: bounds, defaults, horizon --- */
   calculator: {
     years: 5,
@@ -1921,11 +2264,33 @@ const CONFIG = {
   'use strict';
 
   var $  = function (s, r) { return (r || document).querySelector(s); };
-  var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  /* reduceMotion is LIVE: flipping the OS setting mid-session takes effect
+     immediately. Features that own running motion subscribe through
+     onMotionChange(); CSS handles everything else on its own. */
+  var mqReduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reduceMotion = !!(mqReduce && mqReduce.matches);
+  var motionHandlers = [];
+  function onMotionChange(fn) { motionHandlers.push(fn); }
+  if (mqReduce) {
+    var onMq = function (e) {
+      reduceMotion = e.matches;
+      motionHandlers.forEach(function (fn) {
+        try { fn(reduceMotion); } catch (err) { if (window.console) console.error(err); }
+      });
+    };
+    if (mqReduce.addEventListener) mqReduce.addEventListener('change', onMq);
+    else if (mqReduce.addListener) mqReduce.addListener(onMq);
+  }
+  /* Save-Data or a 2G-class link: no ambient video, smallest film rendition. */
+  function lowData() {
+    var c = navigator.connection;
+    return !!(c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || '')));
+  }
 
   var nfInt = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
   var nfUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
   function tb(n) { return (Math.round(n * 10) / 10).toFixed(1) + ' TB'; }
+  function clock(s) { var m = Math.floor(s / 60), r = Math.floor(s % 60); return m + ':' + (r < 10 ? '0' : '') + r; }
 
   /* Motion durations are read from the token block so the CSS spec and the
      JS spec cannot drift apart. --t-slow is the hard ceiling for everything. */
@@ -2055,6 +2420,19 @@ const CONFIG = {
         + '</div>';
     }).join(''));
 
+    /* Governed Data Journey: rail and transcript from one chapter list */
+    var J = C.journey;
+    mount('journeyChapters', J.chapters.map(function (ch, i) {
+      return '<li><button class="chapter" type="button" data-i="' + i + '">'
+        + '<span class="chapter__n" aria-hidden="true">' + ch.n + '</span>'
+        + '<span class="chapter__label">' + ch.label + '</span>'
+        + '<span class="chapter__t"><span class="sr-only">, from </span>' + clock(ch.start) + '</span>'
+        + '</button></li>';
+    }).join(''));
+    mount('journeyTranscript', J.chapters.filter(function (ch) { return ch.vo; }).map(function (ch) {
+      return '<p><b>' + clock(ch.start) + ' &middot; ' + ch.label + '</b>' + ch.vo + '</p>';
+    }).join(''));
+
     /* Optional background photos — absent unless CONFIG.images is filled in */
     applyPhoto('heroPhoto', (C.images || {}).hero);
     applyPhoto('contactPhoto', (C.images || {}).contact);
@@ -2124,6 +2502,19 @@ const CONFIG = {
             { '@type': 'EducationalOccupationalCredential', credentialCategory: 'security clearance',
               name: 'Active Secret clearance' }
           ]
+        },
+        {
+          '@type': 'VideoObject',
+          '@id': ORIGIN + '/#journey-video',
+          name: J.title,
+          description: J.description,
+          thumbnailUrl: [ORIGIN + J.media.posterWebp],
+          uploadDate: J.uploadDate,
+          duration: J.duration,
+          contentUrl: ORIGIN + J.media.film1080H264,
+          inLanguage: 'en',
+          publisher: { '@id': ORG_ID },
+          transcript: J.chapters.map(function (ch) { return ch.vo; }).filter(Boolean).join(' ')
         }
       ]
     });
@@ -2461,6 +2852,10 @@ const CONFIG = {
       return;
     }
 
+    /* Arm the hidden state only now. Anything that failed earlier in boot
+       leaves .reveal content visible, because this class was never added. */
+    document.documentElement.classList.add('motion-on');
+
     /* Reveals fire ONCE and are unobserved — they never re-fire on scroll-back. */
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -2484,35 +2879,311 @@ const CONFIG = {
      No scroll-jacking, no transform on scroll for anything the reader
      is trying to read. Entirely absent under reduced motion. */
   function initStrata() {
-    if (reduceMotion) return;
     var hero = $('.hero'), svg = $('#strata');
     if (!hero || !svg) return;
-    var ticking = false;
-    function apply() {
-      ticking = false;
-      var h = hero.offsetHeight || 1;
-      var p = Math.min(Math.max(window.scrollY / h, 0), 1);
-      svg.style.setProperty('--sp', p.toFixed(3));
+    var armed = false;
+    function arm() {
+      if (armed) return;
+      armed = true;
+      var ticking = false;
+      function apply() {
+        ticking = false;
+        var h = hero.offsetHeight || 1;
+        var p = Math.min(Math.max(window.scrollY / h, 0), 1);
+        svg.style.setProperty('--sp', p.toFixed(3));
+      }
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(apply);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      apply();
     }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(apply);
+    if (!reduceMotion) arm();
+    /* Reduced motion switched OFF mid-session starts the compression.
+       Switched ON, the CSS block pins the stack at rest. */
+    onMotionChange(function (r) { if (!r) arm(); });
+
+    /* Data-flow pulse: CSS owns the animation. JS only pauses it while the
+       hero is off-screen, so it never spends frames nobody can see. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        svg.classList.toggle('is-paused', !entries[0].isIntersecting);
+      }).observe(hero);
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    apply();
+  }
+
+  /* ---------- GOVERNED DATA JOURNEY ----------
+     States: idle (static poster) -> loop (muted ambient, optional) ->
+     film (sound, captions, native controls). One <video> serves both.
+     Poster is requested within 200px of view; the loop only while the
+     player is visible, motion is allowed and the link is not low-data;
+     the narrated film only on an explicit click. */
+  function initJourney() {
+    var sec = $('#journey'), player = $('#journeyPlayer'), video = $('#journeyVideo');
+    if (!sec || !player || !video || !CONFIG.journey) return;
+    var J = CONFIG.journey, M = J.media;
+    var playBtn = $('#journeyPlay'), playLabel = $('#journeyPlayLabel');
+    var loopBtn = $('#journeyLoopToggle'), ccBtn = $('#journeyCc');
+    var rail = $('#journeyChapters');
+    var chips = rail ? Array.prototype.slice.call(rail.querySelectorAll('.chapter')) : [];
+    var mode = 'idle', visible = false, userPausedLoop = false, loopFailed = false;
+    var posterArmed = false, track = null, ccOn = false, active = -1, pendingSeek = 0;
+
+    var AV1 = 'video/mp4; codecs="av01.0.08M.08"';
+    var AV1_AAC = 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"';
+    function codecOK(type) { return !!(video.canPlayType && video.canPlayType(type) === 'probably'); }
+    function quietPlay() { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+
+    function armPoster() {
+      if (posterArmed) return;
+      posterArmed = true;
+      var pic = $('#journeyPoster');
+      if (!pic) return;
+      var a = pic.querySelector('[data-poster="avif"]'), w = pic.querySelector('[data-poster="webp"]');
+      var img = pic.querySelector('img');
+      if (a) a.srcset = M.posterAvif;
+      if (w) w.srcset = M.posterWebp;
+      if (img) img.src = M.posterWebp;
+    }
+
+    /* ---- Ambient loop (WCAG 2.2.2: visible pause control while it runs) */
+    function setLoopLabel(playing) { loopBtn.textContent = playing ? 'Pause motion' : 'Play motion'; }
+    function startLoop() {
+      if (mode !== 'idle' || !visible || reduceMotion || lowData() || userPausedLoop || loopFailed) return;
+      mode = 'loop';
+      video.muted = true; video.defaultMuted = true; video.loop = true; video.controls = false;
+      video.setAttribute('aria-hidden', 'true');
+      video.src = codecOK(AV1) ? M.loopAv1 : M.loopH264;
+      loopBtn.hidden = false;
+      setLoopLabel(true);
+      var p = video.play();
+      if (p && p.catch) p.catch(function (err) {
+        if (err && err.name === 'AbortError') return;      /* interrupted by pause or film */
+        if (mode === 'loop') { loopFailed = true; stopLoop(); }  /* autoplay refused: keep poster */
+      });
+    }
+    function stopLoop() {
+      if (mode !== 'loop') return;
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+      player.classList.remove('is-live');
+      loopBtn.hidden = true;
+      mode = 'idle';
+    }
+    function onVisible(v) {
+      visible = v;
+      if (mode === 'idle') { if (v) startLoop(); return; }
+      if (mode !== 'loop') return;
+      if (!v) video.pause();
+      else if (!userPausedLoop) quietPlay();
+    }
+    loopBtn.addEventListener('click', function () {
+      if (mode !== 'loop') return;
+      if (video.paused) { userPausedLoop = false; quietPlay(); setLoopLabel(true); }
+      else { userPausedLoop = true; video.pause(); setLoopLabel(false); }
+    });
+
+    /* ---- Film */
+    function filmSrc() {
+      if (window.innerWidth < 600 || lowData()) return M.film720H264;
+      return codecOK(AV1_AAC) ? M.film1080Av1 : M.film1080H264;
+    }
+    function setCaptions(on) {
+      ccOn = on;
+      if (track && track.track) track.track.mode = on ? 'showing' : 'hidden';
+      ccBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    /* The track is attached at film start, never during the loop, so caption
+       cues can't paint over the ambient footage. */
+    function ensureTrack() {
+      if (!track) {
+        track = document.createElement('track');
+        track.kind = 'captions'; track.srclang = 'en'; track.label = 'English';
+        track.src = M.captions;
+        video.appendChild(track);
+      }
+      setCaptions(ccOn);
+    }
+    function seek(at) {
+      player.classList.remove('is-ended');
+      if (video.readyState >= 1) video.currentTime = at || 0;
+      else pendingSeek = at || 0;
+      quietPlay();
+    }
+    /* Must run synchronously inside a click so the browser allows sound. */
+    function startFilm(at) {
+      if (mode === 'film') { seek(at); return; }
+      if (mode === 'loop') video.pause();
+      mode = 'film';
+      loopBtn.hidden = true;
+      player.classList.remove('is-live', 'is-ended');
+      player.classList.add('is-film');
+      sec.classList.add('is-playing');
+      video.removeAttribute('aria-hidden');
+      video.loop = false; video.muted = false; video.defaultMuted = false; video.controls = true;
+      armPoster();
+      video.src = filmSrc();
+      ensureTrack();
+      ccBtn.hidden = false;
+      pendingSeek = at || 0;
+      var p = video.play();
+      if (p && p.catch) p.catch(function (err) {
+        if (err && err.name === 'AbortError') return;
+        player.classList.add('is-ended');          /* re-show the play button */
+        playLabel.textContent = 'Play';
+      });
+    }
+
+    video.addEventListener('loadedmetadata', function () {
+      if (mode === 'film' && pendingSeek) video.currentTime = pendingSeek;
+      pendingSeek = 0;
+    });
+    video.addEventListener('playing', function () { player.classList.add('is-live'); });
+    video.addEventListener('ended', function () {
+      if (mode !== 'film') return;
+      player.classList.add('is-ended');
+      playLabel.textContent = 'Replay';
+    });
+    if (video.textTracks && video.textTracks.addEventListener) {
+      /* Keep the CC button honest if captions are toggled from native controls */
+      video.textTracks.addEventListener('change', function () {
+        if (!track || !track.track) return;
+        ccOn = track.track.mode === 'showing';
+        ccBtn.setAttribute('aria-pressed', ccOn ? 'true' : 'false');
+      });
+    }
+    ccBtn.addEventListener('click', function () { setCaptions(!ccOn); });
+
+    playBtn.addEventListener('click', function () {
+      if (mode === 'film') { seek(video.ended ? 0 : video.currentTime); return; }
+      startFilm(0);
+      video.focus({ preventScroll: true });
+    });
+
+    /* ---- Chapter rail */
+    function indexAt(t) {
+      for (var i = J.chapters.length - 1; i >= 0; i--) { if (t >= J.chapters[i].start) return i; }
+      return 0;
+    }
+    function setActive(i) {
+      if (i === active) return;
+      if (chips[active]) chips[active].removeAttribute('aria-current');
+      active = i;
+      var b = chips[i];
+      if (!b) return;
+      b.setAttribute('aria-current', 'step');
+      /* Chips scroll sideways inside their own row. The page never moves. */
+      if (rail.scrollWidth > rail.clientWidth + 1) {
+        var left = Math.max(0, b.offsetLeft - (rail.clientWidth - b.offsetWidth) / 2);
+        if (rail.scrollTo) rail.scrollTo({ left: left, behavior: reduceMotion ? 'auto' : 'smooth' });
+        else rail.scrollLeft = left;
+      }
+    }
+    function sync() { if (mode === 'film') setActive(indexAt(video.currentTime)); }
+    video.addEventListener('timeupdate', sync);
+    video.addEventListener('seeked', sync);
+
+    if (rail) {
+      rail.addEventListener('click', function (e) {
+        var b = e.target.closest('.chapter');
+        if (!b) return;
+        var i = parseInt(b.getAttribute('data-i'), 10);
+        startFilm(J.chapters[i].start);
+        setActive(i);
+      });
+      /* Arrow keys / Home / End move between chapters; Enter/Space play. */
+      rail.addEventListener('keydown', function (e) {
+        var i = chips.indexOf(document.activeElement);
+        if (i < 0) return;
+        var k = e.key, n = null;
+        if (k === 'ArrowDown' || k === 'ArrowRight') n = Math.min(i + 1, chips.length - 1);
+        else if (k === 'ArrowUp' || k === 'ArrowLeft') n = Math.max(i - 1, 0);
+        else if (k === 'Home') n = 0;
+        else if (k === 'End') n = chips.length - 1;
+        if (n === null) return;
+        e.preventDefault();
+        chips[n].focus();
+      });
+    }
+
+    /* ---- Hero entry point: play inside the gesture, then the anchor's own
+       default action scrolls to #journey (smooth, or instant under reduced). */
+    var hw = $('#heroWatch');
+    if (hw) hw.addEventListener('click', function () {
+      startFilm(0);
+      video.focus({ preventScroll: true });
+    });
+
+    /* ---- Loading gates */
+    if ('IntersectionObserver' in window) {
+      var nearIO = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        armPoster();
+        nearIO.disconnect();
+      }, { rootMargin: '200px 0px' });
+      nearIO.observe(sec);
+      new IntersectionObserver(function (entries) {
+        onVisible(entries[0].isIntersecting);
+      }, { threshold: 0.25 }).observe(player);
+    } else {
+      armPoster();        /* no IO: poster only, never the loop */
+    }
+
+    /* ---- Live preference changes */
+    onMotionChange(function (r) { if (r) stopLoop(); else startLoop(); });
+    var conn = navigator.connection;
+    if (conn && conn.addEventListener) conn.addEventListener('change', function () {
+      if (lowData()) stopLoop(); else startLoop();
+    });
+  }
+
+  /* ---------- SERVICES: edge-light ----------
+     Pointer position feeds --mx/--my; CSS paints amber on the BORDER only.
+     Mouse only (never touch or pen) and never under reduced motion,
+     which is checked live on every move. */
+  function initEdgeLight() {
+    var host = $('#servicesMount');
+    if (!host || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var lit = null, raf = 0, px = 0, py = 0;
+    function paint() {
+      raf = 0;
+      if (!lit) return;
+      var r = lit.getBoundingClientRect();
+      lit.style.setProperty('--mx', Math.round(px - r.left) + 'px');
+      lit.style.setProperty('--my', Math.round(py - r.top) + 'px');
+    }
+    function clear() { if (lit) { lit.classList.remove('is-lit'); lit = null; } }
+    host.addEventListener('pointermove', function (e) {
+      if (reduceMotion || e.pointerType !== 'mouse') { clear(); return; }
+      px = e.clientX; py = e.clientY;
+      var card = e.target.closest('.svc');
+      if (card !== lit) {
+        clear();
+        if (!card) return;
+        lit = card;
+        paint();                     /* position first, so the light never starts centred */
+        card.classList.add('is-lit');
+        return;
+      }
+      if (lit && !raf) raf = requestAnimationFrame(paint);
+    });
+    host.addEventListener('pointerleave', clear);
+    onMotionChange(function (r) { if (r) clear(); });
   }
 
   /* ---------- BOOT ---------- */
   function boot() {
-    render();
-    initNav();
-    initFaq();
-    initForm();
-    initCalculator();
-    initMotion();
-    initStrata();
+    /* Each feature is isolated: one failure cannot stop the others. Because
+       html.motion-on is added inside initMotion, a failure before it leaves
+       every .reveal visible. */
+    [render, initNav, initFaq, initForm, initCalculator, initMotion, initStrata, initJourney, initEdgeLight]
+      .forEach(function (fn) {
+        try { fn(); } catch (err) { if (window.console) console.error(err); }
+      });
   }
 
   if (document.readyState === 'loading') {
