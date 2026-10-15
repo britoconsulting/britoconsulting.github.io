@@ -216,7 +216,7 @@
   --ease:cubic-bezier(0.22,0.61,0.36,1);
   --t-fast:140ms;
   --t-med:280ms;
-  --t-slow:560ms;
+  --t-slow:820ms;
   /* Ambient loops only (hero data-flow pulse). NOT a transition duration and
      the one deliberate exception to the --t-slow ceiling: it is the period of
      continuous decorative motion the reader can stop (reduced motion, and it
@@ -1016,7 +1016,7 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
    added inside initMotion). If the script fails or never runs, every .reveal
    stays fully visible. Travel is capped at 12px. */
 .motion-on .reveal{
-  opacity:0;transform:translateY(12px);
+  opacity:0;transform:translateY(34px);
   transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease);
 }
 .motion-on .reveal.is-in{opacity:1;transform:none}
@@ -1376,6 +1376,49 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
   /* Cross-document transitions off */
   @view-transition{navigation:none}
 }
+
+/* ============================================================
+   MOTION PASS - 2026-10-15 site-wide layer
+   ============================================================ */
+/* Hero headline: words rise once on load */
+.motion-on .hero__title .w{display:inline-block;opacity:0;transform:translateY(30px);animation:wordRise .85s var(--ease) forwards}
+@keyframes wordRise{to{opacity:1;transform:none}}
+
+/* Hero watch entry point: slow breathing play glyph */
+.motion-on .hero__watch .play-glyph{animation:watchPulse 2.8s ease-in-out infinite;transform-origin:center}
+@keyframes watchPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+/* Cards: hover lift (composes with the reveal transition) */
+.cell{transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease),box-shadow var(--t-med) var(--ease)}
+.cell:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.38)}
+
+/* Industries: infinite drift, pauses under the cursor */
+.motion-on .industries{overflow:hidden}
+.motion-on .industries__list{display:flex;flex-wrap:nowrap;width:max-content;border-left:0;animation:indDrift 22s linear infinite}
+.motion-on .industries__list>li{border-left:var(--bd-thin) solid var(--c-hairline);white-space:nowrap}
+.motion-on .industries:hover .industries__list{animation-play-state:paused}
+@keyframes indDrift{to{transform:translateX(-50%)}}
+
+/* Approach: gold progress line across the phase rail + phase activation */
+.phases{position:relative}
+.phases::after{content:"";position:absolute;top:-1px;left:0;height:2px;width:calc(var(--ap,0)*100%);background:var(--c-gold)}
+.phase{transition:transform var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease)}
+.phase.is-active{transform:translateY(-6px);box-shadow:inset 0 2px 0 var(--c-gold)}
+.phase__num{transition:color var(--t-med) var(--ease)}
+.phase.is-active .phase__num{color:var(--c-gold)}
+
+/* About: portrait slow drift */
+.motion-on .portrait__frame.has-photo{background-size:100% 100%;animation:kenburns 18s ease-in-out infinite alternate}
+@keyframes kenburns{from{background-size:100% 100%}to{background-size:118% 118%}}
+
+/* FAQ: smooth height animation (icon morph already ships) */
+.faq__a{overflow:hidden;transition:height var(--t-med) var(--ease)}
+
+/* Contact: gold sheen sweep on the primary CTA */
+.motion-on #contact .btn--gold{position:relative;overflow:hidden;isolation:isolate}
+.motion-on #contact .btn--gold::after{content:"";position:absolute;top:0;bottom:0;width:35%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);animation:sheen 3.2s ease-in-out infinite}
+@keyframes sheen{0%{left:-60%}55%,100%{left:130%}}
+
 </style>
 
 <body>
@@ -2300,7 +2343,7 @@ const CONFIG = {
     return isNaN(n) ? fallback : (/ms$/.test(v) ? n : n * 1000);
   }
   var T_MED = msVar('--t-med', 280);
-  var T_SLOW = msVar('--t-slow', 560);
+  var T_SLOW = msVar('--t-slow', 820);
 
   function mount(id, html) { var el = document.getElementById(id); if (el) el.innerHTML = html; }
   /* CONFIG strings destined for innerHTML already carry their own entities.
@@ -2365,7 +2408,7 @@ const CONFIG = {
         + '<p class="phase__deliv"><b>Deliverable:</b> ' + p.deliverable + '</p></article>';
     }).join(''));
 
-    mount('casesMount', C.caseResults.map(function (c) {
+    mount('casesMount', C.caseResults.map(function (c, ci) {
       /* Pick the cut from what the value IS, not from how long it prints. A
          number, percentage or measurement takes the numeric cut however many
          characters it needs: optional approximation or comparison sign, optional
@@ -2384,7 +2427,7 @@ const CONFIG = {
       return '<article class="case reveal">'
         + '<div class="case__who"><h3 class="case__ind">' + c.industry + '</h3></div>'
         + '<p class="case__sit">' + c.situation + '</p>'
-        + '<p class="case__met"><b' + (isWord ? ' class="is-word"' : '') + '>' + c.metric + '</b>'
+        + '<p class="case__met"><b' + (isWord ? ' class="is-word"' : ' data-case="' + ci + '"') + '>' + (isWord ? c.metric : zeroMetric(c.metric)) + '</b>'
         + '<span>' + c.metricLabel + '</span></p>'
         + '<p class="case__detail">' + c.detail + '</p></article>';
     }).join(''));
@@ -2736,16 +2779,32 @@ const CONFIG = {
   /* ---------- FAQ accordion ---------- */
   function initFaq() {
     var btns = Array.prototype.slice.call(document.querySelectorAll('.faq__q'));
+    function setPanel(panel, open) {
+      if (!panel) return;
+      if (reduceMotion) { panel.hidden = !open; return; }
+      if (open) {
+        panel.hidden = false;
+        var h = panel.scrollHeight;
+        panel.style.height = '0px';
+        requestAnimationFrame(function () { panel.style.height = h + 'px'; });
+        panel.addEventListener('transitionend', function te() { panel.style.height = ''; panel.removeEventListener('transitionend', te); });
+      } else {
+        if (panel.hidden) return;
+        panel.style.height = panel.scrollHeight + 'px';
+        requestAnimationFrame(function () { panel.style.height = '0px'; });
+        panel.addEventListener('transitionend', function te() { panel.hidden = true; panel.style.height = ''; panel.removeEventListener('transitionend', te); });
+      }
+    }
     btns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var open = btn.getAttribute('aria-expanded') === 'true';
         btns.forEach(function (b) {
           b.setAttribute('aria-expanded', 'false');
-          document.getElementById(b.getAttribute('aria-controls')).hidden = true;
+          setPanel(document.getElementById(b.getAttribute('aria-controls')), false);
         });
         if (!open) {
           btn.setAttribute('aria-expanded', 'true');
-          document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
+          setPanel(document.getElementById(btn.getAttribute('aria-controls')), true);
         }
       });
     });
@@ -2811,12 +2870,30 @@ const CONFIG = {
     }
   }
 
+  /* Numeric case metrics tween from zero like the stat bar; words stay words. */
+  function parseMetric(m) {
+    var mm = /^([~≈<>+\-]?\s*[$€£]?)([\d,]+(?:\.\d+)?)(\s*(?:%|×|[A-Za-z]{1,3})?)$/.exec(String(m).trim());
+    if (!mm) return null;
+    return { prefix: mm[1], value: parseFloat(mm[2].replace(/,/g, '')), decimals: (mm[2].split('.')[1] || '').length, suffix: mm[3] || '' };
+  }
+  function zeroMetric(m) { var p = parseMetric(m); return p ? p.prefix + (0).toFixed(p.decimals) + p.suffix : m; }
+  function finalizeCase(el, animate) {
+    var met = el.querySelector('[data-case]');
+    if (!met || met.dataset.done) return;
+    met.dataset.done = '1';
+    var c = CONFIG.caseResults[parseInt(met.getAttribute('data-case'), 10)];
+    var p = parseMetric(c.metric);
+    if (!p || !animate || reduceMotion) { met.textContent = c.metric; return; }
+    countUp(met, p);
+  }
+
   /* Reveal one element. delay = stagger in ms. */
   function activate(el, delay, animate) {
     if (el.classList.contains('is-in')) return;
     if (delay) { setTimeout(function () { el.classList.add('is-in'); }, delay); }
     else { el.classList.add('is-in'); }
     finalizeStat(el, animate !== false);
+    finalizeCase(el, animate !== false);
   }
 
   /* Safety net: anything already in or above the viewport is shown immediately.
@@ -2843,17 +2920,73 @@ const CONFIG = {
     html.style.scrollBehavior = prev;
   }
 
+  /* Hero headline: split into word spans once so CSS can rise them in sequence. */
+  function wrapHeroTitle() {
+    var t = $('#heroTitle');
+    if (!t) return;
+    var i = 0;
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (tok) {
+            if (!tok) return;
+            if (!tok.trim()) { frag.appendChild(document.createTextNode(tok)); return; }
+            var sp = document.createElement('span');
+            sp.className = 'w';
+            sp.style.animationDelay = (i++ * 90) + 'ms';
+            sp.textContent = tok;
+            frag.appendChild(sp);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1) { walk(n); }
+      });
+    })(t);
+  }
+
+  /* Industries strip: duplicate the list for a seamless infinite drift.
+     Skipped under reduced motion - the list stays a plain static grid. */
+  function initIndustries() {
+    var ul = $('#industriesMount');
+    if (!ul || reduceMotion) return;
+    var dup = ul.innerHTML.replace(/<li>/g, '<li aria-hidden="true">');
+    ul.innerHTML = ul.innerHTML + dup;
+  }
+
+  /* Approach: scroll-linked gold line across the phase rail; phases light up. */
+  function initPhases() {
+    var rail = $('.phases');
+    if (!rail || reduceMotion) return;
+    var ticking = false;
+    function apply() {
+      ticking = false;
+      var r = rail.getBoundingClientRect(), vh = window.innerHeight;
+      var p = (vh * 0.85 - r.top) / (r.height + vh * 0.35);
+      rail.style.setProperty('--ap', Math.min(Math.max(p, 0), 1).toFixed(3));
+    }
+    function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(apply); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    apply();
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) en.target.classList.add('is-active'); });
+      }, { threshold: 0.55 });
+      Array.prototype.forEach.call(rail.querySelectorAll('.phase'), function (el) { io.observe(el); });
+    }
+  }
+
   function initMotion() {
     var revealables = document.querySelectorAll('.reveal');
 
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      Array.prototype.forEach.call(revealables, function (el) { el.classList.add('is-in'); finalizeStat(el, false); });
+      Array.prototype.forEach.call(revealables, function (el) { el.classList.add('is-in'); finalizeStat(el, false); finalizeCase(el, false); });
       applyHash();
       return;
     }
 
     /* Arm the hidden state only now. Anything that failed earlier in boot
        leaves .reveal content visible, because this class was never added. */
+    wrapHeroTitle();
     document.documentElement.classList.add('motion-on');
 
     /* Reveals fire ONCE and are unobserved — they never re-fire on scroll-back. */
@@ -2863,7 +2996,7 @@ const CONFIG = {
         var el = en.target;
         var sibs = el.parentElement ? Array.prototype.slice.call(el.parentElement.children).filter(function (c) { return c.classList.contains('reveal'); }) : [el];
         var idx = Math.max(0, sibs.indexOf(el));
-        activate(el, Math.min(idx, 8) * 55, true);
+        activate(el, Math.min(idx, 8) * 105, true);
         io.unobserve(el);
       });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
@@ -3180,7 +3313,7 @@ const CONFIG = {
     /* Each feature is isolated: one failure cannot stop the others. Because
        html.motion-on is added inside initMotion, a failure before it leaves
        every .reveal visible. */
-    [render, initNav, initFaq, initForm, initCalculator, initMotion, initStrata, initJourney, initEdgeLight]
+    [render, initNav, initFaq, initForm, initCalculator, initIndustries, initMotion, initStrata, initPhases, initJourney, initEdgeLight]
       .forEach(function (fn) {
         try { fn(); } catch (err) { if (window.console) console.error(err); }
       });
