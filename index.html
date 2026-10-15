@@ -170,7 +170,7 @@
   --fs-d4:clamp(1.375rem,1.10rem + 0.90vw,1.75rem);
   --fs-d3:clamp(1.875rem,1.30rem + 1.90vw,2.75rem);
   --fs-d1:clamp(2.25rem,1.35rem + 3.20vw,4rem);
-  --fs-metric:clamp(3rem,1.60rem + 6.40vw,7.25rem);
+  --fs-metric:clamp(2.5rem,1.30rem + 4.20vw,5.00rem);
   --fs-metric-word:clamp(1.75rem,1rem + 2.60vw,3.25rem);
   /* The credibility numerals ARE the --fs-d1 step. They used to carry a
      near-duplicate curve of their own that drifted from it by ~1.4px at
@@ -182,7 +182,7 @@
   --fs-tile:clamp(1.75rem,1.10rem + 2.20vw,2.75rem);
   /* Decorative footer wordmark. Its own step by role, declared here so that
      no font-size literal lives below this block. */
-  --fs-wordmark:clamp(2.5rem,11vw,9rem);
+  --fs-wordmark:clamp(1.9rem,8.2vw,6.5rem);
 
   --lh-tight:0.96;
   --lh-head:1.20;
@@ -1418,6 +1418,35 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 .motion-on #contact .btn--gold{position:relative;overflow:hidden;isolation:isolate}
 .motion-on #contact .btn--gold::after{content:"";position:absolute;top:0;bottom:0;width:35%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);animation:sheen 3.2s ease-in-out infinite}
 @keyframes sheen{0%{left:-60%}55%,100%{left:130%}}
+
+
+/* ============================================================
+   AMBIENT MOTION - always-alive layer. Uses the independent
+   translate/scale properties so reveals (transform) and hover
+   lifts (transform) keep working. Gated on .motion-on, which is
+   only armed when the visitor allows motion.
+   ============================================================ */
+/* Cards and case rows: a slow, gentle float, desynchronized */
+.motion-on .cell,.motion-on .case{animation:ambFloat 7s ease-in-out infinite alternate}
+.motion-on .cell:nth-child(2n),.motion-on .case:nth-child(2n){animation-delay:-2.4s}
+.motion-on .cell:nth-child(3n),.motion-on .case:nth-child(3n){animation-delay:-4.6s}
+@keyframes ambFloat{from{translate:0 0}to{translate:0 -7px}}
+
+/* Stat values: slow breathe, staggered across the bar */
+.motion-on .stat__val{animation:ambBreathe 5.5s ease-in-out infinite;transform-origin:left bottom}
+.motion-on .stat:nth-child(2) .stat__val{animation-delay:-1.4s}
+.motion-on .stat:nth-child(3) .stat__val{animation-delay:-2.8s}
+.motion-on .stat:nth-child(4) .stat__val{animation-delay:-4.2s}
+.motion-on .stat:nth-child(5) .stat__val{animation-delay:-5.0s}
+@keyframes ambBreathe{0%,100%{scale:1}50%{scale:1.05}}
+
+/* Approach: light travels along the gold progress line */
+.motion-on .phases::after{background:linear-gradient(90deg,var(--c-gold) 0%,#fff2c8 50%,var(--c-gold) 100%);background-size:200% 100%;animation:ambLine 2.8s linear infinite}
+@keyframes ambLine{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* Footer wordmark: a light sweep passes through the letters */
+.motion-on .footer__mark{background:linear-gradient(100deg,var(--c-ghost) 42%,var(--c-blue-line) 50%,var(--c-ghost) 58%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ambMark 9s linear infinite}
+@keyframes ambMark{from{background-position:130% 0}to{background-position:-130% 0}}
 
 </style>
 
