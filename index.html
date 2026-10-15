@@ -1448,6 +1448,24 @@ button[disabled]{opacity:0.55;cursor:not-allowed;transform:none!important;box-sh
 .motion-on .footer__mark{background:linear-gradient(100deg,var(--c-ghost) 42%,var(--c-blue-line) 50%,var(--c-ghost) 58%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ambMark 9s linear infinite}
 @keyframes ambMark{from{background-position:130% 0}to{background-position:-130% 0}}
 
+
+/* Calculator result tiles: the numbers breathe like the stat bar */
+.motion-on .tile__val{animation:ambBreathe 5.5s ease-in-out infinite;transform-origin:left bottom}
+.motion-on .tile:nth-child(2) .tile__val{animation-delay:-1.4s}
+.motion-on .tile:nth-child(3) .tile__val{animation-delay:-2.8s}
+.motion-on .tile:nth-child(4) .tile__val{animation-delay:-4.2s}
+
+/* Case metrics: the gold glow slowly pulses */
+.motion-on .case__met b{animation:ambGlow 4.8s ease-in-out infinite}
+.motion-on .case:nth-child(2n) .case__met b{animation-delay:-2.4s}
+@keyframes ambGlow{0%,100%{text-shadow:0 0 20px var(--c-gold-glow)}50%{text-shadow:0 0 52px var(--c-gold-glow)}}
+
+/* FAQ rows: a barely-there float so the section is alive */
+.motion-on .faq__item{animation:ambFloatSmall 9s ease-in-out infinite alternate}
+.motion-on .faq__item:nth-child(2n){animation-delay:-3s}
+.motion-on .faq__item:nth-child(3n){animation-delay:-6s}
+@keyframes ambFloatSmall{from{translate:0 0}to{translate:0 -4px}}
+
 </style>
 
 <body>
